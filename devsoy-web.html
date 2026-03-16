@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Dev/Soy Web Stüdyosu — Kuzey Kıbrıs'ın öncü web tasarım ve dijital kimlik stüdyosu.">
+<title>Dev/Soy Web Stüdyosu — Kuzey Kıbrıs'ın Dijital Yüzü</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,300;1,400;1,700&family=Figtree:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════ */
+:root {
+  --black:       #080808;
+  --deep:        #0F0F0F;
+  --surface:     #161616;
+  --surface2:    #1C1C1C;
+  --gold:        #C9A84C;
+  --gold-lt:     #E8D48B;
+  --gold-dim:    rgba(201,168,76,0.10);
+  --gold-brd:    rgba(201,168,76,0.22);
+  --white:       #FFFFFF;
+  --hi:          rgba(255,255,255,0.72);
+  --md:          rgba(255,255,255,0.40);
+  --lo:          rgba(255,255,255,0.16);
+  --brd:         rgba(255,255,255,0.07);
+  --success:     #4CAF7D;
+}
+
+/* ═══════════════════════════════════════
+   RESET
+═══════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Figtree',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+
+/* ═══════════════════════════════════════
+   SHARED COMPONENTS
+═══════════════════════════════════════ */
+.eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);
+  display:flex;align-items:center;gap:14px;
+}
+.eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--gold);flex-shrink:0}
+
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:50px;font-weight:400;line-height:1.08;color:var(--white);
+}
+.section-title em{font-style:italic;color:var(--gold)}
+
+/* Scroll-reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.10s}
+.d2{transition-delay:.20s}
+.d3{transition-delay:.30s}
+
+/* Gold button */
+.btn-gold{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--gold);color:var(--black);
+  font-family:'Figtree',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  padding:11px 26px;
+  transition:background .22s,transform .22s,box-shadow .22s;
+}
+.btn-gold:hover{background:var(--gold-lt);transform:translateY(-1px);box-shadow:0 6px 22px rgba(201,168,76,.28)}
+
+/* ═══════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════ */
+#nav{
+  position:fixed;inset:0 0 auto 0;z-index:999;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:24px 72px;
+  border-bottom:1px solid transparent;
+  transition:padding .4s ease,background .4s ease,border-color .4s ease;
+}
+#nav.scrolled{
+  padding:14px 72px;
+  background:rgba(8,8,8,.95);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border-bottom-color:var(--brd);
+}
+
+.nav-logo{display:flex;align-items:center;gap:11px}
+.logo-gem{
+  width:34px;height:34px;flex-shrink:0;
+  background:var(--gold);
+  clip-path:polygon(0 0,100% 0,100% 72%,72% 100%,0 100%);
+  display:flex;align-items:center;justify-content:center;
+}
+.logo-gem-inner{font-family:'DM Mono',monospace;font-size:12px;color:var(--black);letter-spacing:.5px}
+.logo-wordmark{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;letter-spacing:2px;color:var(--white)}
+.logo-wordmark span{color:var(--gold);font-style:italic;font-weight:400}
+
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  font-size:11px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:var(--md);
+  position:relative;padding-bottom:2px;
+  transition:color .2s;
+}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .25s ease}
+.nav-links a:hover{color:var(--white)}
+.nav-links a:hover::after{width:100%}
+
+.nav-right{display:flex;align-items:center;gap:20px}
+.nav-subtle{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--md);transition:color .2s}
+.nav-subtle:hover{color:var(--gold)}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 420px;
+  align-items:center;gap:60px;
+  padding:100px 72px 80px;
+  position:relative;overflow:hidden;
+}
+
+/* Backgrounds */
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 72% 60% at 78% 28%,rgba(201,168,76,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 48% 48% at 12% 78%,rgba(201,168,76,.04) 0%,transparent 55%),
+    var(--black);
+}
+.hero-grid{
+  position:absolute;inset:0;z-index:0;
+  background-image:linear-gradient(var(--brd) 1px,transparent 1px),linear-gradient(90deg,var(--brd) 1px,transparent 1px);
+  background-size:72px 72px;
+}
+
+/* Left */
+.hero-left{position:relative;z-index:1}
+
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:78px;font-weight:900;line-height:.93;
+  margin:24px 0 28px;
+  animation:fadeUp .7s ease .15s both;
+}
+.hero-title .tg{color:var(--gold);font-style:italic;font-weight:400}
+.hero-title .to{-webkit-text-stroke:1.5px rgba(255,255,255,.2);color:transparent}
+
+.hero-eyebrow{animation:fadeUp .6s ease .05s both}
+
+.hero-sub{
+  font-size:16px;font-weight:300;line-height:1.85;color:var(--md);
+  max-width:480px;margin-bottom:44px;
+  animation:fadeUp .7s ease .28s both;
+}
+
+.hero-ctas{
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  animation:fadeUp .7s ease .4s both;
+}
+
+.btn-gold-lg{
+  display:inline-flex;align-items:center;gap:11px;
+  background:var(--gold);color:var(--black);
+  font-family:'Figtree',sans-serif;font-size:12px;font-weight:600;letter-spacing:3.5px;text-transform:uppercase;
+  padding:17px 42px;
+  transition:background .22s,transform .22s,box-shadow .22s;
+}
+.btn-gold-lg:hover{background:var(--gold-lt);transform:translateY(-2px);box-shadow:0 10px 34px rgba(201,168,76,.27)}
+
+.btn-ghost-lg{
+  display:inline-flex;align-items:center;gap:10px;
+  border:1px solid var(--gold-brd);color:var(--gold);
+  font-family:'Figtree',sans-serif;font-size:12px;font-weight:400;letter-spacing:3px;text-transform:uppercase;
+  padding:17px 32px;background:transparent;
+  transition:background .22s,border-color .22s;
+}
+.btn-ghost-lg:hover{background:var(--gold-dim);border-color:var(--gold)}
+
+.hero-scroll{
+  position:absolute;bottom:40px;left:0;
+  display:flex;align-items:center;gap:12px;
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--lo);
+  animation:fadeUp .7s ease .55s both;
+}
+.hero-scroll-line{width:52px;height:1px;background:linear-gradient(90deg,transparent,var(--lo))}
+
+/* Right panel */
+.hero-right{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;gap:0;
+  height:540px;
+  animation:fadeUp .9s ease .2s both;
+}
+
+.hpanel{
+  flex:1;
+  background:var(--surface);
+  border:1px solid var(--brd);
+  border-top:2px solid var(--gold);
+  padding:32px 28px 26px;
+  display:flex;flex-direction:column;gap:16px;
+  position:relative;overflow:hidden;
+}
+.hpanel::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 80% 10%,rgba(201,168,76,.06) 0%,transparent 60%);
+  pointer-events:none;
+}
+.hpanel-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold)}
+.hpanel-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;font-style:italic;line-height:1.2}
+.hpanel-body{font-size:13px;font-weight:300;color:var(--md);line-height:1.75}
+.hpanel-pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
+.hpill{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:5px 11px;border:1px solid var(--gold-brd);color:var(--gold);background:var(--gold-dim)}
+
+.hstats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border:1px solid var(--brd);border-top:none;
+}
+.hstat{
+  padding:17px 12px;border-right:1px solid var(--brd);text-align:center;
+}
+.hstat:last-child{border-right:none}
+.hstat-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold);line-height:1}
+.hstat-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--lo);margin-top:5px}
+
+/* ═══════════════════════════════════════
+   TICKER
+═══════════════════════════════════════ */
+.ticker{overflow:hidden;border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);background:var(--deep)}
+.ticker-track{display:flex;white-space:nowrap;animation:ticker 28s linear infinite}
+.ticker-item{
+  display:inline-flex;align-items:center;padding:14px 38px;
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--lo);gap:20px;
+}
+.ticker-dot{color:var(--gold);font-size:5px}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ═══════════════════════════════════════
+   SECTION WRAPPER
+═══════════════════════════════════════ */
+.section{padding:108px 72px}
+.section-alt{background:var(--deep);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd)}
+
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:52px}
+.sec-head-l{display:flex;flex-direction:column;gap:14px}
+.sec-note{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--lo);align-self:flex-end;padding-bottom:6px}
+
+/* ═══════════════════════════════════════
+   DEMOS
+═══════════════════════════════════════ */
+.demos-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--brd);border:1px solid var(--brd);
+}
+
+.demo-card{
+  background:var(--deep);
+  display:flex;flex-direction:column;
+  overflow:hidden;position:relative;
+  transition:background .3s;
+}
+.demo-card:hover{background:var(--surface)}
+.demo-card:hover .dvis{transform:scale(1.04)}
+.demo-card:hover .dcaret{opacity:1;transform:translate(0,0)}
+
+/* Visual mockup area */
+.dvis{
+  height:196px;
+  display:flex;align-items:center;justify-content:center;
+  border-bottom:1px solid var(--brd);
+  overflow:hidden;position:relative;
+  transition:transform .5s ease;
+}
+.dv1{background:linear-gradient(145deg,#2A1608 0%,#5C3020 55%,#2A1608 100%)}
+.dv2{background:linear-gradient(145deg,#0C0C1C 0%,#20203A 55%,#0C0C1C 100%)}
+.dv3{background:linear-gradient(145deg,#080808 0%,#181818 60%,#080808 100%)}
+.dv4{background:linear-gradient(145deg,#0A0F18 0%,#182030 55%,#0A0F18 100%)}
+.dv5{background:linear-gradient(145deg,#120D08 0%,#2A1E10 55%,#120D08 100%)}
+.dv6{background:linear-gradient(145deg,#0A0A0A,rgba(201,168,76,.06))}
+
+/* Mini browser mockup */
+.mockup{width:200px;display:flex;flex-direction:column;gap:6px}
+.mockup-bar{
+  height:20px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;gap:4px;padding:0 7px;
+}
+.mbdot{width:5px;height:5px;border-radius:50%}
+.mockup-hero{
+  padding:10px 10px 14px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.05);
+  display:flex;flex-direction:column;gap:5px;
+}
+.mline{height:4px;border-radius:2px}
+.mline.w75{width:75%}
+.mline.w50{width:50%}
+.mline.w38{width:38%}
+.mline.w100{width:100%;height:2px;background:rgba(255,255,255,.06)!important}
+.mbtn{height:12px;width:52px;margin-top:6px;border-radius:0}
+
+/* Card body */
+.demo-body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
+.dtag{
+  font-family:'DM Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;
+  padding:4px 9px;width:fit-content;margin-bottom:9px;
+}
+.dt1{background:rgba(193,96,58,.15);color:#D4784A}
+.dt2{background:rgba(255,209,102,.14);color:#D8A030}
+.dt3{background:var(--gold-dim);color:var(--gold)}
+.dt4{background:rgba(100,160,220,.11);color:#70A8D8}
+.dt5{background:rgba(180,140,100,.11);color:#C09A6A}
+.dt6{background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold-brd)}
+
+.dname{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;line-height:1.2;margin-bottom:4px}
+.dtype{font-size:12px;font-weight:300;color:var(--md);margin-bottom:16px;line-height:1.4}
+
+.dactions{display:flex;gap:7px;margin-top:auto}
+.da{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  padding:8px 13px;display:inline-flex;align-items:center;gap:5px;
+  transition:all .2s;
+}
+.da-p{background:var(--gold);color:var(--black)}
+.da-p:hover{background:var(--gold-lt)}
+.da-s{background:transparent;border:1px solid var(--brd);color:var(--md)}
+.da-s:hover{border-color:var(--gold-brd);color:var(--gold)}
+
+.dcaret{
+  position:absolute;top:12px;right:12px;
+  width:26px;height:26px;background:var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--black);font-size:10px;
+  opacity:0;transform:translate(-4px,4px);
+  transition:all .3s ease;
+}
+
+/* CTA card */
+.demo-card-cta{border:1px solid var(--gold-brd)!important;cursor:pointer}
+.demo-card-cta:hover{background:var(--gold-dim)!important}
+.cta-symbol{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:64px;color:var(--gold);opacity:.25;line-height:1;
+}
+.cta-hint{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);opacity:.6;margin-top:8px}
+
+/* ═══════════════════════════════════════
+   PROCESS
+═══════════════════════════════════════ */
+.process-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--brd);border:1px solid var(--brd);
+  margin-top:52px;
+}
+.pstep{
+  background:var(--black);padding:38px 30px;position:relative;
+  transition:background .3s;
+}
+.pstep::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--brd);transition:background .3s}
+.pstep:hover{background:var(--surface)}
+.pstep:hover::before{background:var(--gold)}
+.pstep:last-child .parrow{display:none}
+
+.pnum{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--lo);margin-bottom:20px}
+.picon{
+  width:44px;height:44px;background:var(--gold-dim);border:1px solid var(--gold-brd);
+  display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:17px;margin-bottom:20px;
+}
+.ptitle{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:10px}
+.pdesc{font-size:13px;font-weight:300;color:var(--md);line-height:1.75}
+.parrow{
+  position:absolute;right:-12px;top:52%;transform:translateY(-50%);
+  width:24px;height:24px;border-radius:50%;
+  background:var(--black);border:1px solid var(--gold-brd);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:9px;z-index:2;
+}
+
+/* ═══════════════════════════════════════
+   SERVICES
+═══════════════════════════════════════ */
+.services-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--brd);border:1px solid var(--brd);
+  margin-top:52px;
+}
+.scard{
+  background:var(--deep);padding:38px 32px;
+  position:relative;overflow:hidden;transition:background .3s;
+}
+.scard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:transparent;transition:background .3s}
+.scard:hover{background:var(--surface)}
+.scard:hover::after{background:var(--gold)}
+
+.snum{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--lo);margin-bottom:20px}
+.sicon-wrap{width:46px;height:46px;background:var(--gold-dim);border:1px solid var(--gold-brd);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:18px;margin-bottom:20px}
+.sname{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;margin-bottom:11px;line-height:1.2}
+.sdesc{font-size:13px;font-weight:300;color:var(--md);line-height:1.8}
+
+/* ═══════════════════════════════════════
+   WHY
+═══════════════════════════════════════ */
+.why-layout{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;margin-top:52px}
+
+.why-intro{font-size:15px;font-weight:300;color:var(--md);line-height:1.9;margin-bottom:32px;max-width:460px}
+
+.why-points{display:flex;flex-direction:column;gap:12px}
+.wpoint{
+  display:flex;gap:16px;align-items:flex-start;padding:17px 18px;
+  background:var(--black);border:1px solid var(--brd);
+  transition:border-color .2s,background .2s;
+}
+.wpoint:hover{border-color:var(--gold-brd);background:var(--surface)}
+.wico{width:34px;height:34px;flex-shrink:0;background:var(--gold-dim);border:1px solid var(--gold-brd);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:13px}
+.wtitle{font-size:13px;font-weight:600;margin-bottom:3px;letter-spacing:.2px}
+.wdesc{font-size:12px;font-weight:300;color:var(--md);line-height:1.65}
+
+/* Quote card */
+.why-card{background:var(--black);border:1px solid var(--brd);position:relative;overflow:hidden}
+.why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+.wcard-inner{padding:42px}
+.wquote{font-family:'Playfair Display',serif;font-size:27px;font-weight:400;font-style:italic;line-height:1.35;margin-bottom:8px}
+.wquote strong{font-style:normal;font-weight:900;color:var(--gold)}
+.wattr{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--lo);margin-bottom:24px}
+.wbody{font-size:13px;font-weight:300;color:var(--md);line-height:1.8}
+.wmetrics{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--brd);border-top:1px solid var(--brd);margin-top:32px}
+.wm{background:var(--surface);padding:17px 14px;text-align:center}
+.wm-val{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--gold);line-height:1}
+.wm-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--lo);margin-top:5px}
+
+/* ═══════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════ */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;margin-top:52px}
+
+.contact-intro{font-size:15px;font-weight:300;color:var(--md);line-height:1.85;margin-bottom:32px;max-width:420px}
+
+.cinfo-list{display:flex;flex-direction:column;gap:11px}
+.cinfo-item{
+  display:flex;align-items:center;gap:15px;padding:14px 17px;
+  background:var(--surface);border:1px solid var(--brd);
+  transition:border-color .2s,background .2s;
+}
+.cinfo-item:hover{border-color:var(--gold-brd);background:var(--surface2)}
+.cico{width:37px;height:37px;flex-shrink:0;background:var(--gold-dim);border:1px solid var(--gold-brd);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:13px}
+.clabel{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--lo);margin-bottom:3px}
+.cvalue{font-size:13px;font-weight:500;color:var(--hi)}
+
+/* Form */
+.form-title{font-family:'Playfair Display',serif;font-size:24px;font-style:italic;color:var(--gold);margin-bottom:22px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.ffield{margin-bottom:12px}
+.finput{
+  width:100%;padding:13px 16px;
+  background:var(--surface);border:1px solid var(--brd);
+  color:var(--white);font-family:'Figtree',sans-serif;font-size:14px;
+  outline:none;-webkit-appearance:none;appearance:none;
+  transition:border-color .2s,background .2s;
+}
+.finput:focus{border-color:var(--gold);background:var(--surface2)}
+.finput::placeholder{color:rgba(255,255,255,.22)}
+.fselect-wrap{position:relative}
+.fselect-wrap::after{
+  content:'\f078';font-family:'Font Awesome 6 Free';font-weight:900;
+  font-size:10px;color:var(--gold);
+  position:absolute;right:16px;top:50%;transform:translateY(-50%);pointer-events:none;
+}
+.fselect{
+  width:100%;padding:13px 16px;
+  background:var(--surface);border:1px solid var(--brd);
+  color:var(--white);font-family:'Figtree',sans-serif;font-size:14px;
+  outline:none;-webkit-appearance:none;appearance:none;cursor:pointer;
+  transition:border-color .2s;
+}
+.fselect:focus{border-color:var(--gold)}
+.fselect option{background:var(--surface);color:var(--white)}
+.ftextarea{
+  width:100%;padding:13px 16px;
+  background:var(--surface);border:1px solid var(--brd);
+  color:var(--white);font-family:'Figtree',sans-serif;font-size:14px;
+  outline:none;resize:vertical;min-height:108px;
+  transition:border-color .2s;
+}
+.ftextarea:focus{border-color:var(--gold)}
+.ftextarea::placeholder{color:rgba(255,255,255,.22)}
+
+.btn-submit{
+  width:100%;padding:16px;
+  background:var(--gold);color:var(--black);
+  font-family:'Figtree',sans-serif;font-size:12px;font-weight:600;letter-spacing:3.5px;text-transform:uppercase;
+  border:none;display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:background .22s,transform .2s,box-shadow .2s;
+}
+.btn-submit:hover{background:var(--gold-lt);transform:translateY(-1px);box-shadow:0 6px 22px rgba(201,168,76,.24)}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer{background:var(--black);border-top:1px solid var(--brd);padding:68px 72px 34px}
+.footer-main{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;margin-bottom:52px}
+.fbrand{display:flex;align-items:center;gap:11px;margin-bottom:15px}
+.fabout{font-size:13px;font-weight:300;color:var(--md);line-height:1.8;margin-bottom:22px;max-width:272px}
+.fsocials{display:flex;gap:8px}
+.fsocial{width:35px;height:35px;border:1px solid var(--brd);display:flex;align-items:center;justify-content:center;color:var(--md);font-size:13px;transition:all .2s}
+.fsocial:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+.fctitle{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.flinks{list-style:none;display:flex;flex-direction:column;gap:9px}
+.flinks li a{font-size:13px;font-weight:300;color:var(--md);transition:color .2s}
+.flinks li a:hover{color:var(--white)}
+.fbot{border-top:1px solid var(--brd);padding-top:26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.flegal{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.13)}
+.flegal a{color:var(--gold)}
+
+/* ═══════════════════════════════════════
+   TOAST
+═══════════════════════════════════════ */
+#toast{
+  position:fixed;bottom:26px;right:26px;z-index:9999;
+  background:var(--surface2);border:1px solid var(--gold-brd);border-left:3px solid var(--gold);
+  padding:13px 18px;display:flex;align-items:center;gap:11px;
+  font-size:13px;color:var(--hi);min-width:290px;max-width:380px;
+  opacity:0;transform:translateY(18px);pointer-events:none;
+  transition:opacity .35s ease,transform .35s ease;
+}
+#toast.on{opacity:1;transform:none;pointer-events:auto}
+#toast i{color:var(--success);font-size:15px;flex-shrink:0}
+
+/* ═══════════════════════════════════════
+   KEYFRAMES
+═══════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="logo-gem"><div class="logo-gem-inner">DS</div></div>
+    <div class="logo-wordmark">Dev/Soy <span>Web Stüdyosu</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#demos">Portföy</a></li>
+    <li><a href="#process">Süreç</a></li>
+    <li><a href="#services">Hizmetler</a></li>
+    <li><a href="#why">Neden Biz</a></li>
+    <li><a href="#contact">İletişim</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://devsoy.online" target="_blank" class="nav-subtle">devsoy.online</a>
+    <a href="#contact" class="btn-gold">
+      Teklif Al <i class="fa-solid fa-arrow-right" style="font-size:10px;"></i>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-left">
+    <div class="eyebrow hero-eyebrow">Kuzey Kıbrıs &nbsp;·&nbsp; Web Tasarım Stüdyosu</div>
+    <h1 class="hero-title">
+      Dijitalde<br>
+      <span class="tg">görünmeyenler</span><br>
+      <span class="to">kaybeder.</span>
+    </h1>
+    <p class="hero-sub">
+      Dev/Soy Web Stüdyosu, KKTC işletmelerine uluslararası standartta 
+      web tasarım, marka kimliği ve e-ticaret çözümleri sunar. 
+      Yerel anlayış, küresel kalite.
+    </p>
+    <div class="hero-ctas">
+      <a href="#demos" class="btn-gold-lg">
+        Portföyü Gör <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i>
+      </a>
+      <a href="#contact" class="btn-ghost-lg">Ücretsiz Görüşme</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      Aşağı kaydır
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hpanel">
+      <div class="hpanel-label">Aktif Demo Portföyü</div>
+      <div class="hpanel-title">Her sektöre özgün tasarım yüzü</div>
+      <div class="hpanel-body">Butikten otomotive, kırtasiyeden sanat galerisine — her projeye özel kimlik ve tam çalışır admin paneli.</div>
+      <div class="hpanel-pills">
+        <div class="hpill">Sıcak Lüks</div>
+        <div class="hpill">Aşırı Lüks</div>
+        <div class="hpill">Piksel&#8209;At</div>
+        <div class="hpill">Endüstriyel</div>
+        <div class="hpill">Minimal Sanat</div>
+      </div>
+    </div>
+    <div class="hstats">
+      <div class="hstat"><div class="hstat-val">5</div><div class="hstat-label">Demo Site</div></div>
+      <div class="hstat"><div class="hstat-val">3</div><div class="hstat-label">Tasarım Yüzü</div></div>
+      <div class="hstat"><div class="hstat-val">KKTC</div><div class="hstat-label">Odak Bölge</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Web Tasarım <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Marka Kimliği <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">E-Ticaret <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Logo Tasarım <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Admin Paneli <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Sosyal Medya <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">KKTC Uzmanlığı <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Hızlı Teslimat <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">SEO &amp; Hız <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">WhatsApp Destek <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Web Tasarım <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Marka Kimliği <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">E-Ticaret <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Logo Tasarım <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Admin Paneli <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Sosyal Medya <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">KKTC Uzmanlığı <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Hızlı Teslimat <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">SEO &amp; Hız <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">WhatsApp Destek <span class="ticker-dot">◆</span></span>
+  </div>
+</div>
+
+<!-- DEMOS -->
+<section class="section" id="demos">
+  <div class="sec-head reveal">
+    <div class="sec-head-l">
+      <div class="eyebrow">Canlı Demo Portföyü</div>
+      <h2 class="section-title">Biz söylemiyoruz,<br><em>gösteriyoruz.</em></h2>
+    </div>
+    <p class="sec-note">Her site tam çalışır admin paneli ile birlikte</p>
+  </div>
+  <div class="demos-grid">
+
+    <!-- 1: Butik -->
+    <div class="demo-card reveal d1">
+      <div class="dvis dv1">
+        <div class="mockup">
+          <div class="mockup-bar">
+            <div class="mbdot" style="background:#C1603A"></div>
+            <div class="mbdot" style="background:rgba(255,255,255,.15)"></div>
+            <div class="mbdot" style="background:rgba(255,255,255,.15)"></div>
+          </div>
+          <div class="mockup-hero">
+            <div class="mline w75" style="background:rgba(255,255,255,.55)"></div>
+            <div class="mline w50" style="background:#C1603A;opacity:.85"></div>
+            <div class="mline w100"></div>
+            <div class="mbtn" style="background:#C1603A;opacity:.8"></div>
+          </div>
+        </div>
+        <div class="dcaret"><i class="fa-solid fa-arrow-up-right"></i></div>
+      </div>
+      <div class="demo-body">
+        <div class="dtag dt1">Sıcak Lüks</div>
+        <div class="dname">Butik Giyim</div>
+        <div class="dtype">LUNE — Moda &amp; E-Ticaret</div>
+        <div class="dactions">
+          <a href="demos/demo-butik.html" target="_blank" class="da da-p"><i class="fa-solid fa-eye"></i> Siteyi Gör</a>
+          <a href="admin/admin-butik.html" target="_blank" class="da da-s"><i class="fa-solid fa-sliders"></i> Admin</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2: Kırtasiye -->
+    <div class="demo-card reveal d2">
+      <div class="dvis dv2">
+        <div class="mockup">
+          <div class="mockup-bar">
+            <div class="mbdot" style="background:#FFD166"></div>
+            <div class="mbdot" style="background:#FF6B6B"></div>
+            <div class="mbdot" style="background:#06D6A0"></div>
+          </div>
+          <div class="mockup-hero" style="border-color:rgba(255,209,102,.15)">
+            <div class="mline w75" style="background:#FFD166;opacity:.9"></div>
+            <div class="mline w50" style="background:#FF6B6B;opacity:.8"></div>
+            <div class="mline w100"></div>
+            <div class="mbtn" style="background:#FFD166"></div>
+          </div>
+        </div>
+        <div class="dcaret"><i class="fa-solid fa-arrow-up-right"></i></div>
+      </div>
+      <div class="demo-body">
+        <div class="dtag dt2">Piksel&#8209;At</div>
+        <div class="dname">Kırtasiye</div>
+        <div class="dtype">KALEM&amp;CO. — Eğlenceli E-Ticaret</div>
+        <div class="dactions">
+          <a href="demos/demo-kirtasiye.html" target="_blank" class="da da-p"><i class="fa-solid fa-eye"></i> Siteyi Gör</a>
+          <a href="admin/admin-kirtasiye.html" target="_blank" class="da da-s"><i class="fa-solid fa-sliders"></i> Admin</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3: Spor -->
+    <div class="demo-card reveal d3">
+      <div class="dvis dv3">
+        <div class="mockup">
+          <div class="mockup-bar">
+            <div class="mbdot" style="background:#C9A84C"></div>
+            <div class="mbdot" style="background:rgba(255,255,255,.1)"></div>
+            <div class="mbdot" style="background:rgba(255,255,255,.1)"></div>
+          </div>
+          <div class="mockup-hero" style="border-color:rgba(201,168,76,.15)">
+            <div class="mline w75" style="background:rgba(255,255,255,.65)"></div>
+            <div class="mline w50" style="background:#C9A84C;opacity:.9"></div>
+            <div class="mline w100"></div>
+            <div class="mbtn" style="background:#C9A84C"></div>
+          </div>
+        </div>
+        <div class="dcaret"><i class="fa-solid fa-arrow-up-right"></i></div>
+      </div>
+      <div class="demo-body">
+        <div class="dtag dt3">Aşırı Lüks</div>
+        <div class="dname">Spor Giyim</div>
+        <div class="dtype">OBSIDIAN — Luxury Performance</div>
+        <div class="dactions">
+          <a href="demos/demo-spor.html" target="_blank" class="da da-p"><i class="fa-solid fa-eye"></i> Siteyi Gör</a>
+          <a href="admin/admin-spor.html" target="_blank" class="da da-s"><i class="fa-solid fa-sliders"></i> Admin</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4: Araç Parça -->
+    <div class="demo-card reveal d1">
+      <div class="dvis dv4">
+        <div class="mockup">
+          <div class="mockup-bar">
+            <div class="mbdot" style="background:#E8531A"></div>
+            <div class="mbdot" style="background:rgba(255,255,255,.1)"></div>
+            <div class="mbdot" style="background:rgba(255,255,255,.1)"></div>
+          </div>
+          <div class="mockup-hero" style="border-color:rgba(232,83,26,.15)">
+            <div class="mline w75" style="background:#E8531A;opacity:.85"></div>
+            <div class="mline w50" style="background:#F5C842;opacity:.7"></div>
+            <div class="mline w100"></div>
+            <div class="mbtn" style="background:#E8531A;clip-path:polygon(0 0,100% 0,100% 65%,88% 100%,0 100%)"></div>
+          </div>
+        </div>
+        <div class="dcaret"><i class="fa-solid fa-arrow-up-right"></i></div>
+      </div>
+      <div class="demo-body">
+        <div class="dtag dt4">Endüstriyel</div>
+        <div class="dname">Araç Parça</div>
+        <div class="dtype">DEMİR PARTS — Oto Aksesuar</div>
+        <div class="dactions">
+          <a href="demos/demo-arac-parca.html" target="_blank" class="da da-p"><i class="fa-solid fa-eye"></i> Siteyi Gör</a>
+          <a href="admin/admin-arac-parca.html" target="_blank" class="da da-s"><i class="fa-solid fa-sliders"></i> Admin</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5: Galeri -->
+    <div class="demo-card reveal d2">
+      <div class="dvis dv5">
+        <div class="mockup">
+          <div class="mockup-bar">
+            <div class="mbdot" style="background:#9B6B4A"></div>
+            <div class="mbdot" style="background:rgba(255,255,255,.1)"></div>
+            <div class="mbdot" style="background:rgba(255,255,255,.1)"></div>
+          </div>
+          <div class="mockup-hero" style="border-color:rgba(155,107,74,.15)">
+            <div class="mline w75" style="background:rgba(255,255,255,.55)"></div>
+            <div class="mline w50" style="background:#9B6B4A;opacity:.9"></div>
+            <div class="mline w100"></div>
+            <div class="mbtn" style="background:#1A1A18;border:1px solid #9B6B4A"></div>
+          </div>
+        </div>
+        <div class="dcaret"><i class="fa-solid fa-arrow-up-right"></i></div>
+      </div>
+      <div class="demo-body">
+        <div class="dtag dt5">Minimal Sanat</div>
+        <div class="dname">Sanat Galerisi</div>
+        <div class="dtype">PHOS GALLERY — Kültür &amp; Sanat</div>
+        <div class="dactions">
+          <a href="demos/demo-galeri.html" target="_blank" class="da da-p"><i class="fa-solid fa-eye"></i> Siteyi Gör</a>
+          <a href="admin/admin-galeri.html" target="_blank" class="da da-s"><i class="fa-solid fa-sliders"></i> Admin</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6: CTA -->
+    <div class="demo-card demo-card-cta reveal d3" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+      <div class="dvis dv6" style="flex-direction:column;gap:10px;">
+        <div class="cta-symbol">✦</div>
+        <div class="cta-hint">Sıradaki Proje</div>
+        <div class="dcaret"><i class="fa-solid fa-arrow-up-right"></i></div>
+      </div>
+      <div class="demo-body">
+        <div class="dtag dt6">Sana Özel</div>
+        <div class="dname">Senin Siten</div>
+        <div class="dtype">Fikrinden canlı siteye — birlikte tasarlayalım</div>
+        <div class="dactions">
+          <div class="da da-p" style="cursor:pointer;"><i class="fa-solid fa-comments"></i> Konuşalım</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section section-alt" id="process">
+  <div class="reveal">
+    <div class="eyebrow" style="margin-bottom:14px;">Nasıl Çalışırız</div>
+    <h2 class="section-title">4 adımda<br><em>canlı site.</em></h2>
+  </div>
+  <div class="process-grid">
+    <div class="pstep reveal d1">
+      <div class="pnum">01 &nbsp;·&nbsp; Keşif</div>
+      <div class="picon"><i class="fa-solid fa-magnifying-glass"></i></div>
+      <div class="ptitle">Sizi Tanıyalım</div>
+      <div class="pdesc">İşletmenizi, hedef kitlenizi ve beklentilerinizi WhatsApp veya yüz yüze görüşmeyle öğreniyoruz.</div>
+      <div class="parrow"><i class="fa-solid fa-chevron-right"></i></div>
+    </div>
+    <div class="pstep reveal d2">
+      <div class="pnum">02 &nbsp;·&nbsp; Tasarım</div>
+      <div class="picon"><i class="fa-solid fa-pen-ruler"></i></div>
+      <div class="ptitle">Kimlik &amp; Görsel Dil</div>
+      <div class="pdesc">Renk paleti, tipografi ve marka kimliği belirliyoruz. Onayladıktan sonra geliştirmeye geçiyoruz.</div>
+      <div class="parrow"><i class="fa-solid fa-chevron-right"></i></div>
+    </div>
+    <div class="pstep reveal d3">
+      <div class="pnum">03 &nbsp;·&nbsp; Geliştirme</div>
+      <div class="picon"><i class="fa-solid fa-code"></i></div>
+      <div class="ptitle">Site &amp; Admin Paneli</div>
+      <div class="pdesc">Sitenizi ve yönetim panelinizi 2–3 hafta içinde teslim ediyoruz. Her revizyonu birlikte yapıyoruz.</div>
+      <div class="parrow"><i class="fa-solid fa-chevron-right"></i></div>
+    </div>
+    <div class="pstep reveal d1">
+      <div class="pnum">04 &nbsp;·&nbsp; Yayın</div>
+      <div class="picon"><i class="fa-solid fa-rocket"></i></div>
+      <div class="ptitle">Canlıya Alım &amp; Destek</div>
+      <div class="pdesc">Domain, hosting ve yayın sürecini biz yönetiyoruz. Sonrasında WhatsApp ile sürekli yanınızdayız.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="sec-head reveal">
+    <div class="sec-head-l">
+      <div class="eyebrow">Hizmetlerimiz</div>
+      <h2 class="section-title">Tam kapsamlı<br><em>dijital çözümler.</em></h2>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="scard reveal d1">
+      <div class="snum">01</div>
+      <div class="sicon-wrap"><i class="fa-solid fa-globe"></i></div>
+      <div class="sname">Web Sitesi Tasarımı</div>
+      <div class="sdesc">Kurumsal tanıtım, e-ticaret, portfolyo ve rezervasyon siteleri. Mobil uyumlu, hızlı, profesyonel.</div>
+    </div>
+    <div class="scard reveal d2">
+      <div class="snum">02</div>
+      <div class="sicon-wrap"><i class="fa-solid fa-palette"></i></div>
+      <div class="sname">Marka Kimliği</div>
+      <div class="sdesc">Logo tasarımı, renk paleti, tipografi sistemi ve marka rehberi. Sizi rakiplerinizden ayıran özgün kimlik.</div>
+    </div>
+    <div class="scard reveal d3">
+      <div class="snum">03</div>
+      <div class="sicon-wrap"><i class="fa-solid fa-cart-shopping"></i></div>
+      <div class="sname">E-Ticaret</div>
+      <div class="sdesc">Ürün yönetimi, stok takibi, ödeme entegrasyonu ve tam çalışır admin paneli. Siteniz satış makineniz olsun.</div>
+    </div>
+    <div class="scard reveal d1">
+      <div class="snum">04</div>
+      <div class="sicon-wrap"><i class="fa-solid fa-mobile-screen"></i></div>
+      <div class="sname">Sosyal Medya Tasarımı</div>
+      <div class="sdesc">Instagram post ve story şablonları, highlight kapakları, reklam görselleri. Tutarlı ve güçlü görsel dil.</div>
+    </div>
+    <div class="scard reveal d2">
+      <div class="snum">05</div>
+      <div class="sicon-wrap"><i class="fa-solid fa-chart-line"></i></div>
+      <div class="sname">SEO &amp; Performans</div>
+      <div class="sdesc">Google'da üst sıralara çıkmak için temel SEO yapısı, sayfa hızı optimizasyonu ve teknik iyileştirmeler.</div>
+    </div>
+    <div class="scard reveal d3">
+      <div class="snum">06</div>
+      <div class="sicon-wrap"><i class="fa-solid fa-headset"></i></div>
+      <div class="sname">Bakım &amp; Destek</div>
+      <div class="sdesc">Aylık güncelleme, hosting desteği ve WhatsApp üzerinden erişilebilir teknik destek. Her zaman yanınızdayız.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="section section-alt" id="why">
+  <div class="reveal" style="margin-bottom:52px;">
+    <div class="eyebrow" style="margin-bottom:14px;">Neden Dev/Soy</div>
+    <h2 class="section-title">Kuzey Kıbrıs'ı<br>biz <em>biliyoruz.</em></h2>
+  </div>
+  <div class="why-layout">
+    <div>
+      <p class="why-intro reveal">
+        Yurt dışı ajanslar KKTC piyasasını anlamıyor. Yerel freelancer'lar ise çoğunlukla yetersiz kalıyor. Biz bu ikisi arasındaki tek doğru adres — hem piyasayı hem teknolojiyi bilen stüdyo.
+      </p>
+      <div class="why-points">
+        <div class="wpoint reveal d1">
+          <div class="wico"><i class="fa-solid fa-location-dot"></i></div>
+          <div><div class="wtitle">Yerel Uzmanlık</div><div class="wdesc">KKTC işletmelerini, müşteri davranışlarını ve piyasa dinamiklerini gerçekten anlıyoruz.</div></div>
+        </div>
+        <div class="wpoint reveal d2">
+          <div class="wico"><i class="fa-solid fa-bolt"></i></div>
+          <div><div class="wtitle">Hızlı Teslimat</div><div class="wdesc">Ortalama 2–3 hafta içinde canlı site. Söylediğimiz tarihe uyuyoruz.</div></div>
+        </div>
+        <div class="wpoint reveal d3">
+          <div class="wico"><i class="fa-brands fa-whatsapp"></i></div>
+          <div><div class="wtitle">WhatsApp Destek</div><div class="wdesc">E-posta için gün beklemenize gerek yok. Mesaj atarsınız, kısa sürede yanıt alırsınız.</div></div>
+        </div>
+        <div class="wpoint reveal d1">
+          <div class="wico"><i class="fa-solid fa-eye"></i></div>
+          <div><div class="wtitle">Önce Gör, Sonra Karar Ver</div><div class="wdesc">Demo sitelerimiz hazır. Sitenizin nasıl görüneceğini teslimattan önce, canlı olarak gösteriyoruz.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="why-card reveal d2">
+      <div class="wcard-inner">
+        <div class="wquote">"Dijitalde görünmeyenler, yarışa <strong>başlamadan</strong> geride kalır."</div>
+        <div class="wattr">— Dev/Soy Web Stüdyosu &nbsp;·&nbsp; Kuzey Kıbrıs</div>
+        <div class="wbody">Bu söz boş bir slogan değil. Kuzey Kıbrıs'ta rakiplerinizin büyük bölümü hâlâ sosyal medya sayfasından ibaret bir dijital varlıkla yetiniyor. Gerçek bir web sitesi ve marka kimliğiyle fark yaratmak hiç bu kadar kolay olmamıştı.</div>
+        <div class="wmetrics">
+          <div class="wm"><div class="wm-val">5</div><div class="wm-label">Demo Site</div></div>
+          <div class="wm"><div class="wm-val">3</div><div class="wm-label">Tasarım Yüzü</div></div>
+          <div class="wm"><div class="wm-val">&lt;3h</div><div class="wm-label">Yanıt Süresi</div></div>
+          <div class="wm"><div class="wm-val">KKTC</div><div class="wm-label">Odak</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="reveal" style="margin-bottom:52px;">
+    <div class="eyebrow" style="margin-bottom:14px;">İletişim</div>
+    <h2 class="section-title">Projenizi<br><em>konuşalım.</em></h2>
+  </div>
+  <div class="contact-layout">
+    <div>
+      <p class="contact-intro reveal">
+        Fikrinizi bize anlatın. Ücretsiz ön görüşmede projenizi dinliyor, size en uygun çözümü ve zaman çizelgesini birlikte belirliyoruz.
+      </p>
+      <div class="cinfo-list">
+        <a href="https://wa.me/905391084979" target="_blank" class="cinfo-item reveal d1">
+          <div class="cico"><i class="fa-brands fa-whatsapp"></i></div>
+          <div><div class="clabel">WhatsApp — Öncelikli Kanal</div><div class="cvalue">+90 539 108 49 79</div></div>
+        </a>
+        <a href="https://www.instagram.com/devsoy.consultancy" target="_blank" class="cinfo-item reveal d2">
+          <div class="cico"><i class="fa-brands fa-instagram"></i></div>
+          <div><div class="clabel">Instagram</div><div class="cvalue">@devsoy.consultancy</div></div>
+        </a>
+        <a href="https://devsoy.online" target="_blank" class="cinfo-item reveal d3">
+          <div class="cico"><i class="fa-solid fa-globe"></i></div>
+          <div><div class="clabel">Ana Web Sitesi</div><div class="cvalue">devsoy.online</div></div>
+        </a>
+        <div class="cinfo-item reveal d1" style="cursor:default;">
+          <div class="cico"><i class="fa-solid fa-location-dot"></i></div>
+          <div><div class="clabel">Konum</div><div class="cvalue">Kuzey Kıbrıs, KKTC</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal d2">
+      <div class="form-title">Mesaj Gönderin</div>
+      <div class="frow">
+        <div class="ffield"><input class="finput" type="text" placeholder="Adınız Soyadınız" autocomplete="name"></div>
+        <div class="ffield"><input class="finput" type="text" placeholder="İşletme Adı (varsa)"></div>
+      </div>
+      <div class="ffield"><input class="finput" type="tel" placeholder="Telefon / WhatsApp" autocomplete="tel"></div>
+      <div class="ffield fselect-wrap">
+        <select class="fselect">
+          <option value="" disabled selected>Hizmet Türü Seçin</option>
+          <option>Web Sitesi Tasarımı</option>
+          <option>Marka Kimliği &amp; Logo</option>
+          <option>E-Ticaret Sitesi</option>
+          <option>Sosyal Medya Tasarımı</option>
+          <option>SEO &amp; Performans</option>
+          <option>Birden Fazla Hizmet</option>
+        </select>
+      </div>
+      <div class="ffield"><textarea class="ftextarea" placeholder="Projeniz hakkında kısaca bilgi verin..."></textarea></div>
+      <button class="btn-submit" onclick="submitForm()">
+        <i class="fa-solid fa-paper-plane"></i> Mesaj Gönder
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div>
+      <div class="fbrand">
+        <div class="logo-gem"><div class="logo-gem-inner">DS</div></div>
+        <div class="logo-wordmark">Dev/Soy <span>Web Stüdyosu</span></div>
+      </div>
+      <p class="fabout">Dev/Soy Danışmanlık bünyesinde, Kuzey Kıbrıs'ın öncü web tasarım stüdyosu. İşletmenizin dijital yüzünü birlikte inşa edelim.</p>
+      <div class="fsocials">
+        <a href="https://www.instagram.com/devsoy.consultancy" target="_blank" class="fsocial"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.me/905391084979" target="_blank" class="fsocial"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://devsoy.online" target="_blank" class="fsocial"><i class="fa-solid fa-globe"></i></a>
+      </div>
+    </div>
+    <div>
+      <div class="fctitle">Demo Portföy</div>
+      <ul class="flinks">
+        <li><a href="demos/demo-butik.html" target="_blank">Butik Giyim — LUNE</a></li>
+        <li><a href="demos/demo-kirtasiye.html" target="_blank">Kırtasiye — KALEM&amp;CO.</a></li>
+        <li><a href="demos/demo-spor.html" target="_blank">Spor Giyim — OBSIDIAN</a></li>
+        <li><a href="demos/demo-arac-parca.html" target="_blank">Araç Parça — DEMİR PARTS</a></li>
+        <li><a href="demos/demo-galeri.html" target="_blank">Sanat Galerisi — PHOS</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fctitle">Hizmetler</div>
+      <ul class="flinks">
+        <li><a href="#services">Web Sitesi Tasarımı</a></li>
+        <li><a href="#services">Marka Kimliği</a></li>
+        <li><a href="#services">E-Ticaret</a></li>
+        <li><a href="#services">Sosyal Medya</a></li>
+        <li><a href="#services">SEO &amp; Performans</a></li>
+        <li><a href="#services">Bakım &amp; Destek</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fctitle">Dev/Soy</div>
+      <ul class="flinks">
+        <li><a href="https://devsoy.online" target="_blank">devsoy.online</a></li>
+        <li><a href="https://www.instagram.com/devsoy.consultancy" target="_blank">@devsoy.consultancy</a></li>
+        <li><a href="https://wa.me/905391084979" target="_blank">+90 539 108 49 79</a></li>
+        <li><a href="#contact">Kuzey Kıbrıs, KKTC</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <div class="flegal">© 2025 Dev/Soy Web Stüdyosu &nbsp;·&nbsp; Dev/Soy Danışmanlık &nbsp;·&nbsp; Tüm hakları saklıdır.</div>
+    <div class="flegal">Tasarım: <a href="https://devsoy.online" target="_blank">devsoy.online</a></div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div id="toast">
+  <i class="fa-solid fa-circle-check"></i>
+  <span id="toast-msg">Mesajınız alındı! En kısa sürede WhatsApp'tan dönüş yapacağız.</span>
+</div>
+
+<script>
+/* Navbar scroll */
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 50);
+window.addEventListener('scroll', onScroll, { passive: true });
+
+/* Smooth scroll */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+
+/* Scroll reveal */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+}, { threshold: 0.10 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* Form submit */
+function submitForm() {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = 'Mesajınız alındı! En kısa sürede WhatsApp\'tan dönüş yapacağız.';
+  t.classList.add('on');
+  setTimeout(() => t.classList.remove('on'), 5000);
+}
+</script>
+</body>
+</html>

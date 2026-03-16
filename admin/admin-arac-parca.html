@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEMİR PARTS Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --steel: #1C2128; --iron: #252D38; --plate: #2E3A47;
+  --orange: #E8531A; --chrome: #C0C8D2; --yellow: #F5C842;
+  --text: #E8ECF0; --gray: rgba(232,236,240,0.4); --border: rgba(192,200,210,0.08);
+  --success: #4CAF7D; --warning: #F5C842; --danger: #E8531A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Barlow', sans-serif; background: var(--steel); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
+
+.sidebar { width: 250px; flex-shrink: 0; background: #0D1117; display: flex; flex-direction: column; height: 100vh; overflow-y: auto; border-right: 2px solid var(--orange); }
+.sidebar-brand { padding: 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.logo-hex { width: 40px; height: 40px; background: var(--orange); clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.brand-name { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--text); }
+.brand-name span { color: var(--orange); }
+.brand-sub { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--gray); text-transform: uppercase; margin-top: 1px; }
+
+.sidebar-section-label { padding: 14px 20px 6px; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; color: rgba(255,255,255,0.15); text-transform: uppercase; }
+.sidebar-item { display: flex; align-items: center; gap: 10px; padding: 11px 20px; color: var(--gray); cursor: pointer; transition: all 0.15s; text-decoration: none; border-left: 3px solid transparent; font-size: 13px; font-weight: 400; }
+.sidebar-item:hover { background: rgba(232,83,26,0.08); color: var(--text); }
+.sidebar-item.active { background: rgba(232,83,26,0.12); color: var(--orange); border-left-color: var(--orange); }
+.sidebar-item i { width: 16px; text-align: center; }
+.sb-badge { margin-left: auto; background: var(--orange); color: white; font-size: 10px; padding: 2px 7px; border-radius: 2px; font-family: 'DM Mono', monospace; }
+
+.sidebar-footer { margin-top: auto; padding: 16px 20px; border-top: 1px solid var(--border); }
+.admin-row { display: flex; align-items: center; gap: 10px; }
+.admin-av { width: 36px; height: 36px; background: var(--orange); color: white; display: flex; align-items: center; justify-content: center; font-size: 16px; clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%); }
+.admin-name { font-size: 13px; color: rgba(255,255,255,0.65); font-weight: 400; }
+.admin-role { font-size: 10px; color: rgba(255,255,255,0.25); }
+
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { background: var(--iron); border-bottom: 2px solid var(--orange); padding: 0 28px; height: 58px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.page-title { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; }
+.page-title span { color: var(--orange); }
+.topbar-actions { display: flex; gap: 10px; }
+.ind-btn { display: flex; align-items: center; gap: 8px; padding: 8px 18px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; cursor: pointer; border: none; text-transform: uppercase; transition: all 0.15s; }
+.ind-btn-primary { background: var(--orange); color: white; clip-path: polygon(0 0, 100% 0, 100% 75%, 95% 100%, 0 100%); }
+.ind-btn-primary:hover { background: #FF6B2B; }
+.ind-btn-outline { background: transparent; border: 1px solid var(--border); color: var(--gray); }
+.ind-btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+
+.content { flex: 1; overflow-y: auto; padding: 24px 28px; }
+
+.stat-row { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; margin-bottom: 22px; }
+.stat-card { background: var(--iron); border: 1px solid var(--border); border-left: 3px solid var(--orange); padding: 16px 18px; }
+.stat-val { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 800; color: var(--orange); margin-bottom: 2px; }
+.stat-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--gray); text-transform: uppercase; margin-bottom: 4px; }
+.stat-change { font-family: 'DM Mono', monospace; font-size: 10px; }
+.change-up { color: var(--success); }
+
+.dash-grid { display: grid; grid-template-columns: 1fr 280px; gap: 18px; }
+
+.filter-row { display: flex; gap: 8px; margin-bottom: 16px; align-items: center; flex-wrap: wrap; }
+.flt-chip { padding: 6px 14px; background: var(--plate); border: 1px solid var(--border); font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); cursor: pointer; transition: all 0.15s; }
+.flt-chip:hover, .flt-chip.active { background: var(--orange); border-color: var(--orange); color: white; }
+.flt-search { display: flex; align-items: center; gap: 8px; background: var(--plate); padding: 7px 14px; border: 1px solid var(--border); margin-left: auto; }
+.flt-search input { background: none; border: none; outline: none; font-family: 'Barlow', sans-serif; font-size: 13px; color: var(--text); width: 200px; }
+.flt-search input::placeholder { color: var(--gray); }
+
+.table-card { background: var(--iron); border: 1px solid var(--border); }
+.table-header { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.table-title { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 2px; }
+.table-title span { color: var(--orange); }
+
+table { width: 100%; border-collapse: collapse; }
+thead th { padding: 10px 16px; text-align: left; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--gray); background: var(--steel); border-bottom: 1px solid var(--border); font-weight: 400; }
+tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+tbody tr:hover { background: rgba(232,83,26,0.05); }
+tbody tr:last-child { border-bottom: none; }
+td { padding: 12px 16px; font-size: 13px; }
+
+.prod-name-cell { display: flex; align-items: center; gap: 10px; }
+.prod-thumb { width: 40px; height: 40px; background: var(--plate); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.prod-name { font-weight: 500; margin-bottom: 1px; }
+.prod-sku { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--orange); }
+
+.cond-badge { display: inline-flex; align-items: center; padding: 2px 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; }
+.cond-new { background: var(--orange); color: white; }
+.cond-oem { background: var(--yellow); color: #333; }
+.cond-used { background: var(--plate); color: var(--gray); border: 1px solid var(--border); }
+
+.status-badge { display: inline-flex; padding: 2px 8px; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px; }
+.st-active { background: rgba(76,175,125,0.12); color: var(--success); }
+.st-low { background: rgba(245,200,66,0.12); color: var(--warning); }
+.st-out { background: rgba(232,83,26,0.12); color: var(--danger); }
+
+.action-btns { display: flex; gap: 5px; }
+.act-btn { width: 28px; height: 28px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; background: none; color: var(--gray); font-size: 11px; transition: all 0.15s; }
+.act-btn:hover { background: var(--orange); color: white; border-color: var(--orange); }
+.act-btn.delete:hover { background: var(--danger); }
+
+/* PANELS */
+.panel-card { background: var(--iron); border: 1px solid var(--border); margin-bottom: 14px; border-top: 2px solid var(--orange); }
+.panel-card-header { padding: 12px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.panel-card-title { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+.panel-card-body { padding: 14px; }
+
+.order-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.order-item:last-child { border-bottom: none; }
+.order-dot { width: 6px; height: 6px; flex-shrink: 0; }
+.od-ok { background: var(--success); }
+.od-pend { background: var(--warning); }
+.od-fail { background: var(--danger); }
+.order-id { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--orange); }
+.order-customer { font-size: 11px; color: var(--gray); }
+.order-amount { margin-left: auto; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--iron); width: 580px; max-height: 88vh; overflow-y: auto; border-top: 3px solid var(--orange); border: 1px solid var(--border); }
+.modal-header { padding: 18px 22px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.modal-title { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); }
+.modal-close { background: none; border: 1px solid var(--border); color: var(--gray); width: 30px; height: 30px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.modal-close:hover { background: var(--danger); color: white; border-color: var(--danger); }
+.modal-body { padding: 22px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.form-full { margin-bottom: 14px; }
+.form-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); margin-bottom: 5px; display: block; }
+.form-input, .form-select, .form-textarea { width: 100%; padding: 9px 12px; background: var(--steel); border: 1px solid var(--border); font-family: 'Barlow', sans-serif; font-size: 13px; color: var(--text); outline: none; transition: border-color 0.15s; }
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--orange); }
+.form-select option { background: var(--iron); }
+.form-textarea { height: 72px; resize: vertical; }
+.modal-footer { padding: 14px 22px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
+
+.toast { position: fixed; bottom: 24px; right: 24px; background: var(--iron); border-left: 3px solid var(--orange); color: var(--text); padding: 14px 20px; display: flex; align-items: center; gap: 10px; font-size: 13px; transform: translateY(80px); opacity: 0; transition: all 0.3s; z-index: 2000; }
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast i { color: var(--success); }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="logo-hex">⚙️</div>
+    <div>
+      <div class="brand-name">DEMİR <span>PARTS</span></div>
+      <div class="brand-sub">Admin Paneli</div>
+    </div>
+  </div>
+  <div class="sidebar-section-label">Yönetim</div>
+  <a href="#" class="sidebar-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-bag-shopping"></i> Siparişler <span class="sb-badge">14</span></a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-cogs"></i> Parçalar</a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-sitemap"></i> Kategoriler</a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-car"></i> Araç Uyumları</a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-users"></i> Müşteriler</a>
+  <div class="sidebar-section-label">Stok</div>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-warehouse"></i> Stok Takibi</a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-triangle-exclamation"></i> Kritik Stok <span class="sb-badge">8</span></a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-file-import"></i> Toplu İçe Aktar</a>
+  <div class="sidebar-section-label">Ayarlar</div>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-truck"></i> Kargo</a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-gear"></i> Genel</a>
+  <div class="sidebar-footer">
+    <div class="admin-row">
+      <div class="admin-av">⚙️</div>
+      <div><div class="admin-name">Depo Yöneticisi</div><div class="admin-role">Admin</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="page-title">DEPO <span>DASHBOARD</span></div>
+    <div class="topbar-actions">
+      <button class="ind-btn ind-btn-outline" onclick="openModal()"><i class="fa-solid fa-plus"></i> Yeni Parça</button>
+      <button class="ind-btn ind-btn-primary"><i class="fa-solid fa-file-import"></i> Toplu Aktar</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-val">₺124K</div><div class="stat-label">Bu Ay Ciro</div><div class="stat-change change-up">↑ %22</div></div>
+      <div class="stat-card"><div class="stat-val">487</div><div class="stat-label">Sipariş</div><div class="stat-change change-up">↑ %9</div></div>
+      <div class="stat-card"><div class="stat-val">500K+</div><div class="stat-label">Parça SKU</div><div class="stat-change">214 yeni</div></div>
+      <div class="stat-card"><div class="stat-val" style="color:var(--warning)">8</div><div class="stat-label">Kritik Stok</div><div class="stat-change" style="color:var(--warning)">⚠ Dikkat</div></div>
+      <div class="stat-card"><div class="stat-val">2.840</div><div class="stat-label">Müşteri</div><div class="stat-change change-up">↑ 64 bu ay</div></div>
+    </div>
+
+    <div class="dash-grid">
+      <div>
+        <div class="filter-row">
+          <div class="flt-chip active">Tümü</div>
+          <div class="flt-chip">Motor</div>
+          <div class="flt-chip">Fren</div>
+          <div class="flt-chip">Elektrik</div>
+          <div class="flt-chip">Süspansiyon</div>
+          <div class="flt-search">
+            <i class="fa-solid fa-magnifying-glass" style="color:var(--gray);font-size:12px;"></i>
+            <input type="text" placeholder="SKU, araç adı veya parça ara...">
+          </div>
+        </div>
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">PARÇA LİSTESİ <span>(500K+)</span></div>
+            <button class="ind-btn ind-btn-primary" style="padding:6px 12px;font-size:11px;" onclick="openModal()">+ Parça Ekle</button>
+          </div>
+          <table>
+            <thead><tr><th>Parça</th><th>Kategori</th><th>Araç Uyumu</th><th>Fiyat</th><th>Stok</th><th>Durum</th><th>İşlem</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb">🔧</div><div><div class="prod-name">Yağ Filtresi</div><div class="prod-sku">SKU: MF-BMW-E46-001</div></div></div></td>
+                <td>Motor</td><td style="font-size:11px;color:var(--gray)">BMW E46 '00-'05</td><td><strong>₺185</strong></td><td>142</td>
+                <td><span class="st-active status-badge">● Stokta</span></td>
+                <td><div class="action-btns"><button class="act-btn" onclick="openModal()"><i class="fa-solid fa-pen"></i></button><button class="act-btn"><i class="fa-solid fa-eye"></i></button><button class="act-btn delete" onclick="showToast('Parça silindi')"><i class="fa-solid fa-trash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb">⚙️</div><div><div class="prod-name">Fren Balatası (Ön)</div><div class="prod-sku">SKU: BP-VW-GOLF7-024</div></div></div></td>
+                <td>Fren</td><td style="font-size:11px;color:var(--gray)">VW Golf 7 '12-'21</td><td><strong>₺420</strong></td><td style="color:var(--warning);font-weight:600">8 ⚠</td>
+                <td><span class="st-low status-badge">⚠ Azalıyor</span></td>
+                <td><div class="action-btns"><button class="act-btn" onclick="openModal()"><i class="fa-solid fa-pen"></i></button><button class="act-btn"><i class="fa-solid fa-eye"></i></button><button class="act-btn delete" onclick="showToast('Parça silindi')"><i class="fa-solid fa-trash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb">🔩</div><div><div class="prod-name">Amortisör (Arka Çift)</div><div class="prod-sku">SKU: SP-TOYO-COROLLA-18</div></div></div></td>
+                <td>Süspansiyon</td><td style="font-size:11px;color:var(--gray)">Toyota Corolla '18-'23</td><td><strong>₺1.890</strong></td><td>32</td>
+                <td><span class="st-active status-badge">● Stokta</span></td>
+                <td><div class="action-btns"><button class="act-btn" onclick="openModal()"><i class="fa-solid fa-pen"></i></button><button class="act-btn"><i class="fa-solid fa-eye"></i></button><button class="act-btn delete" onclick="showToast('Parça silindi')"><i class="fa-solid fa-trash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb">🔋</div><div><div class="prod-name">Akü 74Ah</div><div class="prod-sku">SKU: BAT-FORD-FOCUS-17</div></div></div></td>
+                <td>Elektrik</td><td style="font-size:11px;color:var(--gray)">Ford Focus Tüm Modeller</td><td><strong>₺2.150</strong></td><td style="color:var(--danger);font-weight:600">0 — Tükendi</td>
+                <td><span class="st-out status-badge">✕ Tükendi</span></td>
+                <td><div class="action-btns"><button class="act-btn" onclick="openModal()"><i class="fa-solid fa-pen"></i></button><button class="act-btn"><i class="fa-solid fa-eye"></i></button><button class="act-btn delete" onclick="showToast('Parça silindi')"><i class="fa-solid fa-trash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb">💡</div><div><div class="prod-name">Alternatör</div><div class="prod-sku">SKU: ALT-MERC-C200-15</div></div></div></td>
+                <td>Elektrik</td><td style="font-size:11px;color:var(--gray)">Mercedes C200 '14-'18</td><td><strong>₺890</strong></td><td style="color:var(--warning)">3 ⚠</td>
+                <td><span class="st-low status-badge">⚠ Azalıyor</span></td>
+                <td><div class="action-btns"><button class="act-btn" onclick="openModal()"><i class="fa-solid fa-pen"></i></button><button class="act-btn"><i class="fa-solid fa-eye"></i></button><button class="act-btn delete" onclick="showToast('Parça silindi')"><i class="fa-solid fa-trash"></i></button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel-card">
+          <div class="panel-card-header"><div class="panel-card-title">Son Siparişler</div><a href="#" style="font-family:'DM Mono',monospace;font-size:9px;color:var(--orange);text-decoration:none;">TÜMÜ →</a></div>
+          <div class="panel-card-body">
+            <div class="order-item"><div class="order-dot od-ok"></div><div><div class="order-id">#8841</div><div class="order-customer">Mehmet K. Garajı</div></div><div class="order-amount">₺2.845</div></div>
+            <div class="order-item"><div class="order-dot od-pend"></div><div><div class="order-id">#8840</div><div class="order-customer">Ali Servis</div></div><div class="order-amount">₺890</div></div>
+            <div class="order-item"><div class="order-dot od-ok"></div><div><div class="order-id">#8839</div><div class="order-customer">Hasan B.</div></div><div class="order-amount">₺420</div></div>
+            <div class="order-item"><div class="order-dot od-fail"></div><div><div class="order-id">#8838</div><div class="order-customer">Kıbrıs Oto</div></div><div class="order-amount">₺5.200</div></div>
+          </div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-card-header"><div class="panel-card-title">Kritik Stok Uyarısı</div></div>
+          <div class="panel-card-body" style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:rgba(232,83,26,0.1);border:1px solid rgba(232,83,26,0.2);padding:10px;display:flex;align-items:center;gap:8px;">
+              <i class="fa-solid fa-triangle-exclamation" style="color:var(--orange);"></i>
+              <div style="font-size:12px;"><strong>Fren Balatası VW</strong><br><span style="color:var(--gray);font-size:11px;">Yalnızca 8 adet kaldı</span></div>
+              <button class="ind-btn ind-btn-primary" style="margin-left:auto;padding:4px 10px;font-size:10px;">Sipariş Ver</button>
+            </div>
+            <div style="background:rgba(232,83,26,0.1);border:1px solid rgba(232,83,26,0.2);padding:10px;display:flex;align-items:center;gap:8px;">
+              <i class="fa-solid fa-triangle-exclamation" style="color:var(--orange);"></i>
+              <div style="font-size:12px;"><strong>Alternatör Mercedes</strong><br><span style="color:var(--gray);font-size:11px;">Yalnızca 3 adet kaldı</span></div>
+              <button class="ind-btn ind-btn-primary" style="margin-left:auto;padding:4px 10px;font-size:10px;">Sipariş Ver</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-card-header"><div class="panel-card-title">Hızlı İşlemler</div></div>
+          <div class="panel-card-body" style="display:flex;flex-direction:column;gap:8px;">
+            <button class="ind-btn ind-btn-primary" style="justify-content:center;width:100%;" onclick="openModal()">+ Yeni Parça Ekle</button>
+            <button class="ind-btn ind-btn-outline" style="justify-content:center;width:100%;">📁 Toplu CSV Aktar</button>
+            <button class="ind-btn ind-btn-outline" style="justify-content:center;width:100%;">🖨 Stok Raporu Al</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">YENİ PARÇA EKLE</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div><label class="form-label">Parça Adı</label><input class="form-input" type="text" placeholder="Örn: Yağ Filtresi"></div>
+        <div><label class="form-label">SKU / OEM Kodu</label><input class="form-input" type="text" placeholder="SKU: XX-YY-ZZ"></div>
+      </div>
+      <div class="form-row">
+        <div><label class="form-label">Kategori</label><select class="form-select"><option>Motor</option><option>Fren Sistemi</option><option>Elektrik</option><option>Süspansiyon</option><option>Egzoz</option></select></div>
+        <div><label class="form-label">Durum</label><select class="form-select"><option>Yeni</option><option>OEM</option><option>İkinci El</option></select></div>
+      </div>
+      <div class="form-row">
+        <div><label class="form-label">Araç Markası</label><input class="form-input" type="text" placeholder="BMW, VW, Toyota..."></div>
+        <div><label class="form-label">Model / Yıl Uyumu</label><input class="form-input" type="text" placeholder="Golf 7 · 2012–2021"></div>
+      </div>
+      <div class="form-row">
+        <div><label class="form-label">Fiyat (₺)</label><input class="form-input" type="number" placeholder="0"></div>
+        <div><label class="form-label">Stok Adedi</label><input class="form-input" type="number" placeholder="0"></div>
+      </div>
+      <div class="form-full"><label class="form-label">Notlar</label><textarea class="form-textarea" placeholder="Parça hakkında notlar, garanti bilgisi..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="ind-btn ind-btn-outline" onclick="closeModal()">İptal</button>
+      <button class="ind-btn ind-btn-primary" onclick="saveProduct()"><i class="fa-solid fa-check"></i> Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><i class="fa-solid fa-circle-check"></i><span id="toastMsg">Parça kaydedildi</span></div>
+
+<script>
+function openModal() { document.getElementById('productModal').classList.add('open'); }
+function closeModal() { document.getElementById('productModal').classList.remove('open'); }
+function saveProduct() { closeModal(); showToast('Parça başarıyla kaydedildi'); }
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+document.querySelectorAll('.flt-chip').forEach(c => {
+  c.addEventListener('click', function() {
+    document.querySelectorAll('.flt-chip').forEach(x => x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+document.getElementById('productModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+</script>
+
+<!-- DEV/SOY ADMIN NAVIGATION BAR -->
+<div style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(8,8,8,0.97);border-top:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;padding:0 16px 0 8px;height:46px;overflow:hidden;">
+  <div style="display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;">
+    <a href="../devsoy-web.html" style="display:inline-flex;align-items:center;gap:7px;padding:10px 16px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;text-decoration:none;border-right:1px solid rgba(255,255,255,0.07);white-space:nowrap;flex-shrink:0;">
+      <span style="width:18px;height:18px;background:#C9A84C;clip-path:polygon(0 0,100% 0,100% 72%,72% 100%,0 100%);display:inline-flex;align-items:center;justify-content:center;font-size:8px;color:#080808;font-weight:700;">DS</span>
+      Dev/Soy
+    </a>
+    <a href="../admin/admin-butik.html" style="display:inline-flex;align-items:center;gap:5px;padding:10px 12px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;border-bottom:2px solid transparent;;white-space:nowrap;">👗 Butik Admin</a><a href="../admin/admin-kirtasiye.html" style="display:inline-flex;align-items:center;gap:5px;padding:10px 12px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;border-bottom:2px solid transparent;;white-space:nowrap;">✏️ Kırtasiye Admin</a><a href="../admin/admin-spor.html" style="display:inline-flex;align-items:center;gap:5px;padding:10px 12px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;border-bottom:2px solid transparent;;white-space:nowrap;">🏃 Spor Admin</a><a href="../admin/admin-arac-parca.html" style="display:inline-flex;align-items:center;gap:5px;padding:10px 12px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;color:#C9A84C;border-bottom:2px solid #C9A84C;;white-space:nowrap;">⚙️ Araç Admin</a><a href="../admin/admin-galeri.html" style="display:inline-flex;align-items:center;gap:5px;padding:10px 12px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;border-bottom:2px solid transparent;;white-space:nowrap;">🎨 Galeri Admin</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px;border-left:1px solid rgba(255,255,255,0.07);">
+    <a href="../demos/demo-arac-parca.html" style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.6);text-decoration:none;white-space:nowrap;" onmouseover="this.style.borderColor='rgba(201,168,76,0.4)';this.style.color='#C9A84C'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.6)'"><i class="fa-solid fa-eye" style="font-size:10px;"></i> ⚙️ Siteyi Gör</a>
+  </div>
+</div>
+<div style="height:46px;"></div>
+<!-- /DEV/SOY ADMIN NAVIGATION BAR -->
+
+</body>
+</html>

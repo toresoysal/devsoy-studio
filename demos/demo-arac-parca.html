@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEMIR PARTS — Araç Parça & Aksesuar</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --steel: #1C2128;
+  --iron: #252D38;
+  --plate: #2E3A47;
+  --chrome: #C0C8D2;
+  --orange: #E8531A;
+  --orange-dim: rgba(232,83,26,0.15);
+  --yellow: #F5C842;
+  --text: #E8ECF0;
+  --gray: rgba(232,236,240,0.45);
+  --border: rgba(192,200,210,0.1);
+  --white: #FFFFFF;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--steel);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--steel); }
+::-webkit-scrollbar-thumb { background: var(--orange); }
+
+/* ── TOP BAR ── */
+.topbar {
+  background: var(--orange);
+  padding: 8px 60px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.topbar-left {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; letter-spacing: 2px;
+  color: white; text-transform: uppercase;
+  display: flex; align-items: center; gap: 20px;
+}
+
+.topbar-left span { color: rgba(255,255,255,0.6); }
+
+.topbar-right {
+  display: flex; gap: 20px;
+}
+
+.topbar-right a {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: rgba(255,255,255,0.7);
+  text-decoration: none; letter-spacing: 1px;
+  transition: color 0.2s;
+}
+.topbar-right a:hover { color: white; }
+
+/* ── NAV ── */
+nav {
+  background: var(--iron);
+  border-bottom: 2px solid var(--orange);
+  padding: 0 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+  position: sticky; top: 0; z-index: 100;
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+}
+
+.logo-icon {
+  width: 44px; height: 44px;
+  background: var(--orange);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%);
+}
+
+.logo-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 26px; font-weight: 800;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--text);
+  line-height: 1;
+}
+
+.logo-text span { color: var(--orange); }
+.logo-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 3px;
+  color: var(--gray); text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* Search bar */
+.nav-search {
+  display: flex; gap: 0; flex: 0 0 400px;
+}
+
+.search-select {
+  background: var(--plate);
+  border: 1px solid var(--border);
+  border-right: none;
+  color: var(--gray);
+  padding: 0 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 1px;
+  outline: none; cursor: pointer;
+}
+
+.nav-search input {
+  flex: 1; padding: 0 20px;
+  background: var(--plate);
+  border: 1px solid var(--border); border-right: none;
+  color: var(--text); font-family: 'Barlow', sans-serif; font-size: 14px;
+  outline: none;
+}
+
+.nav-search input::placeholder { color: var(--gray); }
+
+.search-btn {
+  padding: 0 20px;
+  background: var(--orange); border: none;
+  color: white; font-size: 16px;
+  cursor: pointer; transition: background 0.2s;
+}
+
+.search-btn:hover { background: #C94015; }
+
+.nav-right {
+  display: flex; align-items: center; gap: 20px;
+}
+
+.nav-action {
+  display: flex; flex-direction: column; align-items: center;
+  cursor: pointer; text-decoration: none; color: var(--gray);
+  transition: color 0.2s; gap: 3px;
+}
+
+.nav-action:hover { color: var(--orange); }
+.nav-action i { font-size: 20px; }
+.nav-action span {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+}
+
+/* ── CATEGORY NAV ── */
+.cat-nav {
+  background: var(--plate);
+  border-bottom: 1px solid var(--border);
+  padding: 0 60px;
+  display: flex; gap: 0;
+  overflow-x: auto;
+}
+
+.cat-nav-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 14px 20px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--gray);
+  text-decoration: none; white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: all 0.15s;
+}
+
+.cat-nav-item:hover, .cat-nav-item.active {
+  color: var(--orange);
+  border-bottom-color: var(--orange);
+}
+
+/* ── HERO ── */
+.hero {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 540px;
+  position: relative;
+}
+
+.hero-left {
+  background: linear-gradient(145deg, var(--steel), #0D1117);
+  padding: 60px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+
+/* Metal texture lines */
+.hero-left::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 40px,
+    rgba(255,255,255,0.015) 40px,
+    rgba(255,255,255,0.015) 41px
+  );
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--orange);
+  padding: 6px 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: white;
+  margin-bottom: 24px; width: fit-content;
+}
+
+.hero-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 80px; font-weight: 900;
+  line-height: 0.9; letter-spacing: -1px;
+  text-transform: uppercase; color: var(--text);
+  margin-bottom: 20px; position: relative; z-index: 1;
+}
+
+.hero-title .orange { color: var(--orange); }
+.hero-title .dim { color: rgba(232,236,240,0.3); }
+
+.hero-desc {
+  font-size: 15px; font-weight: 300; color: var(--gray);
+  line-height: 1.7; max-width: 400px; margin-bottom: 36px;
+  position: relative; z-index: 1;
+}
+
+.hero-btns {
+  display: flex; gap: 12px;
+  position: relative; z-index: 1;
+}
+
+.btn-orange {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--orange); color: white;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; padding: 14px 32px;
+  text-decoration: none; border: none; cursor: pointer;
+  transition: all 0.2s;
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 94% 100%, 0 100%);
+}
+
+.btn-orange:hover {
+  background: #FF6B2B;
+  transform: translateY(-2px);
+}
+
+.btn-steel {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--plate); color: var(--chrome);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px; font-weight: 600; letter-spacing: 3px;
+  text-transform: uppercase; padding: 14px 32px;
+  text-decoration: none; border: 1px solid var(--border);
+  cursor: pointer; transition: all 0.2s;
+}
+
+.btn-steel:hover { border-color: var(--orange); color: var(--orange); }
+
+.hero-right {
+  background: linear-gradient(135deg, #1A2433, #0D1117);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden; padding: 40px;
+}
+
+.hero-car-display {
+  text-align: center; position: relative; z-index: 1;
+  width: 100%;
+}
+
+.car-emoji-big { font-size: 160px; display: block; margin-bottom: 20px; }
+
+.car-specs {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.car-spec {
+  background: rgba(28,33,40,0.8);
+  padding: 14px;
+  text-align: center;
+}
+
+.cs-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 700; color: var(--orange);
+}
+
+.cs-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 2px; color: var(--gray);
+  text-transform: uppercase; margin-top: 2px;
+}
+
+/* Hero right decorative bolt pattern */
+.hero-right::before {
+  content: '⚙';
+  position: absolute; right: -30px; top: -30px;
+  font-size: 200px; opacity: 0.04;
+  color: var(--orange);
+}
+
+/* ── BRANDS ── */
+.brands-bar {
+  background: #0D1117;
+  padding: 20px 60px;
+  display: flex; align-items: center; gap: 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+.brands-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 3px; color: var(--gray);
+  text-transform: uppercase; white-space: nowrap;
+}
+
+.brand-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px; font-weight: 800; letter-spacing: 3px;
+  color: rgba(192,200,210,0.2); text-transform: uppercase;
+  transition: color 0.2s; cursor: default;
+}
+
+.brand-logo:hover { color: var(--chrome); }
+
+/* ── MAIN CONTENT ── */
+.main-content {
+  display: grid; grid-template-columns: 260px 1fr;
+  gap: 0;
+  min-height: 600px;
+}
+
+/* Sidebar */
+.sidebar {
+  background: var(--iron);
+  border-right: 1px solid var(--border);
+  padding: 24px 0;
+}
+
+.sidebar-section { margin-bottom: 0; }
+
+.sidebar-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--gray);
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+
+.sidebar-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 24px;
+  font-size: 13px; color: rgba(232,236,240,0.6);
+  text-decoration: none; border-left: 3px solid transparent;
+  transition: all 0.15s; cursor: pointer;
+}
+
+.sidebar-item:hover, .sidebar-item.active {
+  background: var(--orange-dim);
+  border-left-color: var(--orange);
+  color: var(--text);
+}
+
+.sidebar-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--gray);
+  background: var(--plate); padding: 2px 7px;
+}
+
+/* Product area */
+.product-area {
+  padding: 32px 40px;
+}
+
+.area-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.area-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.area-title span { color: var(--orange); }
+
+.area-filters {
+  display: flex; gap: 8px;
+}
+
+.filter-chip {
+  padding: 6px 14px;
+  background: var(--plate);
+  border: 1px solid var(--border);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 1px;
+  color: var(--gray); cursor: pointer;
+  transition: all 0.15s;
+}
+
+.filter-chip:hover, .filter-chip.active {
+  background: var(--orange); border-color: var(--orange);
+  color: white;
+}
+
+/* Parts grid */
+.parts-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.part-card {
+  background: var(--iron);
+  border: 1px solid var(--border);
+  overflow: hidden; cursor: pointer;
+  transition: all 0.2s;
+}
+
+.part-card:hover {
+  border-color: var(--orange);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.part-card:hover .part-cta { background: var(--orange); }
+
+.part-img {
+  height: 160px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 64px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.pi-steel { background: linear-gradient(135deg, #1C2533, #0D1520); }
+.pi-rust { background: linear-gradient(135deg, #2A1815, #150C0A); }
+.pi-chrome { background: linear-gradient(135deg, #1E2328, #12161C); }
+
+.part-condition {
+  position: absolute; top: 10px; left: 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  padding: 3px 8px; text-transform: uppercase;
+}
+
+.cond-new { background: var(--orange); color: white; }
+.cond-oem { background: var(--yellow); color: #333; }
+.cond-used { background: var(--plate); color: var(--gray); border: 1px solid var(--border); }
+
+.part-info { padding: 16px; }
+
+.part-sku {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 2px; color: var(--gray);
+  text-transform: uppercase; margin-bottom: 4px;
+}
+
+.part-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px; font-weight: 700; letter-spacing: 1px;
+  color: var(--text); margin-bottom: 2px;
+}
+
+.part-compat {
+  font-size: 11px; color: var(--gray);
+  margin-bottom: 10px; font-weight: 300;
+}
+
+.part-price-row {
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.part-price {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 24px; font-weight: 700; color: var(--orange);
+}
+
+.part-stock {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 1px;
+  color: #4CAF50;
+}
+
+.part-cta {
+  width: 100%; padding: 10px;
+  background: var(--plate);
+  color: var(--text);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; border: none; cursor: pointer;
+  transition: background 0.15s;
+  margin-top: 12px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+
+/* ── PROMO BANNER ── */
+.promo-banner {
+  margin: 40px 60px;
+  background: linear-gradient(135deg, var(--orange), #C94015);
+  padding: 48px 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative; overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 97% 100%, 0 100%);
+}
+
+.promo-banner::before {
+  content: '🔧';
+  position: absolute; right: 200px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 160px; opacity: 0.1;
+}
+
+.promo-text {}
+
+.promo-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 48px; font-weight: 900; letter-spacing: 2px;
+  text-transform: uppercase; color: white;
+  line-height: 0.95; margin-bottom: 8px;
+}
+
+.promo-sub {
+  font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.7);
+}
+
+.promo-cta {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+}
+
+.promo-discount {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 72px; font-weight: 900;
+  color: var(--yellow); line-height: 1;
+}
+
+.btn-white {
+  background: white; color: var(--orange);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px; font-weight: 800; letter-spacing: 3px;
+  text-transform: uppercase; padding: 14px 32px;
+  text-decoration: none; border: none; cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-white:hover { background: var(--yellow); }
+
+/* ── FOOTER ── */
+footer {
+  background: #0D1117;
+  border-top: 3px solid var(--orange);
+  padding: 60px 60px 32px;
+}
+
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px; margin-bottom: 48px;
+}
+
+.footer-logo-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+
+.footer-about {
+  font-size: 13px; font-weight: 300; color: var(--gray);
+  line-height: 1.7; margin-bottom: 20px;
+}
+
+.footer-socials { display: flex; gap: 8px; }
+.footer-socials a {
+  width: 36px; height: 36px; background: var(--plate);
+  color: var(--gray); font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; transition: all 0.15s;
+}
+.footer-socials a:hover { background: var(--orange); color: white; }
+
+.footer-col-h {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 3px;
+  color: var(--orange); text-transform: uppercase;
+  margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+}
+
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer-links a { font-size: 13px; color: var(--gray); text-decoration: none; transition: color 0.15s; }
+.footer-links a:hover { color: var(--text); }
+
+.footer-bottom {
+  border-top: 1px solid var(--border); padding-top: 24px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.footer-copy {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 1px; color: rgba(192,200,210,0.2);
+}
+
+.footer-copy a { color: var(--orange); text-decoration: none; }
+
+/* ── DSO TAG ── */
+.dso-tag {
+  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  background: var(--orange);
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 92% 100%, 0 100%);
+  padding: 10px 20px 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 3px;
+  color: white; text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.dso-tag:hover { background: #FF6B2B; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <i class="fa-solid fa-phone"></i> +90 548 XXX XX XX
+    <span>|</span>
+    <i class="fa-solid fa-truck"></i> KKTC'ye 24 Saat Teslimat
+  </div>
+  <div class="topbar-right">
+    <a href="#">Hesabım</a>
+    <a href="#">Sipariş Takibi</a>
+    <a href="#">Toplu Alım</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo-icon">⚙️</div>
+    <div>
+      <div class="logo-text">DEMİR <span>PARTS</span></div>
+      <div class="logo-sub">Araç Parça & Aksesuar</div>
+    </div>
+  </div>
+  <div class="nav-search">
+    <select class="search-select">
+      <option>Tüm Kategoriler</option>
+      <option>Motor</option>
+      <option>Fren</option>
+      <option>Elektrik</option>
+      <option>Süspansiyon</option>
+    </select>
+    <input type="text" placeholder="Parça adı, OEM kodu veya araç modeli ara...">
+    <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+  </div>
+  <div class="nav-right">
+    <a href="#" class="nav-action">
+      <i class="fa-regular fa-heart"></i>
+      <span>Favori</span>
+    </a>
+    <a href="#" class="nav-action">
+      <i class="fa-regular fa-bag-shopping"></i>
+      <span>Sepet (0)</span>
+    </a>
+    <a href="#" class="nav-action">
+      <i class="fa-regular fa-user"></i>
+      <span>Hesap</span>
+    </a>
+  </div>
+</nav>
+
+<!-- CATEGORY NAV -->
+<div class="cat-nav">
+  <a href="#" class="cat-nav-item active"><i class="fa-solid fa-engine"></i> Motor</a>
+  <a href="#" class="cat-nav-item"><i class="fa-solid fa-circle-dot"></i> Fren Sistemi</a>
+  <a href="#" class="cat-nav-item"><i class="fa-solid fa-bolt"></i> Elektrik</a>
+  <a href="#" class="cat-nav-item"><i class="fa-solid fa-car-side"></i> Süspansiyon</a>
+  <a href="#" class="cat-nav-item"><i class="fa-solid fa-fire"></i> Egzoz</a>
+  <a href="#" class="cat-nav-item"><i class="fa-solid fa-droplet"></i> Yağ & Filtre</a>
+  <a href="#" class="cat-nav-item"><i class="fa-solid fa-snowflake"></i> Klima</a>
+  <a href="#" class="cat-nav-item"><i class="fa-solid fa-wrench"></i> Gövde</a>
+  <a href="#" class="cat-nav-item"><i class="fa-solid fa-star"></i> Kampanya</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge"><i class="fa-solid fa-bolt"></i> YENİ STOK GELDİ</div>
+    <h1 class="hero-title">
+      500.000+<br>
+      <span class="orange">PARÇA</span><br>
+      <span class="dim">STOKTA.</span>
+    </h1>
+    <p class="hero-desc">
+      Kuzey Kıbrıs'ın en büyük araç parça mağazası. 
+      Orjinal ve muadil parça, 24 saat teslimat, 2 yıl garanti.
+    </p>
+    <div class="hero-btns">
+      <a href="#" class="btn-orange"><i class="fa-solid fa-search"></i> Parça Ara</a>
+      <a href="#" class="btn-steel">Katalog İndir</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-car-display">
+      <span class="car-emoji-big">🚗</span>
+      <div class="car-specs">
+        <div class="car-spec">
+          <div class="cs-val">500K+</div>
+          <div class="cs-label">Parça</div>
+        </div>
+        <div class="car-spec">
+          <div class="cs-val">200+</div>
+          <div class="cs-label">Marka</div>
+        </div>
+        <div class="car-spec">
+          <div class="cs-val">24h</div>
+          <div class="cs-label">Teslimat</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<div class="brands-bar">
+  <div class="brands-label">Markalar ·</div>
+  <div class="brand-logo">BOSCH</div>
+  <div class="brand-logo">MANN</div>
+  <div class="brand-logo">NGK</div>
+  <div class="brand-logo">FEBI</div>
+  <div class="brand-logo">BREMBO</div>
+  <div class="brand-logo">LEMFÖRDER</div>
+  <div class="brand-logo">VALEO</div>
+  <div class="brand-logo">DAYCO</div>
+  <div class="brand-logo">SKF</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title"><i class="fa-solid fa-list"></i> KATEGORİLER</div>
+      <a href="#" class="sidebar-item active">Motor Parçaları <span class="sidebar-count">1.248</span></a>
+      <a href="#" class="sidebar-item">Fren Sistemi <span class="sidebar-count">892</span></a>
+      <a href="#" class="sidebar-item">Elektrik Sistemi <span class="sidebar-count">1.104</span></a>
+      <a href="#" class="sidebar-item">Süspansiyon <span class="sidebar-count">654</span></a>
+      <a href="#" class="sidebar-item">Egzoz Sistemi <span class="sidebar-count">347</span></a>
+      <a href="#" class="sidebar-item">Yağ & Filtreler <span class="sidebar-count">520</span></a>
+    </div>
+    <div class="sidebar-section" style="margin-top: 16px;">
+      <div class="sidebar-title"><i class="fa-solid fa-car"></i> ARAÇ MARKALARI</div>
+      <a href="#" class="sidebar-item">Toyota <span class="sidebar-count">2.100</span></a>
+      <a href="#" class="sidebar-item">Volkswagen <span class="sidebar-count">1.850</span></a>
+      <a href="#" class="sidebar-item">Ford <span class="sidebar-count">1.620</span></a>
+      <a href="#" class="sidebar-item">BMW <span class="sidebar-count">1.480</span></a>
+      <a href="#" class="sidebar-item">Mercedes <span class="sidebar-count">1.310</span></a>
+      <a href="#" class="sidebar-item">Renault <span class="sidebar-count">1.200</span></a>
+      <a href="#" class="sidebar-item">Honda <span class="sidebar-count">980</span></a>
+    </div>
+  </div>
+
+  <div class="product-area">
+    <div class="area-header">
+      <div class="area-title">Motor Parçaları <span>(1.248 Ürün)</span></div>
+      <div class="area-filters">
+        <div class="filter-chip active">Tümü</div>
+        <div class="filter-chip">Orjinal</div>
+        <div class="filter-chip">Muadil</div>
+        <div class="filter-chip">İkinci El</div>
+        <div class="filter-chip">En Ucuz</div>
+      </div>
+    </div>
+    <div class="parts-grid">
+      <div class="part-card">
+        <div class="part-img pi-steel">
+          <span class="part-condition cond-new">YENİ</span>
+          🔧
+        </div>
+        <div class="part-info">
+          <div class="part-sku">SKU: MF-BMW-E46-001</div>
+          <div class="part-name">Yağ Filtresi</div>
+          <div class="part-compat">BMW 3 Serisi · E46 · 2000–2005</div>
+          <div class="part-price-row">
+            <div class="part-price">₺185</div>
+            <div class="part-stock">✓ Stokta</div>
+          </div>
+          <button class="part-cta"><i class="fa-solid fa-cart-plus"></i> Sepete Ekle</button>
+        </div>
+      </div>
+      <div class="part-card">
+        <div class="part-img pi-rust">
+          <span class="part-condition cond-oem">OEM</span>
+          ⚙️
+        </div>
+        <div class="part-info">
+          <div class="part-sku">SKU: BP-VW-GOLF7-024</div>
+          <div class="part-name">Fren Balatası (Ön)</div>
+          <div class="part-compat">VW Golf 7 · 2012–2021</div>
+          <div class="part-price-row">
+            <div class="part-price">₺420</div>
+            <div class="part-stock">✓ Stokta</div>
+          </div>
+          <button class="part-cta"><i class="fa-solid fa-cart-plus"></i> Sepete Ekle</button>
+        </div>
+      </div>
+      <div class="part-card">
+        <div class="part-img pi-chrome">
+          <span class="part-condition cond-new">YENİ</span>
+          🔩
+        </div>
+        <div class="part-info">
+          <div class="part-sku">SKU: SP-TOYO-COROLLA-18</div>
+          <div class="part-name">Amortisör (Arka Çift)</div>
+          <div class="part-compat">Toyota Corolla · 2018–2023</div>
+          <div class="part-price-row">
+            <div class="part-price">₺1.890</div>
+            <div class="part-stock">✓ Son 3</div>
+          </div>
+          <button class="part-cta"><i class="fa-solid fa-cart-plus"></i> Sepete Ekle</button>
+        </div>
+      </div>
+      <div class="part-card">
+        <div class="part-img pi-steel">
+          <span class="part-condition cond-oem">OEM</span>
+          🔋
+        </div>
+        <div class="part-info">
+          <div class="part-sku">SKU: BAT-FORD-FOCUS-17</div>
+          <div class="part-name">Akü 74Ah</div>
+          <div class="part-compat">Ford Focus · Tüm Modeller</div>
+          <div class="part-price-row">
+            <div class="part-price">₺2.150</div>
+            <div class="part-stock">✓ Stokta</div>
+          </div>
+          <button class="part-cta"><i class="fa-solid fa-cart-plus"></i> Sepete Ekle</button>
+        </div>
+      </div>
+      <div class="part-card">
+        <div class="part-img pi-rust">
+          <span class="part-condition cond-used">2.EL</span>
+          💡
+        </div>
+        <div class="part-info">
+          <div class="part-sku">SKU: ALT-MERC-C200-15</div>
+          <div class="part-name">Alternatör</div>
+          <div class="part-compat">Mercedes C200 · 2014–2018</div>
+          <div class="part-price-row">
+            <div class="part-price">₺890</div>
+            <div class="part-stock">⚠ Son 1</div>
+          </div>
+          <button class="part-cta"><i class="fa-solid fa-cart-plus"></i> Sepete Ekle</button>
+        </div>
+      </div>
+      <div class="part-card">
+        <div class="part-img pi-chrome">
+          <span class="part-condition cond-new">YENİ</span>
+          🌡️
+        </div>
+        <div class="part-info">
+          <div class="part-sku">SKU: RAD-HON-CIVIC-20</div>
+          <div class="part-name">Radyatör</div>
+          <div class="part-compat">Honda Civic · 2020–2024</div>
+          <div class="part-price-row">
+            <div class="part-price">₺3.200</div>
+            <div class="part-stock">✓ Stokta</div>
+          </div>
+          <button class="part-cta"><i class="fa-solid fa-cart-plus"></i> Sepete Ekle</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  <div class="promo-text">
+    <div class="promo-title">Toplu Alımda<br>Büyük Avantaj</div>
+    <div class="promo-sub">Garaj ve servis sahiplerine özel toplu alım fiyatları. Bugün ara.</div>
+  </div>
+  <div class="promo-cta">
+    <div class="promo-discount">%25</div>
+    <a href="#" class="btn-white">Teklif Al →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo-wrap">
+        <div class="logo-icon" style="width:36px;height:36px;font-size:18px;">⚙️</div>
+        <div>
+          <div class="logo-text" style="font-size:22px;">DEMİR <span style="color:var(--orange)">PARTS</span></div>
+        </div>
+      </div>
+      <p class="footer-about">KKTC'nin en büyük araç parça mağazası. 500.000+ ürün, 200+ marka, 24 saat teslimat garantisi.</p>
+      <div class="footer-socials">
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-h">⚙ Kategoriler</div>
+      <ul class="footer-links">
+        <li><a href="#">Motor Parçaları</a></li>
+        <li><a href="#">Fren Sistemi</a></li>
+        <li><a href="#">Elektrik</a></li>
+        <li><a href="#">Süspansiyon</a></li>
+        <li><a href="#">Yağ & Filtre</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-h">🔧 Destek</div>
+      <ul class="footer-links">
+        <li><a href="#">OEM Kodu ile Ara</a></li>
+        <li><a href="#">Araç ile Ara</a></li>
+        <li><a href="#">Sipariş Takibi</a></li>
+        <li><a href="#">İade Koşulları</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-h">📍 İletişim</div>
+      <ul class="footer-links">
+        <li><a href="#">Gazimağusa, KKTC</a></li>
+        <li><a href="#">+90 548 XXX XX XX</a></li>
+        <li><a href="#">WhatsApp Sipariş</a></li>
+        <li><a href="#"><span class="__cf_email__" data-cfemail="fe97909891be9a9b93978c8e9f8c8a8dd09d9193">[email&#160;protected]</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 DEMİR PARTS. Tüm hakları saklıdır.</div>
+    <div class="footer-copy">Web Tasarım: <a href="https://devsoy.online">Dev/Soy Web Stüdyosu</a></div>
+  </div>
+</footer>
+
+<a href="h
+
+<!-- DEV/SOY NAVIGATION BAR -->
+<div style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(8,8,8,0.96);border-top:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;padding:0 16px 0 8px;height:46px;overflow:hidden;">
+  <div style="display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;">
+    <a href="../devsoy-web.html" style="display:inline-flex;align-items:center;gap:7px;padding:10px 16px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;text-decoration:none;border-right:1px solid rgba(255,255,255,0.07);white-space:nowrap;flex-shrink:0;">
+      <span style="width:18px;height:18px;background:#C9A84C;clip-path:polygon(0 0,100% 0,100% 72%,72% 100%,0 100%);display:inline-flex;align-items:center;justify-content:center;font-size:8px;color:#080808;font-weight:700;">DS</span>
+      Dev/Soy
+    </a>
+    <a href="../demos/demo-butik.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid transparent;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">👗 Butik</a><a href="../demos/demo-kirtasiye.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid transparent;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">✏️ Kırtasiye</a><a href="../demos/demo-spor.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid transparent;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">🏃 Spor</a><a href="../demos/demo-arac-parca.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid #E8531A;color:#fff;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">⚙️ Araç Parça</a><a href="../demos/demo-galeri.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid transparent;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">🎨 Galeri</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px;border-left:1px solid rgba(255,255,255,0.07);">
+    <a href="../admin/admin-arac-parca.html" style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.25);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;text-decoration:none;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.background='rgba(201,168,76,0.2)'" onmouseout="this.style.background='rgba(201,168,76,0.12)'"><i class="fa-solid fa-sliders" style="font-size:10px;"></i> Araç Parça Admin</a>
+  </div>
+</div>
+<div style="height:46px;"></div>
+<!-- /DEV/SOY NAVIGATION BAR -->
+
+</body>
+</html>

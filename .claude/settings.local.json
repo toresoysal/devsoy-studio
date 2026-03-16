@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -l \"devsoy-web.html\" \"C:/Users/MONSTER/Desktop/DEVSOY/09-Sidekicks/DevSoy Web studios/\"*.html)",
+      "Bash(mkdir -p demos admin)",
+      "Bash(mv demo-butik.html demo-kirtasiye.html demo-spor.html demo-arac-parca.html demo-galeri.html demos/)",
+      "Bash(mv admin-butik.html admin-kirtasiye.html admin-spor.html admin-arac-parca.html admin-galeri.html admin/)"
+    ]
+  }
+}

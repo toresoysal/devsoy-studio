@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHOS GALLERY — Kıbrıs Çağdaş Sanat</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@200;300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg: #F8F5F0;
+  --white: #FFFFFF;
+  --dark: #1A1A18;
+  --ink: #2E2E2A;
+  --sand: #E8E0D4;
+  --dust: #C8BDB0;
+  --copper: #9B6B4A;
+  --sienna: #7A4A2A;
+  --sage: #7A8C7A;
+  --text: #2E2E2A;
+  --muted: rgba(46,46,42,0.45);
+  --border: rgba(46,46,42,0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--copper); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 80px;
+  background: rgba(248,245,240,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid transparent;
+  transition: all 0.4s ease;
+}
+
+nav.scrolled {
+  border-bottom-color: var(--border);
+  padding: 18px 80px;
+}
+
+.nav-logo {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 22px; letter-spacing: 6px;
+  color: var(--dark); text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex; gap: 40px; list-style: none;
+}
+
+.nav-links a {
+  font-size: 12px; font-weight: 300; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--muted);
+  text-decoration: none; transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.nav-right {
+  display: flex; align-items: center; gap: 24px;
+}
+
+.nav-right a {
+  font-size: 11px; font-weight: 300; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+  text-decoration: none; transition: color 0.2s;
+}
+
+.nav-right a:hover { color: var(--copper); }
+
+.nav-ticket {
+  background: var(--dark) !important;
+  color: var(--bg) !important;
+  padding: 10px 20px;
+  font-size: 10px !important; letter-spacing: 3px !important;
+}
+
+.nav-ticket:hover { background: var(--copper) !important; color: white !important; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid; grid-template-rows: 1fr auto;
+  padding-top: 80px;
+  position: relative;
+}
+
+.hero-main {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: calc(100vh - 80px);
+}
+
+.hero-text {
+  padding: 80px 80px 60px;
+  display: flex; flex-direction: column;
+  justify-content: center;
+}
+
+.hero-small-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 5px;
+  color: var(--copper); text-transform: uppercase;
+  margin-bottom: 28px;
+  display: flex; align-items: center; gap: 12px;
+}
+
+.hero-small-label::before {
+  content: ''; width: 32px; height: 1px; background: var(--copper);
+}
+
+.hero-big-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 68px; font-weight: 400;
+  line-height: 1.1; color: var(--dark);
+  margin-bottom: 12px;
+}
+
+.hero-big-title em {
+  font-style: italic; font-weight: 400;
+  color: var(--copper);
+}
+
+.hero-year {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 120px; font-weight: 700;
+  color: rgba(46,46,42,0.05);
+  line-height: 1; margin-bottom: 32px;
+  margin-top: -20px;
+}
+
+.hero-desc {
+  font-size: 14px; font-weight: 300; letter-spacing: 0.5px;
+  color: var(--muted); line-height: 1.9; max-width: 400px;
+  margin-bottom: 48px;
+}
+
+.hero-actions {
+  display: flex; align-items: center; gap: 28px;
+}
+
+.btn-dark {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--dark); color: var(--bg);
+  font-size: 11px; font-weight: 400; letter-spacing: 4px;
+  text-transform: uppercase; text-decoration: none;
+  padding: 16px 36px; transition: all 0.3s;
+}
+
+.btn-dark:hover { background: var(--copper); }
+
+.btn-text-link {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 15px; font-style: italic;
+  color: var(--copper); text-decoration: none;
+  border-bottom: 1px solid rgba(155,107,74,0.3);
+  padding-bottom: 2px; transition: all 0.2s;
+}
+
+.btn-text-link:hover { border-color: var(--copper); }
+
+.hero-feature {
+  display: flex; align-items: center; gap: 16px; margin-top: 48px;
+  padding-top: 40px; border-top: 1px solid var(--border);
+}
+
+.feat-item {
+  display: flex; flex-direction: column; gap: 4px;
+}
+
+.feat-sep { color: var(--border); font-size: 20px; }
+
+.feat-num {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 28px; font-weight: 400; color: var(--copper);
+}
+
+.feat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 3px; color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* Hero visual */
+.hero-visual {
+  position: relative; overflow: hidden;
+  background: var(--sand);
+}
+
+.hero-artwork {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 200px;
+  background: linear-gradient(145deg, #E8E0D4, #D4C8B8, #C8B8A4);
+  position: relative;
+}
+
+.hero-artwork::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.3) 0%, transparent 55%);
+}
+
+.artwork-meta {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: rgba(248,245,240,0.95);
+  backdrop-filter: blur(8px);
+  padding: 24px 32px;
+  border-top: 1px solid var(--border);
+}
+
+.artwork-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 18px; font-style: italic;
+  color: var(--dark); margin-bottom: 4px;
+}
+
+.artwork-artist {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 3px; color: var(--copper);
+  text-transform: uppercase; margin-bottom: 8px;
+}
+
+.artwork-price {
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.price-tag {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 20px; color: var(--dark);
+}
+
+.available-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 2px;
+  color: var(--sage); text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
+}
+
+.available-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--sage);
+}
+
+/* ── CURRENT EXHIBITION ── */
+.exhibition {
+  padding: 120px 80px;
+}
+
+.exh-grid {
+  display: grid; grid-template-columns: 1fr 2fr;
+  gap: 80px; align-items: start;
+}
+
+.exh-meta {}
+
+.exh-dates {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 4px;
+  color: var(--copper); text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.exh-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 48px; font-weight: 400; font-style: italic;
+  color: var(--dark); line-height: 1.1; margin-bottom: 20px;
+}
+
+.exh-artist {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 3px;
+  color: var(--muted); text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.exh-desc {
+  font-size: 14px; font-weight: 300; color: var(--muted);
+  line-height: 1.9; margin-bottom: 32px;
+}
+
+.exh-artworks {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.artwork-card {
+  cursor: pointer; transition: transform 0.3s ease;
+}
+
+.artwork-card:hover { transform: scale(1.02); }
+.artwork-card:hover .artwork-card-img { box-shadow: 0 12px 40px rgba(46,46,42,0.15); }
+
+.artwork-card-img {
+  width: 100%; aspect-ratio: 4/5;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 72px;
+  margin-bottom: 12px;
+  transition: box-shadow 0.3s;
+}
+
+.ac1 { background: linear-gradient(145deg, #E8D8C8, #C4AA92); }
+.ac2 { background: linear-gradient(145deg, #C8D4CC, #A0B4A8); }
+.ac3 { background: linear-gradient(145deg, #D4C8E4, #B0A0CC); }
+.ac4 { background: linear-gradient(145deg, #E4D4C4, #C8B49A); }
+.ac5 { background: linear-gradient(145deg, #CCE0D8, #A0C0B4); }
+.ac6 { background: linear-gradient(145deg, #E8E0C8, #CCC0A0); }
+
+.artwork-card-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 15px; font-style: italic;
+  color: var(--dark); margin-bottom: 3px;
+}
+
+.artwork-card-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 2px;
+  color: var(--muted); text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.artwork-card-price {
+  font-size: 15px; font-weight: 400; color: var(--copper);
+}
+
+/* ── FEATURED ARTISTS ── */
+.artists {
+  padding: 0 80px 120px;
+  border-top: 1px solid var(--border);
+  padding-top: 100px;
+}
+
+.artists-header {
+  display: flex; align-items: flex-end;
+  justify-content: space-between; margin-bottom: 60px;
+}
+
+.artists-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 32px;
+}
+
+.artist-card {
+  cursor: pointer;
+}
+
+.artist-portrait {
+  width: 100%; aspect-ratio: 1;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 56px; margin-bottom: 16px;
+  border: 2px solid var(--sand);
+  transition: border-color 0.2s;
+}
+
+.artist-card:hover .artist-portrait { border-color: var(--copper); }
+
+.ap1 { background: linear-gradient(145deg, #E8D8C8, #C4A890); }
+.ap2 { background: linear-gradient(145deg, #C8D4C8, #A0B4A0); }
+.ap3 { background: linear-gradient(145deg, #D0C8E0, #A890C8); }
+.ap4 { background: linear-gradient(145deg, #E0D0C0, #C0A888); }
+
+.artist-name {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 17px; text-align: center;
+  color: var(--dark); margin-bottom: 4px;
+}
+
+.artist-specialty {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 2px; color: var(--copper);
+  text-transform: uppercase; text-align: center;
+  margin-bottom: 8px;
+}
+
+.artist-works {
+  font-size: 12px; font-weight: 300; color: var(--muted);
+  text-align: center;
+}
+
+/* ── VISIT ── */
+.visit {
+  background: var(--dark);
+  padding: 100px 80px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+
+.visit-left {}
+
+.visit-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 5px;
+  color: var(--copper); text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.visit-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--copper); }
+
+.visit-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 48px; font-weight: 400; color: var(--bg);
+  font-style: italic; line-height: 1.1; margin-bottom: 20px;
+}
+
+.visit-info {
+  display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px;
+}
+
+.info-row {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.info-icon {
+  color: var(--copper); font-size: 16px; margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.info-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 3px;
+  color: rgba(248,245,240,0.3); text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.info-val {
+  font-size: 13px; font-weight: 300;
+  color: rgba(248,245,240,0.7);
+}
+
+.visit-right {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 160px;
+}
+
+/* ── NEWSLETTER ── */
+.newsletter {
+  background: var(--sand);
+  padding: 80px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+.nl-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 40px; font-style: italic;
+  color: var(--dark); margin-bottom: 12px;
+}
+
+.nl-sub {
+  font-size: 14px; font-weight: 300; color: var(--muted);
+  margin-bottom: 40px;
+}
+
+.nl-form {
+  display: flex; max-width: 460px; margin: 0 auto;
+}
+
+.nl-form input {
+  flex: 1; padding: 16px 24px;
+  background: var(--white);
+  border: 1px solid var(--border); border-right: none;
+  font-family: 'Outfit', sans-serif; font-size: 14px;
+  color: var(--text); outline: none;
+}
+
+.nl-form input::placeholder { color: var(--muted); }
+
+.nl-form button {
+  padding: 16px 28px;
+  background: var(--dark); color: var(--bg);
+  font-size: 11px; font-weight: 400; letter-spacing: 3px;
+  text-transform: uppercase; border: none; cursor: pointer;
+  transition: background 0.2s;
+}
+
+.nl-form button:hover { background: var(--copper); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--dark);
+  padding: 80px 80px 40px;
+}
+
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px; margin-bottom: 60px;
+}
+
+.footer-logo-text {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 22px; letter-spacing: 6px;
+  color: var(--bg); text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.footer-about {
+  font-size: 13px; font-weight: 300;
+  color: rgba(248,245,240,0.35); line-height: 1.8; margin-bottom: 24px;
+}
+
+.footer-socials { display: flex; gap: 8px; }
+.footer-socials a {
+  width: 36px; height: 36px; border: 1px solid rgba(248,245,240,0.1);
+  color: rgba(248,245,240,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; text-decoration: none; transition: all 0.2s;
+}
+.footer-socials a:hover { border-color: var(--copper); color: var(--copper); }
+
+.footer-col-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 4px; color: var(--copper);
+  text-transform: uppercase; margin-bottom: 20px;
+}
+
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links a {
+  font-size: 13px; font-weight: 300;
+  color: rgba(248,245,240,0.35); text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--bg); }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06); padding-top: 32px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.footer-legal {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 2px; color: rgba(248,245,240,0.15);
+}
+
+.footer-legal a { color: var(--copper); text-decoration: none; }
+
+/* ── DSO TAG ── */
+.dso-tag {
+  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  background: var(--bg); border: 1px solid var(--border);
+  padding: 10px 18px;
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 3px; color: var(--muted);
+  text-decoration: none; text-transform: uppercase;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(46,46,42,0.1);
+}
+
+.dso-tag:hover { background: var(--copper); color: white; border-color: var(--copper); }
+
+/* ANIM */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-small-label { animation: fadeIn 0.7s ease 0.1s both; }
+.hero-big-title { animation: fadeIn 0.7s ease 0.2s both; }
+.hero-desc { animation: fadeIn 0.7s ease 0.35s both; }
+.hero-actions { animation: fadeIn 0.7s ease 0.5s both; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-logo">Phos</div>
+  <ul class="nav-links">
+    <li><a href="#">Sergiler</a></li>
+    <li><a href="#">Sanatçılar</a></li>
+    <li><a href="#">Koleksiyon</a></li>
+    <li><a href="#">Etkinlikler</a></li>
+    <li><a href="#">Hakkımızda</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#">TR / EN</a>
+    <a href="#" class="nav-ticket">Ziyaret Planla</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-main">
+    <div class="hero-text">
+      <div class="hero-small-label">Güncel Sergi · 2025</div>
+      <h1 class="hero-big-title">
+        Işığın<br>
+        <em>ötesinde</em><br>
+        sanat.
+      </h1>
+      <div class="hero-year">25</div>
+      <p class="hero-desc">
+        Kuzey Kıbrıs'ın öncü çağdaş sanat mekânı. 
+        Yerel ve uluslararası sanatçıların biricik eserleriyle 
+        dolu, canlı bir kültür adası.
+      </p>
+      <div class="hero-actions">
+        <a href="#" class="btn-dark">Sergiye Git</a>
+        <a href="#" class="btn-text-link">Koleksiyonu İncele</a>
+      </div>
+      <div class="hero-feature">
+        <div class="feat-item">
+          <div class="feat-num">48</div>
+          <div class="feat-label">Eser</div>
+        </div>
+        <div class="feat-sep">|</div>
+        <div class="feat-item">
+          <div class="feat-num">12</div>
+          <div class="feat-label">Sanatçı</div>
+        </div>
+        <div class="feat-sep">|</div>
+        <div class="feat-item">
+          <div class="feat-num">3</div>
+          <div class="feat-label">Sergi Salonu</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-artwork">🎨</div>
+      <div class="artwork-meta">
+        <div class="artwork-title">Kıbrıs Akşamı</div>
+        <div class="artwork-artist">Zeynep Arslan · 2025</div>
+        <div class="artwork-price">
+          <div class="price-tag">₺18.500</div>
+          <div class="available-badge">
+            <div class="available-dot"></div>
+            Satışta
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXHIBITION -->
+<section class="exhibition">
+  <div class="exh-grid">
+    <div class="exh-meta">
+      <div class="exh-dates">1 Mart — 30 Nisan 2025</div>
+      <h2 class="exh-title">Kıbrıs'ın<br>Renkli Ruhları</h2>
+      <div class="exh-artist">Küratör: Defne Yıldız</div>
+      <p class="exh-desc">
+        Adanın dört bir yanından gelen sanatçılar, Kıbrıs'ın toprak renklerini, 
+        deniz mavilerini ve insan hikâyelerini tuvale taşıyor.
+      </p>
+      <a href="#" class="btn-dark" style="display: inline-flex;">Sergiyi İncele</a>
+    </div>
+    <div class="exh-artworks">
+      <div class="artwork-card">
+        <div class="artwork-card-img ac1">🌅</div>
+        <div class="artwork-card-title">Girne Sabahı</div>
+        <div class="artwork-card-meta">Ahmet Çelik · Tuval</div>
+        <div class="artwork-card-price">₺12.000</div>
+      </div>
+      <div class="artwork-card">
+        <div class="artwork-card-img ac2">🌿</div>
+        <div class="artwork-card-title">Zeytin Bahçesi</div>
+        <div class="artwork-card-meta">Selin Kurt · Suluboya</div>
+        <div class="artwork-card-price">₺8.500</div>
+      </div>
+      <div class="artwork-card">
+        <div class="artwork-card-img ac3">🌊</div>
+        <div class="artwork-card-title">Akdeniz Hüznü</div>
+        <div class="artwork-card-meta">Mert Arslan · Karışık</div>
+        <div class="artwork-card-price">₺24.000</div>
+      </div>
+      <div class="artwork-card">
+        <div class="artwork-card-img ac4">🏛️</div>
+        <div class="artwork-card-title">Lefkoşa Gecesi</div>
+        <div class="artwork-card-meta">Derya Öz · Akrilik</div>
+        <div class="artwork-card-price">₺15.750</div>
+      </div>
+      <div class="artwork-card">
+        <div class="artwork-card-img ac5">🐚</div>
+        <div class="artwork-card-title">Deniz Kabukları</div>
+        <div class="artwork-card-meta">Neslihan Ay · Suluboya</div>
+        <div class="artwork-card-price">₺6.200</div>
+      </div>
+      <div class="artwork-card">
+        <div class="artwork-card-img ac6">☀️</div>
+        <div class="artwork-card-title">Ağustos Işığı</div>
+        <div class="artwork-card-meta">Cem Dinç · Tuval Yağlı</div>
+        <div class="artwork-card-price">₺31.500</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTISTS -->
+<section class="artists">
+  <div class="artists-header">
+    <div>
+      <div class="hero-small-label" style="animation:none;">Galerinin Sesi</div>
+      <h2 style="font-family:'Libre Baskerville',serif; font-size:40px; font-weight:400; font-style:italic; color:var(--dark);">Öne Çıkan <em style="color:var(--copper)">Sanatçılar</em></h2>
+    </div>
+    <a href="#" class="btn-text-link">Tüm Sanatçılar</a>
+  </div>
+  <div class="artists-grid">
+    <div class="artist-card">
+      <div class="artist-portrait ap1">🧑‍🎨</div>
+      <div class="artist-name">Zeynep Arslan</div>
+      <div class="artist-specialty">Tuval · Yağlı Boya</div>
+      <div class="artist-works">14 eser · Koleksiyonda</div>
+    </div>
+    <div class="artist-card">
+      <div class="artist-portrait ap2">👩‍🎨</div>
+      <div class="artist-name">Selin Kurt</div>
+      <div class="artist-specialty">Suluboya · Grafik</div>
+      <div class="artist-works">8 eser · Koleksiyonda</div>
+    </div>
+    <div class="artist-card">
+      <div class="artist-portrait ap3">🧑‍🎨</div>
+      <div class="artist-name">Mert Arslan</div>
+      <div class="artist-specialty">Karma Teknik</div>
+      <div class="artist-works">22 eser · Koleksiyonda</div>
+    </div>
+    <div class="artist-card">
+      <div class="artist-portrait ap4">👩‍🎨</div>
+      <div class="artist-name">Derya Öz</div>
+      <div class="artist-specialty">Akrilik · Heykel</div>
+      <div class="artist-works">11 eser · Koleksiyonda</div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<div class="visit">
+  <div class="visit-left">
+    <div class="visit-eyebrow">Ziyaret Bilgisi</div>
+    <h2 class="visit-title">Bizi bulmak<br>çok kolay.</h2>
+    <div class="visit-info">
+      <div class="info-row">
+        <i class="fa-regular fa-clock info-icon"></i>
+        <div>
+          <div class="info-label">Çalışma Saatleri</div>
+          <div class="info-val">Salı – Pazar: 10:00 – 19:00<br>Pazartesi kapalı</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <i class="fa-regular fa-location-dot info-icon"></i>
+        <div>
+          <div class="info-label">Adres</div>
+          <div class="info-val">Bellapais Caddesi No: 42<br>Girne, KKTC</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <i class="fa-regular fa-ticket info-icon"></i>
+        <div>
+          <div class="info-label">Giriş</div>
+          <div class="info-val">Ücretsiz · Tüm sergiler açık</div>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="btn-dark" style="background: var(--copper);">Yol Tarifi Al</a>
+  </div>
+  <div class="visit-right">🗺️</div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2 class="nl-title">Sanat dünyanıza katılın.</h2>
+  <p class="nl-sub">Yeni sergiler, sanatçı buluşmaları ve özel etkinlikler için bültenimize kayıt olun.</p>
+  <div class="nl-form">
+    <input type="email" placeholder="E-posta adresiniz">
+    <button>Abone Ol</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo-text">Phos</div>
+      <p class="footer-about">Kuzey Kıbrıs'ın öncü çağdaş sanat mekânı. 2019'dan bu yana sanatı toplumla buluşturuyoruz.</p>
+      <div class="footer-socials">
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Galeri</div>
+      <ul class="footer-links">
+        <li><a href="#">Güncel Sergi</a></li>
+        <li><a href="#">Geçmiş Sergiler</a></li>
+        <li><a href="#">Koleksiyon</a></li>
+        <li><a href="#">Satışta Eserler</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Program</div>
+      <ul class="footer-links">
+        <li><a href="#">Atölyeler</a></li>
+        <li><a href="#">Konferanslar</a></li>
+        <li><a href="#">Özel Etkinlik</a></li>
+        <li><a href="#">Okul Gezileri</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">İletişim</div>
+      <ul class="footer-links">
+        <li><a href="#">Girne, KKTC</a></li>
+        <li><a href="#"><span class="__cf_email__" data-cfemail="3c55525a537c4c54534f5b5d5050594e45125f5351">[email&#160;protected]</span></a></li>
+        <li><a href="#">+90 548 XXX XX XX</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2025 PHOS GALLERY. Tüm hakları saklıdır.</div>
+    <div class="footer-legal">Web Tasarım: <a href="https://devsoy.online">Dev/Soy Web Stüdyosu</a></div>
+  </div>
+</footer>
+
+<a href="https://devsoy.online" target="_blank" class="dso-tag">Dev/Soy Web Stüdyosu</a>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const nav = docum
+
+<!-- DEV/SOY NAVIGATION BAR -->
+<div style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(8,8,8,0.96);border-top:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;padding:0 16px 0 8px;height:46px;overflow:hidden;">
+  <div style="display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;">
+    <a href="../devsoy-web.html" style="display:inline-flex;align-items:center;gap:7px;padding:10px 16px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;text-decoration:none;border-right:1px solid rgba(255,255,255,0.07);white-space:nowrap;flex-shrink:0;">
+      <span style="width:18px;height:18px;background:#C9A84C;clip-path:polygon(0 0,100% 0,100% 72%,72% 100%,0 100%);display:inline-flex;align-items:center;justify-content:center;font-size:8px;color:#080808;font-weight:700;">DS</span>
+      Dev/Soy
+    </a>
+    <a href="../demos/demo-butik.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid transparent;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">👗 Butik</a><a href="../demos/demo-kirtasiye.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid transparent;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">✏️ Kırtasiye</a><a href="../demos/demo-spor.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid transparent;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">🏃 Spor</a><a href="../demos/demo-arac-parca.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid transparent;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">⚙️ Araç Parça</a><a href="../demos/demo-galeri.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid #9B6B4A;color:#fff;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">🎨 Galeri</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px;border-left:1px solid rgba(255,255,255,0.07);">
+    <a href="../admin/admin-galeri.html" style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.25);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;text-decoration:none;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.background='rgba(201,168,76,0.2)'" onmouseout="this.style.background='rgba(201,168,76,0.12)'"><i class="fa-solid fa-sliders" style="font-size:10px;"></i> Galeri Admin</a>
+  </div>
+</div>
+<div style="height:46px;"></div>
+<!-- /DEV/SOY NAVIGATION BAR -->
+
+</body>
+</html>

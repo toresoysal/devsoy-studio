@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site Haritası — Dev/Soy Web Stüdyosu</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Figtree:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --black:#080808;--deep:#0F0F0F;--surface:#161616;--surface2:#1C1C1C;
+  --gold:#C9A84C;--gold-lt:#E8D48B;--gold-dim:rgba(201,168,76,0.10);--gold-brd:rgba(201,168,76,0.22);
+  --white:#FFFFFF;--hi:rgba(255,255,255,0.75);--md:rgba(255,255,255,0.40);--lo:rgba(255,255,255,0.16);
+  --brd:rgba(255,255,255,0.07);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px}
+body{font-family:'Figtree',sans-serif;background:var(--black);color:var(--white);min-height:100vh;padding:60px 72px 100px;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--black)}::-webkit-scrollbar-thumb{background:var(--gold)}
+
+/* Header */
+.sm-header{margin-bottom:64px;padding-bottom:32px;border-bottom:1px solid var(--brd);}
+.sm-logo{display:flex;align-items:center;gap:11px;margin-bottom:24px;}
+.sm-gem{width:34px;height:34px;background:var(--gold);clip-path:polygon(0 0,100% 0,100% 72%,72% 100%,0 100%);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:12px;color:var(--black);font-weight:700;}
+.sm-wordmark{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;letter-spacing:2px;}
+.sm-wordmark span{color:var(--gold);font-style:italic;font-weight:400;}
+.sm-title{font-family:'Playfair Display',serif;font-size:48px;font-weight:400;line-height:1.1;margin-bottom:12px;}
+.sm-title em{color:var(--gold);font-style:italic;}
+.sm-sub{font-size:14px;font-weight:300;color:var(--md);line-height:1.7;max-width:560px;}
+
+/* Map grid */
+.map-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;}
+
+.map-col{}
+.map-col-title{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);
+  display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--brd);
+}
+.map-col-title::before{content:'';width:24px;height:1px;background:var(--gold);}
+
+.map-node{
+  background:var(--surface);border:1px solid var(--brd);
+  padding:18px 20px;margin-bottom:10px;
+  display:flex;align-items:flex-start;gap:14px;
+  transition:border-color 0.2s,background 0.2s;
+  position:relative;
+}
+.map-node:hover{border-color:var(--gold-brd);background:var(--surface2);}
+.map-node.root{border-top:2px solid var(--gold);}
+.map-node.demo-node::before{content:'';position:absolute;left:-1px;top:0;bottom:0;width:3px;}
+.mn-butik::before{background:#C1603A;}
+.mn-kirt::before{background:#FFD166;}
+.mn-spor::before{background:#C9A84C;}
+.mn-arac::before{background:#E8531A;}
+.mn-galeri::before{background:#9B6B4A;}
+
+.mn-icon{width:36px;height:36px;flex-shrink:0;background:var(--gold-dim);border:1px solid var(--gold-brd);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:14px;}
+.mn-title{font-size:14px;font-weight:600;margin-bottom:3px;line-height:1.2;}
+.mn-desc{font-size:11px;font-weight:300;color:var(--md);line-height:1.5;margin-bottom:8px;}
+.mn-link{
+  font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gold);display:flex;align-items:center;gap:5px;
+  padding:5px 10px;background:var(--gold-dim);border:1px solid var(--gold-brd);width:fit-content;
+  transition:all 0.2s;
+}
+.mn-link:hover{background:rgba(201,168,76,0.2);}
+
+/* Connection lines visual */
+.connector{display:flex;align-items:center;gap:8px;margin:4px 0 4px 20px;color:var(--lo);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;}
+.connector::before{content:'└─';font-size:10px;}
+
+/* Legend */
+.legend{margin-top:48px;padding:24px;background:var(--surface);border:1px solid var(--brd);}
+.legend-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.legend-items{display:flex;gap:24px;flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:300;color:var(--md);}
+.legend-dot{width:10px;height:10px;flex-shrink:0;}
+
+/* Footer */
+.sm-footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--brd);display:flex;justify-content:space-between;align-items:center;}
+.sm-footer-l{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--lo);}
+.sm-back{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:7px;}
+.sm-back:hover{color:var(--gold-lt);}
+</style>
+</head>
+<body>
+
+<div class="sm-header">
+  <div class="sm-logo">
+    <div class="sm-gem">DS</div>
+    <div class="sm-wordmark">Dev/Soy <span>Web Stüdyosu</span></div>
+  </div>
+  <h1 class="sm-title">Site <em>Haritası</em></h1>
+  <p class="sm-sub">Tüm sayfalara buradan ulaşabilirsiniz. Ana sayfadan demo sitelere ve admin panellerine giden tam bağlantı listesi.</p>
+</div>
+
+<div class="map-grid">
+
+  <!-- COL 1: Ana Sayfa -->
+  <div class="map-col">
+    <div class="map-col-title">Ana Yapı</div>
+
+    <div class="map-node root">
+      <div class="mn-icon"><i class="fa-solid fa-house"></i></div>
+      <div>
+        <div class="mn-title">Ana Sayfa</div>
+        <div class="mn-desc">Dev/Soy Web Stüdyosu tanıtım ve portföy sayfası. Hero, demos, süreç, hizmetler, neden biz, iletişim.</div>
+        <a href="devsoy-web.html" class="mn-link"><i class="fa-solid fa-arrow-right" style="font-size:8px;"></i> devsoy-web.html</a>
+      </div>
+    </div>
+
+    <div class="connector">Portföy &amp; Demolar Bölümü</div>
+    <div class="connector">Süreç Bölümü (4 adım)</div>
+    <div class="connector">Hizmetler Bölümü (6 kart)</div>
+    <div class="connector">Neden Dev/Soy Bölümü</div>
+    <div class="connector">İletişim Formu</div>
+    <div class="connector">Footer (linkler)</div>
+
+    <div class="map-node" style="margin-top:20px;">
+      <div class="mn-icon"><i class="fa-solid fa-map"></i></div>
+      <div>
+        <div class="mn-title">Site Haritası</div>
+        <div class="mn-desc">Bu sayfa. Tüm sayfalara genel bakış.</div>
+        <a href="sitemap.html" class="mn-link"><i class="fa-solid fa-arrow-right" style="font-size:8px;"></i> sitemap.html</a>
+      </div>
+    </div>
+
+    <div class="map-node" style="margin-top:10px;">
+      <div class="mn-icon"><i class="fa-solid fa-file-lines"></i></div>
+      <div>
+        <div class="mn-title">Proje Dökümanları</div>
+        <div class="mn-desc">Yol haritası ve marka brief dosyaları.</div>
+        <a href="ROADMAP.md" class="mn-link" style="margin-bottom:5px;display:flex;"><i class="fa-solid fa-arrow-right" style="font-size:8px;"></i> ROADMAP.md</a>
+        <a href="DEVSOY_WEB_STUDIO_BRIEF.md" class="mn-link"><i class="fa-solid fa-arrow-right" style="font-size:8px;"></i> BRIEF.md</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- COL 2: Demo Siteler -->
+  <div class="map-col">
+    <div class="map-col-title">Demo Siteler</div>
+
+    <div class="map-node demo-node mn-butik">
+      <div class="mn-icon" style="background:rgba(193,96,58,0.12);border-color:rgba(193,96,58,0.25);color:#C1603A;">👗</div>
+      <div>
+        <div class="mn-title">Butik Giyim — LUNE</div>
+        <div class="mn-desc">Sıcak lüks estetik. E-ticaret, koleksiyon, ürün sayfaları.</div>
+        <a href="demos/demo-butik.html" class="mn-link"><i class="fa-solid fa-eye" style="font-size:8px;"></i> demo-butik.html</a>
+      </div>
+    </div>
+
+    <div class="map-node demo-node mn-kirt">
+      <div class="mn-icon" style="background:rgba(255,209,102,0.12);border-color:rgba(255,209,102,0.25);color:#D8A030;">✏️</div>
+      <div>
+        <div class="mn-title">Kırtasiye — KALEM&amp;CO.</div>
+        <div class="mn-desc">Piksel-at eğlenceli estetik. Kategori, ürün, kampanya.</div>
+        <a href="demos/demo-kirtasiye.html" class="mn-link"><i class="fa-solid fa-eye" style="font-size:8px;"></i> demo-kirtasiye.html</a>
+      </div>
+    </div>
+
+    <div class="map-node demo-node mn-spor">
+      <div class="mn-icon" style="background:rgba(201,168,76,0.12);border-color:rgba(201,168,76,0.25);color:#C9A84C;">🏃</div>
+      <div>
+        <div class="mn-title">Spor Giyim — OBSIDIAN</div>
+        <div class="mn-desc">Aşırı lüks karanlık estetik. Koleksiyon, ürün, felsefe.</div>
+        <a href="demos/demo-spor.html" class="mn-link"><i class="fa-solid fa-eye" style="font-size:8px;"></i> demo-spor.html</a>
+      </div>
+    </div>
+
+    <div class="map-node demo-node mn-arac">
+      <div class="mn-icon" style="background:rgba(232,83,26,0.12);border-color:rgba(232,83,26,0.25);color:#E8531A;">⚙️</div>
+      <div>
+        <div class="mn-title">Araç Parça — DEMİR PARTS</div>
+        <div class="mn-desc">Endüstriyel estetik. SKU arama, kategori sidebar, stok.</div>
+        <a href="demos/demo-arac-parca.html" class="mn-link"><i class="fa-solid fa-eye" style="font-size:8px;"></i> demo-arac-parca.html</a>
+      </div>
+    </div>
+
+    <div class="map-node demo-node mn-galeri">
+      <div class="mn-icon" style="background:rgba(155,107,74,0.12);border-color:rgba(155,107,74,0.25);color:#9B6B4A;">🎨</div>
+      <div>
+        <div class="mn-title">Sanat Galerisi — PHOS</div>
+        <div class="mn-desc">Minimal sanat estetiği. Sergi, sanatçı, koleksiyon, ziyaret.</div>
+        <a href="demos/demo-galeri.html" class="mn-link"><i class="fa-solid fa-eye" style="font-size:8px;"></i> demo-galeri.html</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- COL 3: Admin Paneller -->
+  <div class="map-col">
+    <div class="map-col-title">Admin Paneller</div>
+
+    <div class="map-node demo-node mn-butik">
+      <div class="mn-icon" style="background:rgba(193,96,58,0.12);border-color:rgba(193,96,58,0.25);color:#C1603A;"><i class="fa-solid fa-sliders"></i></div>
+      <div>
+        <div class="mn-title">Butik Admin</div>
+        <div class="mn-desc">Ürün yönetimi, koleksiyon, sipariş, stok, renk/beden seçimi, modal ekleme/düzenleme.</div>
+        <a href="admin/admin-butik.html" class="mn-link"><i class="fa-solid fa-sliders" style="font-size:8px;"></i> admin-butik.html</a>
+      </div>
+    </div>
+
+    <div class="map-node demo-node mn-kirt">
+      <div class="mn-icon" style="background:rgba(255,209,102,0.12);border-color:rgba(255,209,102,0.25);color:#D8A030;"><i class="fa-solid fa-sliders"></i></div>
+      <div>
+        <div class="mn-title">Kırtasiye Admin</div>
+        <div class="mn-desc">Ürün, kategori, kampanya, sipariş, en çok satan, stok güncelleme.</div>
+        <a href="admin/admin-kirtasiye.html" class="mn-link"><i class="fa-solid fa-sliders" style="font-size:8px;"></i> admin-kirtasiye.html</a>
+      </div>
+    </div>
+
+    <div class="map-node demo-node mn-spor">
+      <div class="mn-icon" style="background:rgba(201,168,76,0.12);border-color:rgba(201,168,76,0.25);color:#C9A84C;"><i class="fa-solid fa-sliders"></i></div>
+      <div>
+        <div class="mn-title">Spor Admin</div>
+        <div class="mn-desc">Koleksiyon/seri bazlı ürün yönetimi, beden seçimi, sipariş, performans metrikleri.</div>
+        <a href="admin/admin-spor.html" class="mn-link"><i class="fa-solid fa-sliders" style="font-size:8px;"></i> admin-spor.html</a>
+      </div>
+    </div>
+
+    <div class="map-node demo-node mn-arac">
+      <div class="mn-icon" style="background:rgba(232,83,26,0.12);border-color:rgba(232,83,26,0.25);color:#E8531A;"><i class="fa-solid fa-sliders"></i></div>
+      <div>
+        <div class="mn-title">Araç Parça Admin</div>
+        <div class="mn-desc">SKU/OEM kodu, araç uyumu, kritik stok uyarıları, filtre ve toplu içe aktarma.</div>
+        <a href="admin/admin-arac-parca.html" class="mn-link"><i class="fa-solid fa-sliders" style="font-size:8px;"></i> admin-arac-parca.html</a>
+      </div>
+    </div>
+
+    <div class="map-node demo-node mn-galeri">
+      <div class="mn-icon" style="background:rgba(155,107,74,0.12);border-color:rgba(155,107,74,0.25);color:#9B6B4A;"><i class="fa-solid fa-sliders"></i></div>
+      <div>
+        <div class="mn-title">Galeri Admin</div>
+        <div class="mn-desc">Eser kürasyon paneli, sanatçı, sergi takvimi, satış/rezervasyon ve koleksiyoncu takibi.</div>
+        <a href="admin/admin-galeri.html" class="mn-link"><i class="fa-solid fa-sliders" style="font-size:8px;"></i> admin-galeri.html</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-title">Renk Sistemi Rehberi</div>
+  <div class="legend-items">
+    <div class="legend-item"><div class="legend-dot" style="background:#C1603A;"></div> Butik Giyim — Terrakota / Sıcak Lüks</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#FFD166;"></div> Kırtasiye — Sarı / Piksel-At Eğlenceli</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#C9A84C;"></div> Spor Giyim — Altın / Aşırı Lüks</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#E8531A;"></div> Araç Parça — Turuncu / Endüstriyel</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#9B6B4A;"></div> Sanat Galerisi — Bakır / Minimal Sanat</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#C9A84C;border:1px solid rgba(255,255,255,0.2);"></div> Ana Stüdyo — Altın / Premium Karanlık</div>
+  </div>
+</div>
+
+<div class="sm-footer">
+  <div class="sm-footer-l">© 2025 Dev/Soy Web Stüdyosu · Dev/Soy Danışmanlık · KKTC</div>
+  <a href="devsoy-web.html" class="sm-back"><i class="fa-solid fa-arrow-left" style="font-size:10px;"></i> Ana Sayfaya Dön</a>
+</div>
+
+</body>
+</html>

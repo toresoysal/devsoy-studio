@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUNE — Butik Giyim | KKTC</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --cream: #F9F4EC;
+  --warm-white: #FDF9F3;
+  --terracotta: #C1603A;
+  --gold: #B8935A;
+  --dark-brown: #2C1A0E;
+  --mid-brown: #7A5C3E;
+  --blush: #E8CDB5;
+  --sage: #8B9E8A;
+  --text: #2C1A0E;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 60px;
+  background: rgba(249,244,236,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(184,147,90,0.15);
+  transition: all 0.3s ease;
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  color: var(--dark-brown);
+  text-transform: uppercase;
+}
+
+.nav-logo span {
+  color: var(--terracotta);
+  font-style: italic;
+  font-weight: 300;
+}
+
+.nav-links {
+  display: flex; gap: 36px; list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--mid-brown);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--terracotta); }
+
+.nav-actions {
+  display: flex; align-items: center; gap: 20px;
+}
+
+.nav-actions i {
+  font-size: 16px; color: var(--mid-brown); cursor: pointer; transition: color 0.2s;
+}
+.nav-actions i:hover { color: var(--terracotta); }
+
+.cart-badge {
+  position: relative;
+}
+.cart-badge::after {
+  content: '3';
+  position: absolute; top: -8px; right: -8px;
+  width: 16px; height: 16px;
+  background: var(--terracotta);
+  color: white; font-size: 9px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 72px;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 60px 80px 80px;
+  background: var(--warm-white);
+}
+
+.hero-season {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+
+.hero-season::before {
+  content: '';
+  width: 40px; height: 1px;
+  background: var(--gold);
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 72px;
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--dark-brown);
+  margin-bottom: 8px;
+}
+
+.hero-title em {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--terracotta);
+}
+
+.hero-title .line-offset {
+  padding-left: 48px;
+  font-size: 56px;
+}
+
+.hero-subtitle {
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: var(--mid-brown);
+  line-height: 1.8;
+  max-width: 380px;
+  margin-bottom: 48px;
+  margin-top: 20px;
+}
+
+.hero-actions {
+  display: flex; align-items: center; gap: 24px;
+}
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--dark-brown);
+  color: var(--cream);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 16px 32px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer; border: none;
+}
+
+.btn-primary:hover {
+  background: var(--terracotta);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(184,147,90,0.3);
+  padding-bottom: 2px;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  color: var(--terracotta);
+  border-color: var(--terracotta);
+}
+
+.hero-right {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image-area {
+  width: 100%; height: 100%;
+  background: linear-gradient(145deg, #D4A882 0%, #C1603A 35%, #8B6347 65%, #5C3D2E 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 180px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image-area::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 60% 40%, rgba(249,244,236,0.1) 0%, transparent 60%);
+}
+
+.hero-image-area .figure-emoji {
+  font-size: 160px;
+  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.3));
+  position: relative; z-index: 1;
+}
+
+.hero-image-tag {
+  position: absolute; bottom: 40px; left: -20px;
+  background: var(--cream);
+  padding: 20px 28px;
+  box-shadow: 0 8px 40px rgba(44,26,14,0.15);
+}
+
+.hero-image-tag .tag-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 2px; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 4px;
+}
+
+.hero-image-tag .tag-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 600;
+  color: var(--dark-brown);
+}
+
+.hero-scroll {
+  position: absolute; bottom: 32px; right: 32px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 2px;
+  color: rgba(249,244,236,0.6);
+  text-transform: uppercase;
+}
+
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(180deg, rgba(249,244,236,0.6), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+
+@keyframes scrollPulse {
+  0%,100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  background: var(--dark-brown);
+  padding: 14px 0;
+  overflow: hidden;
+}
+
+.marquee-inner {
+  display: flex; gap: 0;
+  white-space: nowrap;
+  animation: marquee 20s linear infinite;
+}
+
+.marquee-item {
+  display: inline-flex; align-items: center; gap: 24px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(249,244,236,0.5);
+  padding-right: 40px;
+}
+
+.marquee-item span { color: var(--gold); }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── COLLECTIONS ── */
+.collections {
+  padding: 100px 80px;
+}
+
+.section-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 60px;
+}
+
+.section-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 4px;
+  color: var(--gold); text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 300;
+  line-height: 1.1;
+  color: var(--dark-brown);
+}
+
+.section-title em { font-style: italic; color: var(--terracotta); }
+
+.section-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 2px;
+  color: var(--gold); text-decoration: none; text-transform: uppercase;
+  border-bottom: 1px solid rgba(184,147,90,0.3);
+  padding-bottom: 2px;
+  transition: all 0.2s;
+}
+
+.section-link:hover { color: var(--terracotta); }
+
+.collections-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 16px;
+}
+
+.col-card {
+  position: relative; overflow: hidden; cursor: pointer;
+  transition: transform 0.4s ease;
+}
+
+.col-card:hover { transform: scale(1.01); }
+
+.col-card:hover .col-overlay { opacity: 1; }
+
+.col-card:nth-child(1) { grid-row: 1 / 3; }
+
+.col-image {
+  width: 100%; height: 100%;
+  min-height: 280px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 80px;
+}
+
+.col-card:nth-child(1) .col-image { min-height: 560px; font-size: 120px; }
+
+.col-image.bg1 { background: linear-gradient(135deg, #D4A882, #C1603A); }
+.col-image.bg2 { background: linear-gradient(135deg, #8B9E8A, #5C7A5A); }
+.col-image.bg3 { background: linear-gradient(135deg, #B8A08A, #8B6347); }
+.col-image.bg4 { background: linear-gradient(135deg, #E8CDB5, #C9A87A); }
+.col-image.bg5 { background: linear-gradient(135deg, #C1603A, #8B3A1E); }
+
+.col-overlay {
+  position: absolute; inset: 0;
+  background: rgba(44,26,14,0.7);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex; align-items: flex-end;
+  padding: 32px;
+}
+
+.col-info .col-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 3px;
+  color: rgba(249,244,236,0.6); text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.col-info .col-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px; font-weight: 300; font-style: italic;
+  color: var(--cream);
+}
+
+.col-badge {
+  position: absolute; top: 20px; right: 20px;
+  background: var(--terracotta);
+  color: white; font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 2px;
+  padding: 6px 12px; text-transform: uppercase;
+}
+
+/* ── PRODUCTS ── */
+.products {
+  padding: 80px 80px;
+  background: var(--warm-white);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+}
+
+.product-card {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover { transform: translateY(-8px); }
+
+.product-card:hover .product-image { box-shadow: 0 20px 60px rgba(44,26,14,0.2); }
+
+.product-image {
+  width: 100%; aspect-ratio: 3/4;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 64px;
+  margin-bottom: 16px;
+  transition: box-shadow 0.3s ease;
+  position: relative; overflow: hidden;
+}
+
+.pi1 { background: linear-gradient(145deg, #F0E0D0, #D4A882); }
+.pi2 { background: linear-gradient(145deg, #D0D8CE, #8B9E8A); }
+.pi3 { background: linear-gradient(145deg, #E8CDB5, #C9A87A); }
+.pi4 { background: linear-gradient(145deg, #C8B4A4, #8B6347); }
+
+.product-wish {
+  position: absolute; top: 12px; right: 12px;
+  background: white; width: 32px; height: 32px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: var(--mid-brown);
+  opacity: 0; transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.product-card:hover .product-wish { opacity: 1; }
+
+.product-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-weight: 400;
+  color: var(--dark-brown);
+  margin-bottom: 4px;
+}
+
+.product-category {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 2px;
+  color: var(--gold); text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.product-price-row {
+  display: flex; align-items: center; gap: 10px;
+}
+
+.price-current {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; font-weight: 600;
+  color: var(--dark-brown);
+}
+
+.price-old {
+  font-size: 14px; color: var(--mid-brown);
+  text-decoration: line-through;
+  font-family: 'Jost', sans-serif; font-weight: 300;
+}
+
+/* ── BANNER ── */
+.mid-banner {
+  margin: 0 80px;
+  background: var(--dark-brown);
+  padding: 80px 80px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: center;
+  position: relative; overflow: hidden;
+}
+
+.mid-banner::before {
+  content: 'LUNE';
+  position: absolute; right: -60px; top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 200px; font-weight: 600;
+  color: rgba(249,244,236,0.03);
+  pointer-events: none;
+}
+
+.banner-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 4px;
+  color: var(--gold); text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.banner-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px; font-weight: 300; font-style: italic;
+  color: var(--cream); line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.banner-title strong { font-weight: 600; font-style: normal; color: var(--blush); }
+
+.banner-text {
+  font-size: 14px; font-weight: 300;
+  color: rgba(249,244,236,0.5); line-height: 1.8;
+  margin-bottom: 40px;
+}
+
+.banner-visual {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 140px;
+  background: linear-gradient(135deg, rgba(184,147,90,0.15), rgba(193,96,58,0.1));
+  height: 360px;
+  border: 1px solid rgba(184,147,90,0.1);
+}
+
+/* ── TESTIMONIALS ── */
+.testimonials {
+  padding: 100px 80px;
+  text-align: center;
+}
+
+.testimonials-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 40px; margin-top: 60px;
+}
+
+.testi-card {
+  background: var(--warm-white);
+  padding: 40px 32px;
+  text-align: left;
+  border-left: 3px solid var(--blush);
+  transition: border-color 0.3s;
+}
+
+.testi-card:hover { border-color: var(--terracotta); }
+
+.testi-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-style: italic; font-weight: 300;
+  color: var(--dark-brown); line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.testi-author {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 2px;
+  color: var(--gold); text-transform: uppercase;
+}
+
+/* ── NEWSLETTER ── */
+.newsletter {
+  background: linear-gradient(135deg, var(--terracotta), #8B3A1E);
+  padding: 80px;
+  text-align: center;
+}
+
+.newsletter-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 300; font-style: italic;
+  color: white; margin-bottom: 12px;
+}
+
+.newsletter-sub {
+  font-size: 14px; font-weight: 300;
+  color: rgba(255,255,255,0.7); margin-bottom: 40px;
+}
+
+.newsletter-form {
+  display: flex; max-width: 480px; margin: 0 auto;
+  gap: 0;
+}
+
+.newsletter-form input {
+  flex: 1; padding: 16px 24px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white; font-family: 'Jost', sans-serif; font-size: 14px;
+  outline: none;
+}
+
+.newsletter-form input::placeholder { color: rgba(255,255,255,0.5); }
+
+.newsletter-form button {
+  padding: 16px 32px;
+  background: white; color: var(--terracotta);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  border: none; cursor: pointer;
+  transition: background 0.2s;
+}
+
+.newsletter-form button:hover { background: var(--cream); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--dark-brown);
+  padding: 80px 80px 40px;
+  color: rgba(249,244,236,0.5);
+}
+
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px; margin-bottom: 60px;
+}
+
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px; font-weight: 600; letter-spacing: 6px;
+  color: var(--cream); text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.footer-logo span { color: var(--terracotta); font-style: italic; font-weight: 300; }
+
+.footer-about {
+  font-size: 13px; font-weight: 300; line-height: 1.8;
+  color: rgba(249,244,236,0.4);
+  margin-bottom: 24px;
+}
+
+.footer-socials {
+  display: flex; gap: 12px;
+}
+
+.footer-socials a {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(249,244,236,0.15);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(249,244,236,0.4);
+  text-decoration: none; font-size: 14px;
+  transition: all 0.2s;
+}
+
+.footer-socials a:hover {
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+  color: white;
+}
+
+.footer-col-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 3px;
+  color: var(--gold); text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.footer-links {
+  list-style: none; display: flex; flex-direction: column; gap: 10px;
+}
+
+.footer-links a {
+  font-size: 13px; color: rgba(249,244,236,0.4);
+  text-decoration: none; transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--cream); }
+
+.footer-bottom {
+  border-top: 1px solid rgba(249,244,236,0.08);
+  padding-top: 32px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.footer-credit {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 1px; color: rgba(249,244,236,0.2);
+}
+
+.footer-credit a {
+  color: var(--gold); text-decoration: none;
+}
+
+/* ── DSO TAG ── */
+.dso-tag {
+  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  background: var(--dark-brown);
+  border: 1px solid rgba(184,147,90,0.3);
+  padding: 10px 16px;
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 2px; color: rgba(249,244,236,0.5);
+  text-transform: uppercase; text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.dso-tag:hover {
+  background: var(--gold);
+  color: var(--dark-brown);
+  border-color: var(--gold);
+}
+
+.dso-tag span { color: var(--gold); }
+.dso-tag:hover span { color: var(--dark-brown); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-left > * {
+  animation: fadeUp 0.8s ease both;
+}
+
+.hero-season { animation-delay: 0.1s; }
+.hero-title { animation-delay: 0.2s; }
+.hero-subtitle { animation-delay: 0.35s; }
+.hero-actions { animation-delay: 0.5s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">L<span>une</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Koleksiyonlar</a></li>
+    <li><a href="#">Yeni Gelenler</a></li>
+    <li><a href="#">Aksesuar</a></li>
+    <li><a href="#">Sale</a></li>
+    <li><a href="#">Hakkımızda</a></li>
+  </ul>
+  <div class="nav-actions">
+    <i class="fa-regular fa-magnifying-glass"></i>
+    <i class="fa-regular fa-heart"></i>
+    <i class="fa-regular fa-bag-shopping cart-badge"></i>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-season">2025 İlkbahar / Yaz</div>
+    <h1 class="hero-title">
+      Zarafetin<br>
+      <em>yeni dili</em><br>
+      <span class="line-offset">seninle.</span>
+    </h1>
+    <p class="hero-subtitle">
+      Kuzey Kıbrıs'ın en seçkin butik koleksiyonu. 
+      Her parça, bir hikâye anlatır. Her dikiş, bir özen taşır.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Koleksiyonu Keşfet <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="#" class="btn-secondary">Yeni Gelenler</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-image-area">
+      <div class="figure-emoji">👗</div>
+    </div>
+    <div class="hero-image-tag">
+      <div class="tag-label">Bu Sezonun Favorisi</div>
+      <div class="tag-price">₺1.290</div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Kaydır
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <div class="marquee-item">Yeni Koleksiyon <span>★</span></div>
+    <div class="marquee-item">Ücretsiz Kargo 1500₺ Üzeri <span>★</span></div>
+    <div class="marquee-item">Özel Tasarım <span>★</span></div>
+    <div class="marquee-item">Kuzey Kıbrıs'tan Dünyaya <span>★</span></div>
+    <div class="marquee-item">Yeni Koleksiyon <span>★</span></div>
+    <div class="marquee-item">Ücretsiz Kargo 1500₺ Üzeri <span>★</span></div>
+    <div class="marquee-item">Özel Tasarım <span>★</span></div>
+    <div class="marquee-item">Kuzey Kıbrıs'tan Dünyaya <span>★</span></div>
+    <div class="marquee-item">Yeni Koleksiyon <span>★</span></div>
+    <div class="marquee-item">Ücretsiz Kargo 1500₺ Üzeri <span>★</span></div>
+    <div class="marquee-item">Özel Tasarım <span>★</span></div>
+    <div class="marquee-item">Kuzey Kıbrıs'tan Dünyaya <span>★</span></div>
+  </div>
+</div>
+
+<!-- COLLECTIONS -->
+<section class="collections">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Seçki</div>
+      <h2 class="section-title">Bu sezon<br><em>öne çıkanlar</em></h2>
+    </div>
+    <a href="#" class="section-link">Tümünü Gör →</a>
+  </div>
+  <div class="collections-grid">
+    <div class="col-card">
+      <div class="col-image bg1">👗</div>
+      <div class="col-overlay">
+        <div class="col-info">
+          <div class="col-label">Koleksiyon</div>
+          <div class="col-name">Terra Rossa</div>
+        </div>
+      </div>
+      <div class="col-badge">Yeni</div>
+    </div>
+    <div class="col-card">
+      <div class="col-image bg2">🧥</div>
+      <div class="col-overlay">
+        <div class="col-info">
+          <div class="col-label">Koleksiyon</div>
+          <div class="col-name">Sage Garden</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-card">
+      <div class="col-image bg3">👜</div>
+      <div class="col-overlay">
+        <div class="col-info">
+          <div class="col-label">Aksesuar</div>
+          <div class="col-name">Doğal Tonlar</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-card">
+      <div class="col-image bg4">🧣</div>
+      <div class="col-overlay">
+        <div class="col-info">
+          <div class="col-label">Aksesuar</div>
+          <div class="col-name">Blush Edit</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-card">
+      <div class="col-image bg5">👠</div>
+      <div class="col-overlay">
+        <div class="col-info">
+          <div class="col-label">Ayakkabı</div>
+          <div class="col-name">Ateş Serisi</div>
+        </div>
+      </div>
+      <div class="col-badge">%30 İndirim</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Öne Çıkan Ürünler</div>
+      <h2 class="section-title">En çok <em>sevilenler</em></h2>
+    </div>
+    <a href="#" class="section-link">Tüm Ürünler →</a>
+  </div>
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-image pi1">
+        <div class="product-wish"><i class="fa-regular fa-heart"></i></div>
+        🌸
+      </div>
+      <div class="product-category">Elbise · Yazlık</div>
+      <div class="product-name">Lüks Keten Elbise</div>
+      <div class="product-price-row">
+        <span class="price-current">₺1.290</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-image pi2">
+        <div class="product-wish"><i class="fa-regular fa-heart"></i></div>
+        🍃
+      </div>
+      <div class="product-category">Hırka · Yazlık</div>
+      <div class="product-name">Açık Yeşil Örgü</div>
+      <div class="product-price-row">
+        <span class="price-current">₺890</span>
+        <span class="price-old">₺1.190</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-image pi3">
+        <div class="product-wish"><i class="fa-regular fa-heart"></i></div>
+        🌙
+      </div>
+      <div class="product-category">Çanta · Aksesuar</div>
+      <div class="product-name">Rattan Omuz Çantası</div>
+      <div class="product-price-row">
+        <span class="price-current">₺2.100</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-image pi4">
+        <div class="product-wish"><i class="fa-regular fa-heart"></i></div>
+        ✨
+      </div>
+      <div class="product-category">Bluz · Casual</div>
+      <div class="product-name">Kahverengi İpek Bluz</div>
+      <div class="product-price-row">
+        <span class="price-current">₺750</span>
+        <span class="price-old">₺950</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MID BANNER -->
+<div class="mid-banner">
+  <div>
+    <div class="banner-eyebrow">Özel Sipariş</div>
+    <h2 class="banner-title">Sana özel<br><strong>biricik</strong> parça.</h2>
+    <p class="banner-text">
+      Her kadın benzersizdir. Özel sipariş hizmetimizle, 
+      tam bedeninize dikilen, sizin için tasarlanan parçalar üretiyoruz.
+    </p>
+    <a href="#" class="btn-primary" style="background: var(--gold); color: var(--dark-brown);">
+      Sipariş Ver <i class="fa-solid fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="banner-visual">🧵</div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-eyebrow">Müşteri Yorumları</div>
+  <h2 class="section-title" style="font-size: 40px; margin-bottom: 0;">Onlar <em>anlattı</em></h2>
+  <div class="testimonials-grid">
+    <div class="testi-card">
+      <div class="testi-quote">"Yıllardır LUNE'den alışveriş yapıyorum. Kumaş kalitesi gerçekten başka bir şey."</div>
+      <div class="testi-author">— Aylin K., Lefkoşa</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">"Özel sipariş elbisem düğüne mükemmel uydu. Herkes sormadan geçemedi!"</div>
+      <div class="testi-author">— Selin M., Girne</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">"Bu kadar nazik ve özenli bir satış deneyimi başka hiçbir yerde yaşamadım."</div>
+      <div class="testi-author">— Derya T., Gazimağusa</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <div class="newsletter-title">Yeni gelenleri ilk sen bil.</div>
+  <p class="newsletter-sub">Özel indirimler ve koleksiyon duyuruları için bültenimize kaydol.</p>
+  <div class="newsletter-form">
+    <input type="email" placeholder="E-posta adresin">
+    <button>Kaydol</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">L<span>une</span></div>
+      <p class="footer-about">Kuzey Kıbrıs'ın en seçkin butik giyim markası. Kalite, zarafet ve özgünlük bir arada.</p>
+      <div class="footer-socials">
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Koleksiyonlar</div>
+      <ul class="footer-links">
+        <li><a href="#">Yeni Sezon</a></li>
+        <li><a href="#">Elbiseler</a></li>
+        <li><a href="#">Üst Giyim</a></li>
+        <li><a href="#">Aksesuar</a></li>
+        <li><a href="#">Sale</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Bilgi</div>
+      <ul class="footer-links">
+        <li><a href="#">Hakkımızda</a></li>
+        <li><a href="#">Beden Rehberi</a></li>
+        <li><a href="#">Kargo & İade</a></li>
+        <li><a href="#">Gizlilik</a></li>
+        <li><a href="#">İletişim</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">İletişim</div>
+      <ul class="footer-links">
+        <li><a href="#">📍 Girne, KKTC</a></li>
+        <li><a href="#">📞 +90 548 xxx xx xx</a></li>
+        <li><a href="#">✉️ <span class="__cf_email__" data-cfemail="a0c9cec6cfe0ccd5cec58ec3cfcd">[email&#160;protected]</span></a></li>
+        <li><a href="#">💬 WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-credit">© 2025 LUNE Butik. Tüm hakları saklıdır.</div>
+    <div class="footer-credit">Web Tasarım: <a href="https://devsoy.online" target="_blank">Dev/Soy Web Stüdyosu</a></div>
+  </div>
+</footer>
+
+<!-- DSO TAG -->
+<a href="https://devsoy.online" target="_bl
+
+<!-- DEV/SOY NAVIGATION BAR -->
+<div style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(8,8,8,0.96);border-top:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;padding:0 16px 0 8px;height:46px;overflow:hidden;">
+  <div style="display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;">
+    <a href="../devsoy-web.html" style="display:inline-flex;align-items:center;gap:7px;padding:10px 16px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;text-decoration:none;border-right:1px solid rgba(255,255,255,0.07);white-space:nowrap;flex-shrink:0;">
+      <span style="width:18px;height:18px;background:#C9A84C;clip-path:polygon(0 0,100% 0,100% 72%,72% 100%,0 100%);display:inline-flex;align-items:center;justify-content:center;font-size:8px;color:#080808;font-weight:700;">DS</span>
+      Dev/Soy
+    </a>
+    <a href="../demos/demo-butik.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid #C1603A;color:#fff;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">👗 Butik</a><a href="../demos/demo-kirtasiye.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid transparent;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">✏️ Kırtasiye</a><a href="../demos/demo-spor.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid transparent;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">🏃 Spor</a><a href="../demos/demo-arac-parca.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid transparent;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">⚙️ Araç Parça</a><a href="../demos/demo-galeri.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;border-bottom:2px solid transparent;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.style.borderBottomColor!=='transparent'?'#fff':'rgba(255,255,255,0.5)'">🎨 Galeri</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px;border-left:1px solid rgba(255,255,255,0.07);">
+    <a href="../admin/admin-butik.html" style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.25);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;text-decoration:none;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.background='rgba(201,168,76,0.2)'" onmouseout="this.style.background='rgba(201,168,76,0.12)'"><i class="fa-solid fa-sliders" style="font-size:10px;"></i> Butik Admin</a>
+  </div>
+</div>
+<div style="height:46px;"></div>
+<!-- /DEV/SOY NAVIGATION BAR -->
+
+</body>
+</html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUNE Admin Paneli</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --sidebar-bg: #2C1A0E;
+  --gold: #B8935A;
+  --terracotta: #C1603A;
+  --cream: #F9F4EC;
+  --warm-white: #FDF9F3;
+  --border: rgba(44,26,14,0.08);
+  --text: #2C1A0E;
+  --muted: #7A5C3E;
+  --surface: #FFFFFF;
+  --success: #4CAF7D;
+  --warning: #E8A020;
+  --danger: #C1603A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
+
+.sidebar { width: 240px; flex-shrink: 0; background: var(--sidebar-bg); display: flex; flex-direction: column; height: 100vh; overflow-y: auto; }
+.sidebar-brand { padding: 24px 20px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.brand-name { font-family: 'DM Mono', monospace; font-size: 18px; letter-spacing: 6px; color: white; text-transform: uppercase; margin-bottom: 2px; }
+.brand-sub { font-size: 10px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; font-family: 'DM Mono', monospace; }
+.sidebar-section-label { padding: 16px 20px 8px; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; color: rgba(255,255,255,0.2); text-transform: uppercase; }
+.sidebar-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; color: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.2s; text-decoration: none; border-left: 3px solid transparent; font-size: 13px; }
+.sidebar-item:hover { background: rgba(184,147,90,0.12); color: rgba(255,255,255,0.85); }
+.sidebar-item.active { background: rgba(184,147,90,0.2); color: var(--gold); border-left-color: var(--gold); }
+.sidebar-item i { width: 16px; text-align: center; font-size: 14px; }
+.sidebar-badge { margin-left: auto; background: var(--terracotta); color: white; font-size: 10px; padding: 2px 7px; border-radius: 12px; }
+.sidebar-footer { margin-top: auto; padding: 20px; border-top: 1px solid rgba(255,255,255,0.06); }
+.admin-user { display: flex; align-items: center; gap: 10px; }
+.admin-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--sidebar-bg); }
+.admin-name { font-size: 13px; color: rgba(255,255,255,0.7); }
+.admin-role { font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 1px; }
+
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 32px; height: 60px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.page-title { font-size: 18px; font-weight: 600; }
+.page-breadcrumb { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.topbar-actions { display: flex; align-items: center; gap: 12px; }
+.tb-btn { display: flex; align-items: center; gap: 8px; padding: 8px 18px; font-size: 12px; font-weight: 500; letter-spacing: 1px; cursor: pointer; border: none; transition: all 0.2s; text-transform: uppercase; font-family: 'Jost', sans-serif; }
+.tb-btn-primary { background: var(--sidebar-bg); color: white; }
+.tb-btn-primary:hover { background: var(--terracotta); }
+.tb-btn-outline { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+.tb-btn-outline:hover { border-color: var(--gold); color: var(--text); }
+
+.content { flex: 1; overflow-y: auto; padding: 28px 32px; }
+
+.stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 28px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); padding: 20px 24px; position: relative; overflow: hidden; }
+.stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.sc1::before { background: var(--gold); }
+.sc2::before { background: var(--terracotta); }
+.sc3::before { background: var(--success); }
+.sc4::before { background: var(--warning); }
+.stat-icon { font-size: 28px; margin-bottom: 10px; }
+.stat-val { font-size: 28px; font-weight: 600; margin-bottom: 3px; }
+.stat-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.stat-change { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; }
+.change-up { color: var(--success); }
+.change-down { color: var(--danger); }
+
+.dashboard-grid { display: grid; grid-template-columns: 1fr 300px; gap: 20px; }
+
+.tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 24px; }
+.tab { padding: 10px 24px; font-size: 13px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
+.tab.active { color: var(--text); border-bottom-color: var(--gold); }
+.tab:hover { color: var(--text); }
+
+.table-card { background: var(--surface); border: 1px solid var(--border); }
+.table-header { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.table-title { font-size: 14px; font-weight: 600; }
+.table-search { display: flex; align-items: center; gap: 8px; background: var(--cream); padding: 8px 14px; border: 1px solid var(--border); }
+.table-search input { background: none; border: none; outline: none; font-family: 'Jost', sans-serif; font-size: 13px; color: var(--text); width: 180px; }
+.table-search input::placeholder { color: var(--muted); }
+
+table { width: 100%; border-collapse: collapse; }
+thead th { padding: 12px 20px; text-align: left; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); background: var(--cream); border-bottom: 1px solid var(--border); font-weight: 400; }
+tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+tbody tr:hover { background: var(--cream); }
+tbody tr:last-child { border-bottom: none; }
+td { padding: 13px 20px; font-size: 13px; }
+
+.prod-name-cell { display: flex; align-items: center; gap: 12px; }
+.prod-thumb { width: 40px; height: 40px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.pt1 { background: #F0E0D0; } .pt2 { background: #D0D8CE; } .pt3 { background: #E8CDB5; } .pt4 { background: #C8B4A4; } .pt5 { background: #E4D4E8; }
+.prod-name { font-weight: 500; margin-bottom: 2px; }
+.prod-sku { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); }
+
+.status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; font-size: 11px; font-weight: 500; }
+.status-active { background: rgba(76,175,125,0.12); color: var(--success); }
+.status-draft { background: rgba(122,92,62,0.1); color: var(--muted); }
+.status-sold { background: rgba(193,96,58,0.1); color: var(--danger); }
+.stock-low { color: var(--danger); font-weight: 600; }
+
+.action-btns { display: flex; gap: 6px; }
+.act-btn { width: 30px; height: 30px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; background: none; color: var(--muted); font-size: 12px; }
+.act-btn:hover { background: var(--sidebar-bg); color: white; border-color: var(--sidebar-bg); }
+.act-btn.delete:hover { background: var(--danger); border-color: var(--danger); }
+
+/* RIGHT PANEL */
+.panel-card { background: var(--surface); border: 1px solid var(--border); margin-bottom: 16px; }
+.panel-card-header { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.panel-card-title { font-size: 13px; font-weight: 600; }
+.panel-card-body { padding: 16px; }
+
+.order-item { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.order-item:last-child { border-bottom: none; }
+.order-status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot-success { background: var(--success); }
+.dot-warning { background: var(--warning); }
+.dot-danger { background: var(--danger); }
+.order-id { font-size: 12px; font-weight: 600; }
+.order-customer { font-size: 11px; color: var(--muted); }
+.order-amount { margin-left: auto; font-size: 13px; font-weight: 600; }
+
+/* Inventory bar */
+.inv-item { margin-bottom: 12px; }
+.inv-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; }
+.inv-bar-bg { background: var(--cream); height: 6px; border-radius: 3px; overflow: hidden; }
+.inv-bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
+.inv-ok { background: var(--success); }
+.inv-warn { background: var(--warning); }
+.inv-low { background: var(--danger); }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(44,26,14,0.5); display: none; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--surface); width: 580px; max-height: 88vh; overflow-y: auto; border-top: 4px solid var(--gold); }
+.modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.modal-title { font-size: 16px; font-weight: 600; }
+.modal-close { background: none; border: none; font-size: 22px; color: var(--muted); cursor: pointer; line-height: 1; }
+.modal-close:hover { color: var(--danger); }
+.modal-body { padding: 24px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-full { margin-bottom: 16px; }
+.form-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; display: block; }
+.form-input, .form-select, .form-textarea { width: 100%; padding: 10px 14px; background: var(--cream); border: 1px solid var(--border); font-family: 'Jost', sans-serif; font-size: 13px; color: var(--text); outline: none; transition: border-color 0.2s; }
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold); }
+.form-textarea { height: 80px; resize: vertical; }
+.modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+
+/* Image upload */
+.img-upload-area { border: 2px dashed var(--border); padding: 28px; text-align: center; cursor: pointer; transition: border-color 0.2s; margin-bottom: 16px; }
+.img-upload-area:hover { border-color: var(--gold); }
+.img-upload-area .upload-icon { font-size: 32px; margin-bottom: 8px; }
+.img-upload-area p { font-size: 13px; color: var(--muted); }
+.img-upload-area span { font-size: 11px; color: var(--gold); }
+
+/* Color swatches */
+.color-swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+.color-swatch { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: border-color 0.15s; }
+.color-swatch.selected { border-color: var(--gold); }
+
+/* Size chips */
+.size-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.size-chip { padding: 6px 14px; border: 1px solid var(--border); font-size: 12px; cursor: pointer; transition: all 0.15s; }
+.size-chip.selected { background: var(--sidebar-bg); color: white; border-color: var(--sidebar-bg); }
+.size-chip:hover { border-color: var(--gold); }
+
+/* TOAST */
+.toast { position: fixed; bottom: 24px; right: 24px; background: var(--sidebar-bg); color: white; padding: 14px 20px; display: flex; align-items: center; gap: 10px; font-size: 13px; transform: translateY(80px); opacity: 0; transition: all 0.3s ease; z-index: 2000; min-width: 260px; }
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast i { font-size: 16px; color: var(--success); }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-name">Lune</div>
+    <div class="brand-sub">Admin Paneli</div>
+  </div>
+  <div class="sidebar-section-label">Ana Menü</div>
+  <a href="#" class="sidebar-item active"><i class="fa-solid fa-gauge"></i> Kontrol Paneli</a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-bag-shopping"></i> Siparişler <span class="sidebar-badge">8</span></a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-box"></i> Ürünler</a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-layer-group"></i> Koleksiyonlar</a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-users"></i> Müşteriler</a>
+  <div class="sidebar-section-label">İçerik</div>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-images"></i> Medya</a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-tags"></i> İndirimler</a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-star"></i> Yorumlar <span class="sidebar-badge">3</span></a>
+  <div class="sidebar-section-label">Ayarlar</div>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-truck"></i> Kargo</a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-credit-card"></i> Ödeme</a>
+  <a href="#" class="sidebar-item"><i class="fa-solid fa-gear"></i> Genel</a>
+  <div class="sidebar-footer">
+    <div class="admin-user">
+      <div class="admin-avatar">👑</div>
+      <div>
+        <div class="admin-name">Yönetici</div>
+        <div class="admin-role">Süper Admin</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div>
+      <div class="page-title">Kontrol Paneli</div>
+      <div class="page-breadcrumb">Lune Butik / Admin</div>
+    </div>
+    <div class="topbar-actions">
+      <button class="tb-btn tb-btn-outline" onclick="openModal()"><i class="fa-solid fa-plus"></i> Yeni Ürün</button>
+      <button class="tb-btn tb-btn-primary"><i class="fa-solid fa-eye"></i> Siteyi Gör</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="stat-row">
+      <div class="stat-card sc1">
+        <div class="stat-icon">💰</div>
+        <div class="stat-val">₺38.420</div>
+        <div class="stat-label">Bu Ay Ciro</div>
+        <div class="stat-change change-up">↑ %14 geçen aya göre</div>
+      </div>
+      <div class="stat-card sc2">
+        <div class="stat-icon">🛍️</div>
+        <div class="stat-val">127</div>
+        <div class="stat-label">Bu Ay Sipariş</div>
+        <div class="stat-change change-up">↑ %8 artış</div>
+      </div>
+      <div class="stat-card sc3">
+        <div class="stat-icon">👗</div>
+        <div class="stat-val">84</div>
+        <div class="stat-label">Aktif Ürün</div>
+        <div class="stat-change">12 taslak · 3 tükendi</div>
+      </div>
+      <div class="stat-card sc4">
+        <div class="stat-icon">👩</div>
+        <div class="stat-val">342</div>
+        <div class="stat-label">Toplam Müşteri</div>
+        <div class="stat-change change-up">↑ 24 bu hafta</div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div>
+        <div class="tabs">
+          <div class="tab active">Ürün Listesi</div>
+          <div class="tab">Koleksiyonlar</div>
+          <div class="tab">Stok Uyarıları</div>
+        </div>
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">Tüm Ürünler <span style="color:var(--muted);font-weight:400;">(84)</span></div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <div class="table-search">
+                <i class="fa-solid fa-magnifying-glass" style="color:var(--muted);font-size:12px;"></i>
+                <input type="text" placeholder="Ürün ara...">
+              </div>
+              <button class="tb-btn tb-btn-outline" style="padding:8px 14px;" onclick="openModal()"><i class="fa-solid fa-plus"></i></button>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Ürün</th>
+                <th>Kategori</th>
+                <th>Fiyat</th>
+                <th>Stok</th>
+                <th>Durum</th>
+                <th>İşlem</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb pt1">🌸</div><div><div class="prod-name">Lüks Keten Elbise</div><div class="prod-sku">LNE-001-CRM</div></div></div></td>
+                <td>Elbise</td>
+                <td><strong>₺1.290</strong></td>
+                <td>24</td>
+                <td><span class="status-badge status-active">● Aktif</span></td>
+                <td><div class="action-btns"><button class="act-btn" onclick="openModal()" title="Düzenle"><i class="fa-solid fa-pen"></i></button><button class="act-btn" title="Görüntüle"><i class="fa-solid fa-eye"></i></button><button class="act-btn delete" title="Sil" onclick="showToast('Ürün silindi','danger')"><i class="fa-solid fa-trash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb pt2">🍃</div><div><div class="prod-name">Açık Yeşil Örgü</div><div class="prod-sku">LNE-012-GRN</div></div></div></td>
+                <td>Üst Giyim</td>
+                <td><strong>₺890</strong> <span style="font-size:11px;color:var(--muted);text-decoration:line-through">₺1.190</span></td>
+                <td class="stock-low">3 ⚠</td>
+                <td><span class="status-badge status-active">● Aktif</span></td>
+                <td><div class="action-btns"><button class="act-btn" onclick="openModal()"><i class="fa-solid fa-pen"></i></button><button class="act-btn"><i class="fa-solid fa-eye"></i></button><button class="act-btn delete" onclick="showToast('Ürün silindi','danger')"><i class="fa-solid fa-trash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb pt3">🌙</div><div><div class="prod-name">Rattan Omuz Çantası</div><div class="prod-sku">LNE-A08-RTN</div></div></div></td>
+                <td>Aksesuar</td>
+                <td><strong>₺2.100</strong></td>
+                <td>11</td>
+                <td><span class="status-badge status-active">● Aktif</span></td>
+                <td><div class="action-btns"><button class="act-btn" onclick="openModal()"><i class="fa-solid fa-pen"></i></button><button class="act-btn"><i class="fa-solid fa-eye"></i></button><button class="act-btn delete" onclick="showToast('Ürün silindi','danger')"><i class="fa-solid fa-trash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb pt4">✨</div><div><div class="prod-name">Kahverengi İpek Bluz</div><div class="prod-sku">LNE-022-BRN</div></div></div></td>
+                <td>Bluz</td>
+                <td><strong>₺750</strong></td>
+                <td>18</td>
+                <td><span class="status-badge status-draft">○ Taslak</span></td>
+                <td><div class="action-btns"><button class="act-btn" onclick="openModal()"><i class="fa-solid fa-pen"></i></button><button class="act-btn"><i class="fa-solid fa-eye"></i></button><button class="act-btn delete" onclick="showToast('Ürün silindi','danger')"><i class="fa-solid fa-trash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb pt5">👠</div><div><div class="prod-name">Terra Rossa Topuklu</div><div class="prod-sku">LNE-S03-RED</div></div></div></td>
+                <td>Ayakkabı</td>
+                <td><strong>₺1.850</strong></td>
+                <td class="stock-low">0 — Tükendi</td>
+                <td><span class="status-badge status-sold">✕ Tükendi</span></td>
+                <td><div class="action-btns"><button class="act-btn" onclick="openModal()"><i class="fa-solid fa-pen"></i></button><button class="act-btn"><i class="fa-solid fa-eye"></i></button><button class="act-btn delete" onclick="showToast('Ürün silindi','danger')"><i class="fa-solid fa-trash"></i></button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div>
+        <div class="panel-card">
+          <div class="panel-card-header">
+            <div class="panel-card-title">Son Siparişler</div>
+            <a href="#" style="font-size:11px;color:var(--gold);text-decoration:none;">Tümü →</a>
+          </div>
+          <div class="panel-card-body">
+            <div class="order-item">
+              <div class="order-status-dot dot-success"></div>
+              <div><div class="order-id">#1082</div><div class="order-customer">Aylin K.</div></div>
+              <div class="order-amount">₺1.290</div>
+            </div>
+            <div class="order-item">
+              <div class="order-status-dot dot-warning"></div>
+              <div><div class="order-id">#1081</div><div class="order-customer">Selin M.</div></div>
+              <div class="order-amount">₺890</div>
+            </div>
+            <div class="order-item">
+              <div class="order-status-dot dot-success"></div>
+              <div><div class="order-id">#1080</div><div class="order-customer">Derya T.</div></div>
+              <div class="order-amount">₺2.100</div>
+            </div>
+            <div class="order-item">
+              <div class="order-status-dot dot-danger"></div>
+              <div><div class="order-id">#1079</div><div class="order-customer">Melis A.</div></div>
+              <div class="order-amount">₺750</div>
+            </div>
+            <div class="order-item">
+              <div class="order-status-dot dot-success"></div>
+              <div><div class="order-id">#1078</div><div class="order-customer">Berna Y.</div></div>
+              <div class="order-amount">₺1.850</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-card-header">
+            <div class="panel-card-title">Stok Durumu</div>
+          </div>
+          <div class="panel-card-body">
+            <div class="inv-item">
+              <div class="inv-header"><span>Elbiseler</span><span>24 adet</span></div>
+              <div class="inv-bar-bg"><div class="inv-bar-fill inv-ok" style="width:80%"></div></div>
+            </div>
+            <div class="inv-item">
+              <div class="inv-header"><span>Aksesuar</span><span>11 adet</span></div>
+              <div class="inv-bar-bg"><div class="inv-bar-fill inv-ok" style="width:55%"></div></div>
+            </div>
+            <div class="inv-item">
+              <div class="inv-header"><span>Üst Giyim</span><span style="color:var(--warning)">3 adet ⚠</span></div>
+              <div class="inv-bar-bg"><div class="inv-bar-fill inv-warn" style="width:15%"></div></div>
+            </div>
+            <div class="inv-item">
+              <div class="inv-header"><span>Ayakkabı</span><span style="color:var(--danger)">Tükendi</span></div>
+              <div class="inv-bar-bg"><div class="inv-bar-fill inv-low" style="width:0%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-card-header">
+            <div class="panel-card-title">Hızlı İşlemler</div>
+          </div>
+          <div class="panel-card-body" style="display:flex;flex-direction:column;gap:8px;">
+            <button class="tb-btn tb-btn-primary" style="justify-content:center;width:100%;" onclick="openModal()"><i class="fa-solid fa-plus"></i> Yeni Ürün Ekle</button>
+            <button class="tb-btn tb-btn-outline" style="justify-content:center;width:100%;"><i class="fa-solid fa-tag"></i> İndirim Kodu Oluştur</button>
+            <button class="tb-btn tb-btn-outline" style="justify-content:center;width:100%;"><i class="fa-solid fa-bullhorn"></i> Duyuru Yayınla</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Yeni / Düzenle Ürün -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Ürün Düzenle</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="img-upload-area">
+        <div class="upload-icon">📸</div>
+        <p>Görsel yüklemek için tıkla veya sürükle bırak</p>
+        <span>PNG, JPG · Maks. 5MB · 800×1000px önerilen</span>
+      </div>
+      <div class="form-row">
+        <div>
+          <label class="form-label">Ürün Adı</label>
+          <input class="form-input" type="text" value="Lüks Keten Elbise">
+        </div>
+        <div>
+          <label class="form-label">SKU Kodu</label>
+          <input class="form-input" type="text" value="LNE-001-CRM">
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label class="form-label">Fiyat (₺)</label>
+          <input class="form-input" type="number" value="1290">
+        </div>
+        <div>
+          <label class="form-label">İndirimli Fiyat (₺)</label>
+          <input class="form-input" type="number" placeholder="Boş bırak = indirim yok">
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label class="form-label">Kategori</label>
+          <select class="form-select">
+            <option>Elbise</option>
+            <option>Üst Giyim</option>
+            <option>Aksesuar</option>
+            <option>Ayakkabı</option>
+            <option>Çanta</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label">Stok Adedi</label>
+          <input class="form-input" type="number" value="24">
+        </div>
+      </div>
+      <div class="form-full">
+        <label class="form-label">Ürün Açıklaması</label>
+        <textarea class="form-textarea">Doğal keten kumaştan üretilmiş, nefes alan yazlık elbise. Kıbrıs sıcağında şık ve rahat.</textarea>
+      </div>
+      <div class="form-full">
+        <label class="form-label">Renkler</label>
+        <div class="color-swatches">
+          <div class="color-swatch selected" style="background:#F0E0D0;" title="Krem"></div>
+          <div class="color-swatch" style="background:#C1603A;" title="Terra"></div>
+          <div class="color-swatch" style="background:#8B9E8A;" title="Sage"></div>
+          <div class="color-swatch" style="background:#2C1A0E;" title="Koyu"></div>
+          <div class="color-swatch" style="background:#E8CDB5;" title="Blush"></div>
+        </div>
+      </div>
+      <div class="form-full">
+        <label class="form-label">Bedenler</label>
+        <div class="size-chips">
+          <div class="size-chip">XS</div>
+          <div class="size-chip selected">S</div>
+          <div class="size-chip selected">M</div>
+          <div class="size-chip selected">L</div>
+          <div class="size-chip">XL</div>
+          <div class="size-chip">2XL</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label class="form-label">Yayın Durumu</label>
+          <select class="form-select">
+            <option>Aktif</option>
+            <option>Taslak</option>
+            <option>Arşiv</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label">Koleksiyon</label>
+          <select class="form-select">
+            <option>Terra Rossa</option>
+            <option>Sage Garden</option>
+            <option>Blush Edit</option>
+            <option>Ateş Serisi</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="tb-btn tb-btn-outline" onclick="closeModal()">İptal</button>
+      <button class="tb-btn" style="background:var(--terracotta);color:white;" onclick="saveProduct()">
+        <i class="fa-solid fa-check"></i> Kaydet
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fa-solid fa-circle-check"></i>
+  <span id="toastMsg">Ürün kaydedildi</span>
+</div>
+
+<script>
+function openModal() {
+  document.getElementById('productModal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('productModal').classList.remove('open');
+}
+function saveProduct() {
+  closeModal();
+  showToast('Ürün başarıyla kaydedildi');
+}
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg || 'İşlem tamamlandı';
+  t.querySelector('i').className = type === 'danger'
+    ? 'fa-solid fa-circle-xmark' 
+    : 'fa-solid fa-circle-check';
+  t.querySelector('i').style.color = type === 'danger' ? '#C1603A' : '#4CAF7D';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Tab switching
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// Color swatches
+document.querySelectorAll('.color-swatch').forEach(sw => {
+  sw.addEventListener('click', function() {
+    this.classList.toggle('selected');
+  });
+});
+
+// Size chips
+document.querySelectorAll('.size-chip').forEach(chip => {
+  chip.addEventListener('click', function() {
+    this.classList.toggle('selected');
+  });
+});
+
+// Close modal on overlay click
+document.getElementById('productModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+
+<!-- DEV/SOY ADMIN NAVIGATION BAR -->
+<div style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(8,8,8,0.97);border-top:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;padding:0 16px 0 8px;height:46px;overflow:hidden;">
+  <div style="display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;">
+    <a href="../devsoy-web.html" style="display:inline-flex;align-items:center;gap:7px;padding:10px 16px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;text-decoration:none;border-right:1px solid rgba(255,255,255,0.07);white-space:nowrap;flex-shrink:0;">
+      <span style="width:18px;height:18px;background:#C9A84C;clip-path:polygon(0 0,100% 0,100% 72%,72% 100%,0 100%);display:inline-flex;align-items:center;justify-content:center;font-size:8px;color:#080808;font-weight:700;">DS</span>
+      Dev/Soy
+    </a>
+    <a href="../admin/admin-butik.html" style="display:inline-flex;align-items:center;gap:5px;padding:10px 12px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;color:#C9A84C;border-bottom:2px solid #C9A84C;;white-space:nowrap;">👗 Butik Admin</a><a href="../admin/admin-kirtasiye.html" style="display:inline-flex;align-items:center;gap:5px;padding:10px 12px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;border-bottom:2px solid transparent;;white-space:nowrap;">✏️ Kırtasiye Admin</a><a href="../admin/admin-spor.html" style="display:inline-flex;align-items:center;gap:5px;padding:10px 12px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;border-bottom:2px solid transparent;;white-space:nowrap;">🏃 Spor Admin</a><a href="../admin/admin-arac-parca.html" style="display:inline-flex;align-items:center;gap:5px;padding:10px 12px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;border-bottom:2px solid transparent;;white-space:nowrap;">⚙️ Araç Admin</a><a href="../admin/admin-galeri.html" style="display:inline-flex;align-items:center;gap:5px;padding:10px 12px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;border-bottom:2px solid transparent;;white-space:nowrap;">🎨 Galeri Admin</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px;border-left:1px solid rgba(255,255,255,0.07);">
+    <a href="../demos/demo-butik.html" style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.6);text-decoration:none;white-space:nowrap;" onmouseover="this.style.borderColor='rgba(201,168,76,0.4)';this.style.color='#C9A84C'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.6)'"><i class="fa-solid fa-eye" style="font-size:10px;"></i> 👗 Siteyi Gör</a>
+  </div>
+</div>
+<div style="height:46px;"></div>
+<!-- /DEV/SOY ADMIN NAVIGATION BAR -->
+
+</body>
+</html>
