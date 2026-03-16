@@ -205,6 +205,8 @@ nav.scrolled {
   display: flex; align-items: center; justify-content: center;
   font-size: 200px;
   background: linear-gradient(145deg, #E8E0D4, #D4C8B8, #C8B8A4);
+  background-image: url('https://images.pexels.com/photos/2480854/pexels-photo-2480854.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+  background-size: cover; background-position: center;
   position: relative;
 }
 
@@ -312,12 +314,12 @@ nav.scrolled {
   transition: box-shadow 0.3s;
 }
 
-.ac1 { background: linear-gradient(145deg, #E8D8C8, #C4AA92); }
-.ac2 { background: linear-gradient(145deg, #C8D4CC, #A0B4A8); }
-.ac3 { background: linear-gradient(145deg, #D4C8E4, #B0A0CC); }
-.ac4 { background: linear-gradient(145deg, #E4D4C4, #C8B49A); }
-.ac5 { background: linear-gradient(145deg, #CCE0D8, #A0C0B4); }
-.ac6 { background: linear-gradient(145deg, #E8E0C8, #CCC0A0); }
+.ac1 { background: linear-gradient(145deg, #E8D8C8, #C4AA92); background-image: url('https://images.pexels.com/photos/7149639/pexels-photo-7149639.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.ac2 { background: linear-gradient(145deg, #C8D4CC, #A0B4A8); background-image: url('https://images.pexels.com/photos/3906096/pexels-photo-3906096.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.ac3 { background: linear-gradient(145deg, #D4C8E4, #B0A0CC); background-image: url('https://images.pexels.com/photos/1416367/pexels-photo-1416367.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.ac4 { background: linear-gradient(145deg, #E4D4C4, #C8B49A); background-image: url('https://images.pexels.com/photos/1566988/pexels-photo-1566988.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.ac5 { background: linear-gradient(145deg, #CCE0D8, #A0C0B4); background-image: url('https://images.pexels.com/photos/5654743/pexels-photo-5654743.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.ac6 { background: linear-gradient(145deg, #E8E0C8, #CCC0A0); background-image: url('https://images.pexels.com/photos/1548110/pexels-photo-1548110.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
 
 .artwork-card-title {
   font-family: 'Libre Baskerville', serif;
@@ -571,6 +573,109 @@ footer {
 .hero-big-title { animation: fadeIn 0.7s ease 0.2s both; }
 .hero-desc { animation: fadeIn 0.7s ease 0.35s both; }
 .hero-actions { animation: fadeIn 0.7s ease 0.5s both; }
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+
+  .hero-inner, .hero-content-wrap, .hero-grid, .hero-layout {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .artwork-grid, .gallery-grid, .grid-3, .grid-4,
+  [class*="artwork-grid"], [class*="gallery-grid"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  nav, .navbar, .nav { padding: 0 1rem; }
+  .nav-links, .nav-menu {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10,10,10,0.97);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    z-index: 999;
+  }
+  .nav-links.open, .nav-menu.open { display: flex; }
+  .hamburger, .menu-btn, .nav-toggle {
+    display: flex !important;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    background: none; border: none; padding: 8px;
+  }
+  .hamburger span, .menu-btn span {
+    display: block; width: 24px; height: 2px;
+    background: currentColor;
+    transition: 0.3s;
+  }
+
+  .hero, [class*="hero-section"] {
+    min-height: 70vh !important;
+    padding: 6rem 1.5rem 3rem !important;
+  }
+  .hero-inner, .hero-content, .hero-layout, .hero-grid {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    text-align: center !important;
+  }
+  .hero-artwork, .hero-image-area, [class*="hero-art"] {
+    width: 100% !important;
+    height: 300px !important;
+    max-width: 100% !important;
+  }
+
+  h1, .hero-title, [class*="hero"] h1 { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
+  h2, .section-title { font-size: clamp(1.5rem, 5vw, 2.5rem) !important; }
+  h3 { font-size: clamp(1.1rem, 4vw, 1.5rem) !important; }
+
+  section, [class*="-section"] { padding: 3rem 1.5rem !important; }
+  .container, .section-inner { padding: 0 1.5rem !important; max-width: 100% !important; }
+
+  .artwork-grid, .gallery-grid, .grid-2, .grid-3, .grid-4,
+  [class*="artwork-grid"], [class*="gallery-grid"] {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .two-col, .split-layout, .about-grid, .info-grid,
+  [class*="two-col"], [class*="split"] {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .ac1, .ac2, .ac3, .ac4, .ac5, .ac6, .ac7, .ac8, .ac9,
+  .artwork-card-img, .artwork-image, [class*="artwork-card"] {
+    height: 240px !important;
+  }
+
+  .btn, [class*="btn"], button:not(.hamburger):not(.menu-btn) {
+    width: 100% !important;
+    max-width: 320px !important;
+    margin: 0.5rem auto !important;
+    display: block !important;
+  }
+
+  .promo-row, .feature-row, .highlight-row, .banner-inner, .exhibit-info {
+    flex-direction: column !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  h1, .hero-title { font-size: clamp(1.8rem, 9vw, 2.8rem) !important; }
+  .hero, [class*="hero-section"] { padding: 5rem 1rem 2rem !important; }
+  section, [class*="-section"] { padding: 2rem 1rem !important; }
+  .ac1, .ac2, .ac3, .ac4, .ac5, .ac6, .artwork-card-img { height: 200px !important; }
+}
 </style>
 </head>
 <body>
@@ -629,7 +734,7 @@ footer {
       </div>
     </div>
     <div class="hero-visual">
-      <div class="hero-artwork">🎨</div>
+      <div class="hero-artwork" style="font-size:0">🎨</div>
       <div class="artwork-meta">
         <div class="artwork-title">Kıbrıs Akşamı</div>
         <div class="artwork-artist">Zeynep Arslan · 2025</div>
@@ -660,37 +765,37 @@ footer {
     </div>
     <div class="exh-artworks">
       <div class="artwork-card">
-        <div class="artwork-card-img ac1">🌅</div>
+        <div class="artwork-card-img ac1" style="font-size:0">🌅</div>
         <div class="artwork-card-title">Girne Sabahı</div>
         <div class="artwork-card-meta">Ahmet Çelik · Tuval</div>
         <div class="artwork-card-price">₺12.000</div>
       </div>
       <div class="artwork-card">
-        <div class="artwork-card-img ac2">🌿</div>
+        <div class="artwork-card-img ac2" style="font-size:0">🌿</div>
         <div class="artwork-card-title">Zeytin Bahçesi</div>
         <div class="artwork-card-meta">Selin Kurt · Suluboya</div>
         <div class="artwork-card-price">₺8.500</div>
       </div>
       <div class="artwork-card">
-        <div class="artwork-card-img ac3">🌊</div>
+        <div class="artwork-card-img ac3" style="font-size:0">🌊</div>
         <div class="artwork-card-title">Akdeniz Hüznü</div>
         <div class="artwork-card-meta">Mert Arslan · Karışık</div>
         <div class="artwork-card-price">₺24.000</div>
       </div>
       <div class="artwork-card">
-        <div class="artwork-card-img ac4">🏛️</div>
+        <div class="artwork-card-img ac4" style="font-size:0">🏛️</div>
         <div class="artwork-card-title">Lefkoşa Gecesi</div>
         <div class="artwork-card-meta">Derya Öz · Akrilik</div>
         <div class="artwork-card-price">₺15.750</div>
       </div>
       <div class="artwork-card">
-        <div class="artwork-card-img ac5">🐚</div>
+        <div class="artwork-card-img ac5" style="font-size:0">🐚</div>
         <div class="artwork-card-title">Deniz Kabukları</div>
         <div class="artwork-card-meta">Neslihan Ay · Suluboya</div>
         <div class="artwork-card-price">₺6.200</div>
       </div>
       <div class="artwork-card">
-        <div class="artwork-card-img ac6">☀️</div>
+        <div class="artwork-card-img ac6" style="font-size:0">☀️</div>
         <div class="artwork-card-title">Ağustos Işığı</div>
         <div class="artwork-card-meta">Cem Dinç · Tuval Yağlı</div>
         <div class="artwork-card-price">₺31.500</div>

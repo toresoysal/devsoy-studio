@@ -268,6 +268,8 @@ nav {
 
 .hero-right {
   background: linear-gradient(135deg, #1A2433, #0D1117);
+  background-image: url('https://images.pexels.com/photos/4480505/pexels-photo-4480505.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+  background-size: cover; background-position: center;
   display: flex; align-items: center; justify-content: center;
   position: relative; overflow: hidden; padding: 40px;
 }
@@ -444,9 +446,9 @@ nav {
   position: relative;
 }
 
-.pi-steel { background: linear-gradient(135deg, #1C2533, #0D1520); }
-.pi-rust { background: linear-gradient(135deg, #2A1815, #150C0A); }
-.pi-chrome { background: linear-gradient(135deg, #1E2328, #12161C); }
+.pi-steel { background: linear-gradient(135deg, #1C2533, #0D1520); background-image: url('https://images.pexels.com/photos/833320/pexels-photo-833320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.pi-rust { background: linear-gradient(135deg, #2A1815, #150C0A); background-image: url('https://images.pexels.com/photos/4489734/pexels-photo-4489734.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.pi-chrome { background: linear-gradient(135deg, #1E2328, #12161C); background-image: url('https://images.pexels.com/photos/30169820/pexels-photo-30169820.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
 
 .part-condition {
   position: absolute; top: 10px; left: 10px;
@@ -621,6 +623,109 @@ footer {
 }
 
 .dso-tag:hover { background: #FF6B2B; }
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+
+  .hero-inner, .hero-content-wrap, .hero-grid, .hero-layout {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .product-grid, .parts-grid, .grid-3, .grid-4,
+  [class*="product-grid"], [class*="parts"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  nav, .navbar, .nav { padding: 0 1rem; }
+  .nav-links, .nav-menu {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10,10,10,0.97);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    z-index: 999;
+  }
+  .nav-links.open, .nav-menu.open { display: flex; }
+  .hamburger, .menu-btn, .nav-toggle {
+    display: flex !important;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    background: none; border: none; padding: 8px;
+  }
+  .hamburger span, .menu-btn span {
+    display: block; width: 24px; height: 2px;
+    background: currentColor;
+    transition: 0.3s;
+  }
+
+  .hero, [class*="hero-section"] {
+    min-height: 70vh !important;
+    padding: 6rem 1.5rem 3rem !important;
+  }
+  .hero-inner, .hero-content, .hero-layout, .hero-grid {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    text-align: center !important;
+  }
+  .hero-car-display, .hero-image-area, [class*="hero-img"] {
+    width: 100% !important;
+    height: 280px !important;
+    max-width: 100% !important;
+  }
+
+  h1, .hero-title, [class*="hero"] h1 { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
+  h2, .section-title { font-size: clamp(1.5rem, 5vw, 2.5rem) !important; }
+  h3 { font-size: clamp(1.1rem, 4vw, 1.5rem) !important; }
+
+  section, [class*="-section"] { padding: 3rem 1.5rem !important; }
+  .container, .section-inner { padding: 0 1.5rem !important; max-width: 100% !important; }
+
+  .product-grid, .parts-grid, .grid-2, .grid-3, .grid-4,
+  [class*="product-grid"], [class*="parts-grid"] {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .two-col, .split-layout, .about-grid, .info-grid,
+  [class*="two-col"], [class*="split"] {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .pi-steel, .pi-rust, .pi-chrome,
+  [class*="pi-"], .part-img, .product-image {
+    height: 200px !important;
+  }
+
+  .btn, [class*="btn"], button:not(.hamburger):not(.menu-btn) {
+    width: 100% !important;
+    max-width: 320px !important;
+    margin: 0.5rem auto !important;
+    display: block !important;
+  }
+
+  .promo-row, .feature-row, .highlight-row, .banner-inner, .stats-row {
+    flex-direction: column !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  h1, .hero-title { font-size: clamp(1.8rem, 9vw, 2.8rem) !important; }
+  .hero, [class*="hero-section"] { padding: 5rem 1rem 2rem !important; }
+  section, [class*="-section"] { padding: 2rem 1rem !important; }
+  .pi-steel, .pi-rust, .pi-chrome, [class*="pi-"], .part-img { height: 160px !important; }
+}
 </style>
 </head>
 <body>
@@ -708,7 +813,7 @@ footer {
   </div>
   <div class="hero-right">
     <div class="hero-car-display">
-      <span class="car-emoji-big">🚗</span>
+      <span class="car-emoji-big" style="font-size:0">🚗</span>
       <div class="car-specs">
         <div class="car-spec">
           <div class="cs-val">500K+</div>
@@ -780,7 +885,7 @@ footer {
       <div class="part-card">
         <div class="part-img pi-steel">
           <span class="part-condition cond-new">YENİ</span>
-          🔧
+          <span style="font-size:0">🔧</span>
         </div>
         <div class="part-info">
           <div class="part-sku">SKU: MF-BMW-E46-001</div>
@@ -796,7 +901,7 @@ footer {
       <div class="part-card">
         <div class="part-img pi-rust">
           <span class="part-condition cond-oem">OEM</span>
-          ⚙️
+          <span style="font-size:0">⚙️</span>
         </div>
         <div class="part-info">
           <div class="part-sku">SKU: BP-VW-GOLF7-024</div>
@@ -812,7 +917,7 @@ footer {
       <div class="part-card">
         <div class="part-img pi-chrome">
           <span class="part-condition cond-new">YENİ</span>
-          🔩
+          <span style="font-size:0">🔩</span>
         </div>
         <div class="part-info">
           <div class="part-sku">SKU: SP-TOYO-COROLLA-18</div>
@@ -826,9 +931,9 @@ footer {
         </div>
       </div>
       <div class="part-card">
-        <div class="part-img pi-steel">
+        <div class="part-img pi-steel" style="background-image: url('https://images.pexels.com/photos/34369683/pexels-photo-34369683.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;">
           <span class="part-condition cond-oem">OEM</span>
-          🔋
+          <span style="font-size:0">🔋</span>
         </div>
         <div class="part-info">
           <div class="part-sku">SKU: BAT-FORD-FOCUS-17</div>
@@ -842,9 +947,9 @@ footer {
         </div>
       </div>
       <div class="part-card">
-        <div class="part-img pi-rust">
+        <div class="part-img pi-rust" style="background-image: url('https://images.pexels.com/photos/33559354/pexels-photo-33559354.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;">
           <span class="part-condition cond-used">2.EL</span>
-          💡
+          <span style="font-size:0">💡</span>
         </div>
         <div class="part-info">
           <div class="part-sku">SKU: ALT-MERC-C200-15</div>
@@ -858,9 +963,9 @@ footer {
         </div>
       </div>
       <div class="part-card">
-        <div class="part-img pi-chrome">
+        <div class="part-img pi-chrome" style="background-image: url('https://images.pexels.com/photos/32609646/pexels-photo-32609646.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;">
           <span class="part-condition cond-new">YENİ</span>
-          🌡️
+          <span style="font-size:0">🌡️</span>
         </div>
         <div class="part-info">
           <div class="part-sku">SKU: RAD-HON-CIVIC-20</div>

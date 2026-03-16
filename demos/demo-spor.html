@@ -215,6 +215,8 @@ nav.scrolled {
 .showcase-main {
   width: 100%; max-width: 500px; aspect-ratio: 3/4;
   background: linear-gradient(145deg, #1A2235, #111827);
+  background-image: url('https://images.pexels.com/photos/5961847/pexels-photo-5961847.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+  background-size: cover; background-position: center;
   border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
   font-size: 160px;
@@ -386,9 +388,9 @@ nav.scrolled {
   transition: transform 0.6s ease;
 }
 
-.ci1 { background: linear-gradient(145deg, #1A2235, #0D1117); }
-.ci2 { background: linear-gradient(145deg, #1A2235, #0D1117); }
-.ci3 { background: linear-gradient(145deg, #1A2235, #0D1117); }
+.ci1 { background: linear-gradient(145deg, #1A2235, #0D1117); background-image: url('https://images.pexels.com/photos/17883716/pexels-photo-17883716.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.ci2 { background: linear-gradient(145deg, #1A2235, #0D1117); background-image: url('https://images.pexels.com/photos/3931060/pexels-photo-3931060.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.ci3 { background: linear-gradient(145deg, #1A2235, #0D1117); background-image: url('https://images.pexels.com/photos/6720444/pexels-photo-6720444.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
 
 .col-body { padding: 28px 32px 32px; }
 
@@ -458,10 +460,10 @@ nav.scrolled {
   transition: filter 0.3s;
 }
 
-.pa1 { background: linear-gradient(135deg, #1A2235, #0D1117); }
-.pa2 { background: linear-gradient(135deg, #1A2235, #0D1117); }
-.pa3 { background: linear-gradient(135deg, #1A2235, #0D1117); }
-.pa4 { background: linear-gradient(135deg, #1A2235, #0D1117); }
+.pa1 { background: linear-gradient(135deg, #1A2235, #0D1117); background-image: url('https://images.pexels.com/photos/7992078/pexels-photo-7992078.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.pa2 { background: linear-gradient(135deg, #1A2235, #0D1117); background-image: url('https://images.pexels.com/photos/4754133/pexels-photo-4754133.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.pa3 { background: linear-gradient(135deg, #1A2235, #0D1117); background-image: url('https://images.pexels.com/photos/2294403/pexels-photo-2294403.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.pa4 { background: linear-gradient(135deg, #1A2235, #0D1117); background-image: url('https://images.pexels.com/photos/3760259/pexels-photo-3760259.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
 
 .prod-cta {
   position: absolute; bottom: 0; left: 0; right: 0;
@@ -650,6 +652,109 @@ footer {
 
 /* Nav scroll */
 window-scroll-handled-by-js {}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+
+  .hero-inner, .hero-content-wrap, .hero-grid, .hero-layout {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .product-grid, .products-grid, .grid-3, .grid-4,
+  [class*="product-grid"], [class*="collection-grid"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  nav, .navbar, .nav { padding: 0 1rem; }
+  .nav-links, .nav-menu {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(13,17,23,0.97);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    z-index: 999;
+  }
+  .nav-links.open, .nav-menu.open { display: flex; }
+  .hamburger, .menu-btn, .nav-toggle {
+    display: flex !important;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    background: none; border: none; padding: 8px;
+  }
+  .hamburger span, .menu-btn span {
+    display: block; width: 24px; height: 2px;
+    background: #00E5FF;
+    transition: 0.3s;
+  }
+
+  .hero, [class*="hero-section"] {
+    min-height: 70vh !important;
+    padding: 6rem 1.5rem 3rem !important;
+  }
+  .hero-inner, .hero-content, .hero-layout, .hero-grid, .showcase-grid {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    text-align: center !important;
+  }
+  .hero-image-area, .hero-visual, .showcase-main, [class*="hero-img"] {
+    width: 100% !important;
+    height: 300px !important;
+    max-width: 100% !important;
+  }
+
+  h1, .hero-title, [class*="hero"] h1 { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
+  h2, .section-title { font-size: clamp(1.5rem, 5vw, 2.5rem) !important; }
+  h3 { font-size: clamp(1.1rem, 4vw, 1.5rem) !important; }
+
+  section, [class*="-section"] { padding: 3rem 1.5rem !important; }
+  .container, .section-inner { padding: 0 1.5rem !important; max-width: 100% !important; }
+
+  .product-grid, .products-grid, .grid-2, .grid-3, .grid-4,
+  [class*="product-grid"], .collection-grid, .items-grid, .pa-grid, .ci-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .two-col, .split-layout, .about-grid, .info-grid,
+  [class*="two-col"], [class*="split"] {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .pa1, .pa2, .pa3, .pa4, .ci1, .ci2, .ci3,
+  .product-image, [class*="product-img"] {
+    height: 220px !important;
+  }
+
+  .btn, [class*="btn"], button:not(.hamburger):not(.menu-btn) {
+    width: 100% !important;
+    max-width: 320px !important;
+    margin: 0.5rem auto !important;
+    display: block !important;
+  }
+
+  .promo-row, .feature-row, .highlight-row, .banner-inner, .hero-stats {
+    flex-direction: column !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  h1, .hero-title { font-size: clamp(1.8rem, 9vw, 2.8rem) !important; }
+  .hero, [class*="hero-section"] { padding: 5rem 1rem 2rem !important; }
+  section, [class*="-section"] { padding: 2rem 1rem !important; }
+  .pa1, .pa2, .pa3, .pa4, .ci1, .ci2, .ci3 { height: 180px !important; }
+}
 </style>
 </head>
 <body>
@@ -693,7 +798,7 @@ window-scroll-handled-by-js {}
       </div>
     </div>
     <div class="hero-showcase">
-      <div class="showcase-main">
+      <div class="showcase-main" style="font-size:0">
         <div class="showcase-tag">Sezonun Parçası</div>
         🏃
         <div class="showcase-price">
@@ -748,7 +853,7 @@ window-scroll-handled-by-js {}
   <div class="col-grid">
     <div class="col-item">
       <div class="col-img">
-        <div class="col-img-inner ci1">🏋️</div>
+        <div class="col-img-inner ci1" style="font-size:0">🏋️</div>
       </div>
       <div class="col-body">
         <div class="col-num">01 ·</div>
@@ -759,7 +864,7 @@ window-scroll-handled-by-js {}
     </div>
     <div class="col-item">
       <div class="col-img">
-        <div class="col-img-inner ci2">🧘</div>
+        <div class="col-img-inner ci2" style="font-size:0">🧘</div>
       </div>
       <div class="col-body">
         <div class="col-num">02 ·</div>
@@ -770,7 +875,7 @@ window-scroll-handled-by-js {}
     </div>
     <div class="col-item">
       <div class="col-img">
-        <div class="col-img-inner ci3">🏃</div>
+        <div class="col-img-inner ci3" style="font-size:0">🏃</div>
       </div>
       <div class="col-body">
         <div class="col-num">03 ·</div>
@@ -793,8 +898,8 @@ window-scroll-handled-by-js {}
   </div>
   <div class="prod-grid">
     <div class="prod-item">
-      <div class="prod-img-area pa1">
-        <div class="prod-cta">Sepete Ekle</div>
+      <div class="prod-img-area pa1" style="font-size:0">
+        <div class="prod-cta" style="font-size:10px">Sepete Ekle</div>
         👕
       </div>
       <div class="prod-meta">
@@ -805,8 +910,8 @@ window-scroll-handled-by-js {}
       </div>
     </div>
     <div class="prod-item">
-      <div class="prod-img-area pa2">
-        <div class="prod-cta">Sepete Ekle</div>
+      <div class="prod-img-area pa2" style="font-size:0">
+        <div class="prod-cta" style="font-size:10px">Sepete Ekle</div>
         🩳
       </div>
       <div class="prod-meta">
@@ -817,8 +922,8 @@ window-scroll-handled-by-js {}
       </div>
     </div>
     <div class="prod-item">
-      <div class="prod-img-area pa3">
-        <div class="prod-cta">Sepete Ekle</div>
+      <div class="prod-img-area pa3" style="font-size:0">
+        <div class="prod-cta" style="font-size:10px">Sepete Ekle</div>
         🎽
       </div>
       <div class="prod-meta">
@@ -829,8 +934,8 @@ window-scroll-handled-by-js {}
       </div>
     </div>
     <div class="prod-item">
-      <div class="prod-img-area pa4">
-        <div class="prod-cta">Sepete Ekle</div>
+      <div class="prod-img-area pa4" style="font-size:0">
+        <div class="prod-cta" style="font-size:10px">Sepete Ekle</div>
         🧥
       </div>
       <div class="prod-meta">

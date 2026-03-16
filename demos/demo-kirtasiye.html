@@ -249,6 +249,9 @@ nav {
   position: relative; z-index: 1;
   display: flex; align-items: center; justify-content: center;
   padding: 60px;
+  background-image: url('https://images.pexels.com/photos/9930282/pexels-photo-9930282.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+  background-size: cover;
+  background-position: center;
 }
 
 .hero-canvas {
@@ -373,11 +376,11 @@ nav {
   border-bottom: 2px solid var(--dark);
 }
 
-.pimg1 { background: #FFF9E6; }
-.pimg2 { background: #E6FFF8; }
-.pimg3 { background: #FFE6E6; }
-.pimg4 { background: #E6F0FF; }
-.pimg5 { background: #F0E6FF; }
+.pimg1 { background: #FFF9E6; background-image: url('https://images.pexels.com/photos/9099585/pexels-photo-9099585.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.pimg2 { background: #E6FFF8; background-image: url('https://images.pexels.com/photos/5594313/pexels-photo-5594313.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.pimg3 { background: #FFE6E6; background-image: url('https://images.pexels.com/photos/636242/pexels-photo-636242.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.pimg4 { background: #E6F0FF; background-image: url('https://images.pexels.com/photos/159538/pexels-photo-159538.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
+.pimg5 { background: #F0E6FF; background-image: url('https://images.pexels.com/photos/11154571/pexels-photo-11154571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center; }
 
 .prod-info { padding: 14px; }
 
@@ -623,6 +626,108 @@ footer {
 }
 
 .dso-tag:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--dark); }
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+
+  .hero-inner, .hero-content-wrap, .hero-grid, .hero-layout {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .product-grid, .products-grid, .grid-3, .grid-4,
+  [class*="product-grid"], [class*="grid"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  nav, .navbar, .nav { padding: 0 1rem; }
+  .nav-links, .nav-menu {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.95);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    z-index: 999;
+  }
+  .nav-links.open, .nav-menu.open { display: flex; }
+  .hamburger, .menu-btn, .nav-toggle {
+    display: flex !important;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    background: none; border: none; padding: 8px;
+  }
+  .hamburger span, .menu-btn span {
+    display: block; width: 24px; height: 2px;
+    background: currentColor;
+    transition: 0.3s;
+  }
+
+  .hero, [class*="hero-section"] {
+    min-height: 70vh !important;
+    padding: 6rem 1.5rem 3rem !important;
+  }
+  .hero-inner, .hero-content, .hero-layout, .hero-grid {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    text-align: center !important;
+  }
+  .hero-image-area, .hero-visual, [class*="hero-img"] {
+    width: 100% !important;
+    height: 300px !important;
+    max-width: 100% !important;
+  }
+
+  h1, .hero-title, [class*="hero"] h1 { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
+  h2, .section-title { font-size: clamp(1.5rem, 5vw, 2.5rem) !important; }
+  h3 { font-size: clamp(1.1rem, 4vw, 1.5rem) !important; }
+
+  section, [class*="-section"] { padding: 3rem 1.5rem !important; }
+  .container, .section-inner { padding: 0 1.5rem !important; max-width: 100% !important; }
+
+  .product-grid, .products-grid, .grid-2, .grid-3, .grid-4,
+  [class*="product-grid"], .collection-grid, .items-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .two-col, .split-layout, .about-grid, .info-grid,
+  [class*="two-col"], [class*="split"] {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .product-image, .col-image, [class*="prod-img"], [class*="pimg"] {
+    height: 220px !important;
+  }
+
+  .btn, [class*="btn"], button:not(.hamburger):not(.menu-btn) {
+    width: 100% !important;
+    max-width: 320px !important;
+    margin: 0.5rem auto !important;
+    display: block !important;
+  }
+
+  .promo-row, .feature-row, .highlight-row, .banner-inner {
+    flex-direction: column !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  h1, .hero-title { font-size: clamp(1.8rem, 9vw, 2.8rem) !important; }
+  .hero, [class*="hero-section"] { padding: 5rem 1rem 2rem !important; }
+  section, [class*="-section"] { padding: 2rem 1rem !important; }
+  .product-image, [class*="prod-img"], [class*="pimg"] { height: 180px !important; }
+}
 </style>
 </head>
 <body>
@@ -705,21 +810,21 @@ footer {
   </div>
   <div class="hero-right">
     <div class="hero-canvas">
-      <div class="canvas-block cb1">
+      <div class="canvas-block cb1" style="font-size:0">
         ✏️
-        <div class="canvas-label">KALEMLER</div>
+        <div class="canvas-label" style="font-size:9px">KALEMLER</div>
       </div>
-      <div class="canvas-block cb2">
+      <div class="canvas-block cb2" style="font-size:0">
         📚
-        <div class="canvas-label">DEFTERLER</div>
+        <div class="canvas-label" style="font-size:9px">DEFTERLER</div>
       </div>
-      <div class="canvas-block cb3">
+      <div class="canvas-block cb3" style="font-size:0">
         🎨
-        <div class="canvas-label">SANAT</div>
+        <div class="canvas-label" style="font-size:9px">SANAT</div>
       </div>
-      <div class="canvas-block cb4">
+      <div class="canvas-block cb4" style="font-size:0">
         📐
-        <div class="canvas-label">MİMARİ</div>
+        <div class="canvas-label" style="font-size:9px">MİMARİ</div>
       </div>
     </div>
   </div>
@@ -773,7 +878,7 @@ footer {
   <div class="products-grid">
     <div class="prod-card">
       <div class="prod-badge badge-new">YENİ</div>
-      <div class="prod-img pimg1">🖊️</div>
+      <div class="prod-img pimg1" style="font-size:0">🖊️</div>
       <div class="prod-info">
         <div class="prod-name">Pilot Kalem Seti 12li</div>
         <div class="prod-price">₺89</div>
@@ -782,7 +887,7 @@ footer {
     </div>
     <div class="prod-card">
       <div class="prod-badge badge-sale">%25</div>
-      <div class="prod-img pimg2">📓</div>
+      <div class="prod-img pimg2" style="font-size:0">📓</div>
       <div class="prod-info">
         <div class="prod-name">Hardcover Defter A5</div>
         <div class="prod-price">₺65</div>
@@ -791,7 +896,7 @@ footer {
     </div>
     <div class="prod-card">
       <div class="prod-badge badge-hot">🔥 HOT</div>
-      <div class="prod-img pimg3">🎨</div>
+      <div class="prod-img pimg3" style="font-size:0">🎨</div>
       <div class="prod-info">
         <div class="prod-name">Suluboya Seti 24 Renk</div>
         <div class="prod-price">₺145</div>
@@ -799,7 +904,7 @@ footer {
       </div>
     </div>
     <div class="prod-card">
-      <div class="prod-img pimg4">📏</div>
+      <div class="prod-img pimg4" style="font-size:0">📏</div>
       <div class="prod-info">
         <div class="prod-name">Çift Taraflı Cetvel 30cm</div>
         <div class="prod-price">₺22</div>
@@ -808,7 +913,7 @@ footer {
     </div>
     <div class="prod-card">
       <div class="prod-badge badge-new">YENİ</div>
-      <div class="prod-img pimg5">🖍️</div>
+      <div class="prod-img pimg5" style="font-size:0">🖍️</div>
       <div class="prod-info">
         <div class="prod-name">Pastel Kuru Boya Seti</div>
         <div class="prod-price">₺178</div>
