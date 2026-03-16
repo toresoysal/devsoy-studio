@@ -8,16 +8,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 :root {
-  --black: #080808;
-  --deep: #0F0F0F;
-  --surface: #161616;
-  --border: rgba(255,255,255,0.06);
-  --gold: #C9A84C;
+  --bg:        #0D1117;
+  --bg-alt:    #111827;
+  --surface:   #1A2235;
+  --electric:  #00E5FF;
+  --gold:      #C9A84C;
+  --red:       #FF3D3D;
+  --text:      #F0F4F8;
+  --muted:     rgba(240,244,248,0.45);
+  --border:    rgba(0,229,255,0.12);
+  --black:     #080808;
   --gold-light: #E8D48B;
-  --gold-dim: rgba(201,168,76,0.15);
-  --white: #FFFFFF;
-  --gray: rgba(255,255,255,0.35);
-  --gray-dim: rgba(255,255,255,0.08);
+  --gold-dim:  rgba(201,168,76,0.15);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,14 +27,21 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Raleway', sans-serif;
-  background: var(--black);
-  color: var(--white);
+  background: var(--bg);
+  color: var(--text);
   overflow-x: hidden;
 }
 
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 150px 150px;
+}
+
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--black); }
-::-webkit-scrollbar-thumb { background: var(--gold); }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--electric); }
 
 /* ── NAV ── */
 nav {
@@ -43,7 +52,7 @@ nav {
 }
 
 nav.scrolled {
-  background: rgba(8,8,8,0.95);
+  background: rgba(13,17,23,0.96);
   backdrop-filter: blur(20px);
   padding: 18px 72px;
   border-bottom: 1px solid var(--border);
@@ -65,17 +74,17 @@ nav.scrolled {
 
 .nav-links a {
   font-size: 11px; font-weight: 300; letter-spacing: 4px;
-  text-transform: uppercase; color: var(--gray);
+  text-transform: uppercase; color: var(--muted);
   text-decoration: none; transition: color 0.2s;
 }
 
-.nav-links a:hover { color: var(--white); }
+.nav-links a:hover { color: var(--text); }
 
 .nav-right {
   display: flex; align-items: center; gap: 24px;
 }
 
-.nav-right i { color: var(--gray); font-size: 16px; cursor: pointer; transition: color 0.2s; }
+.nav-right i { color: var(--muted); font-size: 16px; cursor: pointer; transition: color 0.2s; }
 .nav-right i:hover { color: var(--gold); }
 
 /* ── HERO ── */
@@ -88,18 +97,29 @@ nav.scrolled {
 /* Dark texture bg */
 .hero-bg {
   position: absolute; inset: 0;
-  background: 
-    radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.03) 0%, transparent 40%),
-    var(--black);
+  background:
+    radial-gradient(ellipse at 70% 50%, rgba(0,229,255,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 40%),
+    linear-gradient(160deg, #0D1117 0%, #111827 100%);
 }
 
 .hero-lines {
   position: absolute; inset: 0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
   background-size: 80px 80px;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(135deg, transparent 40%, rgba(0,229,255,0.04) 100%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .hero-content {
@@ -131,19 +151,20 @@ nav.scrolled {
   font-size: 120px;
   line-height: 0.9;
   letter-spacing: -2px;
-  color: var(--white);
+  color: var(--text);
   margin-bottom: 32px;
+  text-shadow: 0 0 60px rgba(0,229,255,0.15);
 }
 
-.hero-title .gold-line { color: var(--gold); }
+.hero-title .gold-line { color: var(--electric); }
 .hero-title .outline-line {
-  -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+  -webkit-text-stroke: 1px rgba(0,229,255,0.3);
   color: transparent;
 }
 
 .hero-desc {
   font-size: 15px; font-weight: 200; letter-spacing: 1px;
-  color: var(--gray); line-height: 1.9;
+  color: var(--muted); line-height: 1.9;
   max-width: 420px; margin-bottom: 48px;
 }
 
@@ -153,8 +174,8 @@ nav.scrolled {
 
 .btn-gold {
   display: inline-flex; align-items: center; gap: 12px;
-  background: var(--gold);
-  color: var(--black);
+  background: var(--red);
+  color: var(--text);
   font-size: 11px; font-weight: 500; letter-spacing: 4px;
   text-transform: uppercase; text-decoration: none;
   padding: 18px 40px;
@@ -162,13 +183,14 @@ nav.scrolled {
 }
 
 .btn-gold:hover {
-  background: var(--gold-light);
+  background: #FF5555;
   transform: translateX(4px);
+  box-shadow: 0 0 24px rgba(255,61,61,0.35);
 }
 
 .btn-ghost {
   font-size: 11px; font-weight: 300; letter-spacing: 3px;
-  text-transform: uppercase; color: var(--gray);
+  text-transform: uppercase; color: var(--muted);
   text-decoration: none;
   display: flex; align-items: center; gap: 10px;
   transition: color 0.2s;
@@ -177,11 +199,11 @@ nav.scrolled {
 .btn-ghost::after {
   content: '';
   width: 0; height: 1px;
-  background: var(--gold);
+  background: var(--electric);
   transition: width 0.3s;
 }
 
-.btn-ghost:hover { color: var(--gold); }
+.btn-ghost:hover { color: var(--electric); }
 .btn-ghost:hover::after { width: 32px; }
 
 /* Hero right: product showcase */
@@ -192,17 +214,18 @@ nav.scrolled {
 
 .showcase-main {
   width: 100%; max-width: 500px; aspect-ratio: 3/4;
-  background: linear-gradient(145deg, #1A1A1A, #0F0F0F);
+  background: linear-gradient(145deg, #1A2235, #111827);
   border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
   font-size: 160px;
   position: relative; overflow: hidden;
+  box-shadow: 0 0 60px rgba(0,229,255,0.06);
 }
 
 .showcase-main::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(circle at 50% 30%, rgba(201,168,76,0.1) 0%, transparent 60%);
+  background: radial-gradient(circle at 50% 30%, rgba(0,229,255,0.08) 0%, transparent 60%);
 }
 
 .showcase-tag {
@@ -246,8 +269,8 @@ nav.scrolled {
   transition: border-color 0.2s;
 }
 
-.thumb.active { border-color: var(--gold); }
-.thumb:hover { border-color: rgba(201,168,76,0.5); }
+.thumb.active { border-color: var(--electric); }
+.thumb:hover { border-color: rgba(0,229,255,0.5); }
 
 /* Hero metrics */
 .hero-metrics {
@@ -262,17 +285,18 @@ nav.scrolled {
 .metric-val {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 28px; letter-spacing: 2px;
-  color: var(--gold);
+  color: var(--electric);
 }
 .metric-label {
   font-size: 9px; font-weight: 200; letter-spacing: 3px;
-  color: var(--gray); text-transform: uppercase;
+  color: var(--muted); text-transform: uppercase;
 }
 
 /* ── RIBBON ── */
 .ribbon {
   margin-top: 120px;
   display: flex; overflow: hidden;
+  background: var(--bg-alt);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -287,10 +311,10 @@ nav.scrolled {
   padding: 20px 48px;
   font-family: 'Bebas Neue', sans-serif;
   font-size: 14px; letter-spacing: 6px;
-  color: rgba(255,255,255,0.12);
+  color: rgba(240,244,248,0.10);
 }
 
-.ribbon-item span { color: var(--gold); font-size: 8px; }
+.ribbon-item span { color: var(--electric); font-size: 8px; }
 
 @keyframes ribbonScroll {
   from { transform: translateX(0); }
@@ -319,11 +343,12 @@ nav.scrolled {
 .section-title-lux {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 64px; letter-spacing: 4px;
-  color: var(--white); margin-bottom: 60px;
+  color: var(--text); margin-bottom: 60px;
   line-height: 1;
+  text-shadow: 0 0 40px rgba(0,229,255,0.2);
 }
 
-.section-title-lux span { color: var(--gold); }
+.section-title-lux span { color: var(--electric); }
 
 .col-grid {
   display: grid;
@@ -334,14 +359,18 @@ nav.scrolled {
 }
 
 .col-item {
-  background: var(--deep);
+  background: var(--bg-alt);
   display: flex; flex-direction: column;
   position: relative; overflow: hidden;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, border 0.3s, box-shadow 0.3s;
 }
 
-.col-item:hover { background: var(--surface); }
+.col-item:hover {
+  background: var(--surface);
+  border: 1px solid var(--electric);
+  box-shadow: 0 0 20px rgba(0,229,255,0.10);
+}
 .col-item:hover .col-arrow { opacity: 1; transform: translateX(0); }
 .col-item:hover .col-img-inner { transform: scale(1.05); }
 
@@ -357,9 +386,9 @@ nav.scrolled {
   transition: transform 0.6s ease;
 }
 
-.ci1 { background: linear-gradient(145deg, #1A1A1A, #080808); }
-.ci2 { background: linear-gradient(145deg, #1A1510, #0A0805); }
-.ci3 { background: linear-gradient(145deg, #0A1218, #060C10); }
+.ci1 { background: linear-gradient(145deg, #1A2235, #0D1117); }
+.ci2 { background: linear-gradient(145deg, #1A2235, #0D1117); }
+.ci3 { background: linear-gradient(145deg, #1A2235, #0D1117); }
 
 .col-body { padding: 28px 32px 32px; }
 
@@ -371,18 +400,18 @@ nav.scrolled {
 
 .col-name {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 28px; letter-spacing: 3px;
-  color: var(--white); margin-bottom: 6px;
+  font-size: 28px; letter-spacing: 4px;
+  color: var(--text); margin-bottom: 6px;
 }
 
 .col-desc {
   font-size: 12px; font-weight: 200; letter-spacing: 1px;
-  color: var(--gray); line-height: 1.7;
+  color: var(--muted); line-height: 1.7;
 }
 
 .col-arrow {
   position: absolute; bottom: 28px; right: 28px;
-  color: var(--gold); font-size: 18px;
+  color: var(--electric); font-size: 18px;
   opacity: 0; transform: translateX(-8px);
   transition: all 0.3s;
 }
@@ -400,11 +429,11 @@ nav.scrolled {
 .all-link {
   font-family: 'DM Mono', monospace;
   font-size: 10px; letter-spacing: 3px;
-  color: var(--gray); text-decoration: none;
+  color: var(--muted); text-decoration: none;
   text-transform: uppercase;
   transition: color 0.2s;
 }
-.all-link:hover { color: var(--gold); }
+.all-link:hover { color: var(--electric); }
 
 .prod-grid {
   display: grid; grid-template-columns: repeat(4, 1fr);
@@ -413,11 +442,11 @@ nav.scrolled {
 }
 
 .prod-item {
-  background: var(--deep); overflow: hidden; cursor: pointer;
-  transition: background 0.2s;
+  background: var(--bg-alt); overflow: hidden; cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
 }
 
-.prod-item:hover { background: var(--surface); }
+.prod-item:hover { background: var(--surface); box-shadow: 0 0 16px rgba(0,229,255,0.08); }
 .prod-item:hover .prod-cta { opacity: 1; }
 .prod-item:hover .prod-img-area { filter: brightness(1.1); }
 
@@ -429,14 +458,14 @@ nav.scrolled {
   transition: filter 0.3s;
 }
 
-.pa1 { background: linear-gradient(135deg, #1A1510, #0A0805); }
-.pa2 { background: linear-gradient(135deg, #0A1218, #050A10); }
-.pa3 { background: linear-gradient(135deg, #12100A, #080605); }
-.pa4 { background: linear-gradient(135deg, #0E0A1A, #060510); }
+.pa1 { background: linear-gradient(135deg, #1A2235, #0D1117); }
+.pa2 { background: linear-gradient(135deg, #1A2235, #0D1117); }
+.pa3 { background: linear-gradient(135deg, #1A2235, #0D1117); }
+.pa4 { background: linear-gradient(135deg, #1A2235, #0D1117); }
 
 .prod-cta {
   position: absolute; bottom: 0; left: 0; right: 0;
-  background: var(--gold);
+  background: var(--electric);
   color: var(--black);
   font-family: 'DM Mono', monospace;
   font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
@@ -456,22 +485,22 @@ nav.scrolled {
 .prod-name-lux {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 20px; letter-spacing: 2px;
-  color: var(--white); margin-bottom: 4px;
+  color: var(--text); margin-bottom: 4px;
 }
 
 .prod-spec {
   font-size: 11px; font-weight: 200;
-  color: var(--gray); margin-bottom: 12px;
+  color: var(--muted); margin-bottom: 12px;
 }
 
 .prod-price-lux {
   font-family: 'DM Mono', monospace;
-  font-size: 16px; color: var(--white);
+  font-size: 16px; color: var(--electric);
 }
 
 /* ── PHILOSOPHY ── */
 .philosophy {
-  background: linear-gradient(135deg, var(--surface), var(--deep));
+  background: linear-gradient(135deg, var(--surface), var(--bg-alt));
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   padding: 120px 72px;
@@ -484,19 +513,19 @@ nav.scrolled {
 .phil-quote {
   font-family: 'Raleway', sans-serif;
   font-size: 40px; font-weight: 100; font-style: italic;
-  color: var(--white); line-height: 1.3;
+  color: var(--text); line-height: 1.3;
   margin-bottom: 32px;
 }
 
 .phil-quote strong {
   font-weight: 600; font-style: normal;
-  color: var(--gold);
+  color: var(--electric);
 }
 
 .phil-author {
   font-family: 'DM Mono', monospace;
   font-size: 10px; letter-spacing: 4px;
-  color: var(--gray); text-transform: uppercase;
+  color: var(--muted); text-transform: uppercase;
 }
 
 .phil-right {
@@ -505,23 +534,23 @@ nav.scrolled {
 }
 
 .phil-stat {
-  background: var(--deep);
+  background: var(--bg-alt);
   padding: 40px 32px;
   border: 1px solid transparent;
   transition: border-color 0.2s;
 }
 
-.phil-stat:hover { border-color: var(--gold); }
+.phil-stat:hover { border-color: var(--electric); }
 
 .phil-stat-num {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 48px; letter-spacing: 2px;
-  color: var(--gold);
+  color: var(--electric);
 }
 
 .phil-stat-label {
   font-size: 11px; font-weight: 200; letter-spacing: 2px;
-  color: var(--gray); line-height: 1.5;
+  color: var(--muted); line-height: 1.5;
   margin-top: 6px;
 }
 
@@ -529,6 +558,7 @@ nav.scrolled {
 footer {
   background: var(--black);
   border-top: 1px solid var(--border);
+  border-image: linear-gradient(90deg, transparent, var(--electric), transparent) 1;
   padding: 80px 72px 40px;
 }
 
@@ -571,9 +601,9 @@ footer {
 .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .footer-links a {
   font-size: 12px; font-weight: 200; letter-spacing: 1px;
-  color: var(--gray); text-decoration: none; transition: color 0.2s;
+  color: var(--muted); text-decoration: none; transition: color 0.2s;
 }
-.footer-links a:hover { color: var(--white); }
+.footer-links a:hover { color: var(--electric); }
 
 .footer-bottom {
   border-top: 1px solid var(--border);
@@ -593,16 +623,16 @@ footer {
 .dso-tag {
   position: fixed; bottom: 24px; right: 24px; z-index: 999;
   background: transparent;
-  border: 1px solid var(--gold);
+  border: 1px solid var(--electric);
   padding: 12px 20px;
   font-family: 'DM Mono', monospace; font-size: 10px;
-  letter-spacing: 3px; color: var(--gold);
+  letter-spacing: 3px; color: var(--electric);
   text-decoration: none; text-transform: uppercase;
   transition: all 0.3s;
 }
 
 .dso-tag:hover {
-  background: var(--gold);
+  background: var(--electric);
   color: var(--black);
 }
 
@@ -635,9 +665,9 @@ window-scroll-handled-by-js {}
     <li><a href="#">Hakkımızda</a></li>
   </ul>
   <div class="nav-right">
-    <i class="fa-regular fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass"></i>
     <i class="fa-regular fa-heart"></i>
-    <i class="fa-regular fa-bag-shopping"></i>
+    <i class="fa-solid fa-bag-shopping"></i>
   </div>
 </nav>
 
@@ -891,8 +921,12 @@ window-scroll-handled-by-js {}
 
 <a href="https://devsoy.online" target="_blank" class="dso-tag">Dev/Soy Web Stüdyosu</a>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const nav = document
+<script>
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+</script>
 
 <!-- DEV/SOY NAVIGATION BAR -->
 <div style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(8,8,8,0.96);border-top:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;padding:0 16px 0 8px;height:46px;overflow:hidden;">
