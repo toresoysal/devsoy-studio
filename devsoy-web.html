@@ -389,42 +389,60 @@ button{font-family:inherit;cursor:pointer;border:none}
 .demo-card:hover .dvis{transform:scale(1.04)}
 .demo-card:hover .dcaret{opacity:1;transform:translate(0,0)}
 
-/* Visual mockup area */
+/* Full-bleed site preview */
 .dvis{
-  height:196px;
-  display:flex;align-items:center;justify-content:center;
+  height:232px;
   border-bottom:1px solid var(--brd);
   overflow:hidden;position:relative;
   transition:transform .5s ease;
 }
-.dv1{background:linear-gradient(145deg,#2A1608 0%,#5C3020 55%,#2A1608 100%)}
-.dv2{background:linear-gradient(145deg,#0C0C1C 0%,#20203A 55%,#0C0C1C 100%)}
-.dv3{background:linear-gradient(145deg,#080808 0%,#181818 60%,#080808 100%)}
-.dv4{background:linear-gradient(145deg,#0A0F18 0%,#182030 55%,#0A0F18 100%)}
-.dv5{background:linear-gradient(145deg,#120D08 0%,#2A1E10 55%,#120D08 100%)}
-.dv6{background:linear-gradient(145deg,#0A0A0A,rgba(201,168,76,.06))}
+.dv6{background:linear-gradient(145deg,#0A0A0A,rgba(201,168,76,.06));
+  display:flex;flex-direction:column;align-items:center;justify-content:center}
 
-/* Mini browser mockup */
-.mockup{width:200px;display:flex;flex-direction:column;gap:6px}
-.mockup-bar{
-  height:20px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.06);
-  display:flex;align-items:center;gap:4px;padding:0 7px;
+.dpreview{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  display:flex;flex-direction:column;
 }
-.mbdot{width:5px;height:5px;border-radius:50%}
-.mockup-hero{
-  padding:10px 10px 14px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.05);
-  display:flex;flex-direction:column;gap:5px;
+.dpreview::before{
+  content:'';position:absolute;inset:0;
+  transition:opacity .4s;
 }
-.mline{height:4px;border-radius:2px}
-.mline.w75{width:75%}
-.mline.w50{width:50%}
-.mline.w38{width:38%}
-.mline.w100{width:100%;height:2px;background:rgba(255,255,255,.06)!important}
-.mbtn{height:12px;width:52px;margin-top:6px;border-radius:0}
+.demo-card:hover .dpreview::before{opacity:.85!important}
+
+/* mini nav bar */
+.dpnav{
+  position:relative;z-index:1;
+  height:30px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 12px;
+}
+.dplogo{
+  font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;
+}
+.dplinks{display:flex;gap:10px}
+.dplink{font-size:7px;letter-spacing:2px;text-transform:uppercase;opacity:.6}
+
+/* hero content at bottom */
+.dpbody{
+  position:relative;z-index:1;
+  flex:1;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:10px 14px 14px;
+}
+.dptag{
+  font-size:7px;letter-spacing:3px;text-transform:uppercase;
+  padding:2px 7px;width:fit-content;margin-bottom:7px;font-weight:600;
+}
+.dphead{
+  font-family:'Playfair Display',serif;
+  font-size:18px;font-weight:700;line-height:1.15;
+  margin-bottom:9px;letter-spacing:.3px;
+}
+.dpbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  height:20px;padding:0 11px;width:fit-content;
+  font-size:7px;letter-spacing:2px;text-transform:uppercase;font-weight:700;
+}
 
 /* Card body */
 .demo-body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
@@ -791,7 +809,8 @@ footer .flegal a{color:var(--gold)}
   .section-title{font-size:28px}
   .wquote{font-size:20px}
   .wmetrics{grid-template-columns:1fr 1fr}
-  .dvis{height:160px}
+  .dvis{height:180px}
+  .dphead{font-size:15px}
 }
 </style>
 </head>
@@ -925,17 +944,20 @@ footer .flegal a{color:var(--gold)}
     <!-- 1: Butik -->
     <div class="demo-card reveal d1">
       <div class="dvis dv1">
-        <div class="mockup">
-          <div class="mockup-bar">
-            <div class="mbdot" style="background:#C1603A"></div>
-            <div class="mbdot" style="background:rgba(255,255,255,.15)"></div>
-            <div class="mbdot" style="background:rgba(255,255,255,.15)"></div>
+        <div class="dpreview" style="background-image:url('https://images.pexels.com/photos/336372/pexels-photo-336372.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')">
+          <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(44,26,14,.72) 0%,rgba(44,26,14,.28) 100%);opacity:.9;transition:opacity .4s"></div>
+          <div class="dpnav" style="background:rgba(249,244,236,.12);backdrop-filter:blur(8px)">
+            <span class="dplogo" style="color:#F9F4EC;font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:6px">LUNE</span>
+            <div class="dplinks">
+              <span class="dplink" style="color:#F9F4EC">Koleksiyonlar</span>
+              <span class="dplink" style="color:#F9F4EC">Yeni Gelenler</span>
+              <span class="dplink" style="color:#F9F4EC">Sale</span>
+            </div>
           </div>
-          <div class="mockup-hero">
-            <div class="mline w75" style="background:rgba(255,255,255,.55)"></div>
-            <div class="mline w50" style="background:#C1603A;opacity:.85"></div>
-            <div class="mline w100"></div>
-            <div class="mbtn" style="background:#C1603A;opacity:.8"></div>
+          <div class="dpbody">
+            <div class="dptag" style="background:rgba(193,96,58,.85);color:#fff">Moda</div>
+            <div class="dphead" style="color:#F9F4EC">Zarafet bir<br>seçimdir.</div>
+            <div class="dpbtn" style="background:#C1603A;color:#fff">Koleksiyona Gir</div>
           </div>
         </div>
         <div class="dcaret"><i class="fa-solid fa-arrow-up-right"></i></div>
@@ -954,17 +976,20 @@ footer .flegal a{color:var(--gold)}
     <!-- 2: Kırtasiye -->
     <div class="demo-card reveal d2">
       <div class="dvis dv2">
-        <div class="mockup">
-          <div class="mockup-bar">
-            <div class="mbdot" style="background:#FFD166"></div>
-            <div class="mbdot" style="background:#FF6B6B"></div>
-            <div class="mbdot" style="background:#06D6A0"></div>
+        <div class="dpreview" style="background-image:url('https://images.pexels.com/photos/9930282/pexels-photo-9930282.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')">
+          <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(10,10,28,.55) 0%,rgba(10,10,28,.75) 100%);opacity:.9;transition:opacity .4s"></div>
+          <div class="dpnav" style="background:rgba(10,10,28,.3)">
+            <span class="dplogo" style="color:#FFD166;font-size:10px;letter-spacing:2px">KALEM <span style="color:#FF6B6B">&</span> CO.</span>
+            <div style="display:flex;gap:4px">
+              <div style="width:6px;height:6px;border-radius:50%;background:#FFD166"></div>
+              <div style="width:6px;height:6px;border-radius:50%;background:#FF6B6B"></div>
+              <div style="width:6px;height:6px;border-radius:50%;background:#06D6A0"></div>
+            </div>
           </div>
-          <div class="mockup-hero" style="border-color:rgba(255,209,102,.15)">
-            <div class="mline w75" style="background:#FFD166;opacity:.9"></div>
-            <div class="mline w50" style="background:#FF6B6B;opacity:.8"></div>
-            <div class="mline w100"></div>
-            <div class="mbtn" style="background:#FFD166"></div>
+          <div class="dpbody">
+            <div class="dptag" style="background:#FFD166;color:#0A0A1C">Kırtasiye</div>
+            <div class="dphead" style="color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1px">Yarat.<br>Keşfet.</div>
+            <div class="dpbtn" style="background:#FF6B6B;color:#fff">Ürünleri Gör</div>
           </div>
         </div>
         <div class="dcaret"><i class="fa-solid fa-arrow-up-right"></i></div>
@@ -983,17 +1008,16 @@ footer .flegal a{color:var(--gold)}
     <!-- 3: Spor -->
     <div class="demo-card reveal d3">
       <div class="dvis dv3">
-        <div class="mockup">
-          <div class="mockup-bar">
-            <div class="mbdot" style="background:#C9A84C"></div>
-            <div class="mbdot" style="background:rgba(255,255,255,.1)"></div>
-            <div class="mbdot" style="background:rgba(255,255,255,.1)"></div>
+        <div class="dpreview" style="background-image:url('https://images.pexels.com/photos/5961847/pexels-photo-5961847.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')">
+          <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,.88) 45%,rgba(0,0,0,.35) 100%);opacity:.95;transition:opacity .4s"></div>
+          <div class="dpnav" style="border-bottom:1px solid rgba(0,212,255,.15)">
+            <span class="dplogo" style="color:#fff;letter-spacing:5px">OBSIDIAN</span>
+            <div style="width:20px;height:2px;background:#00D4FF"></div>
           </div>
-          <div class="mockup-hero" style="border-color:rgba(201,168,76,.15)">
-            <div class="mline w75" style="background:rgba(255,255,255,.65)"></div>
-            <div class="mline w50" style="background:#C9A84C;opacity:.9"></div>
-            <div class="mline w100"></div>
-            <div class="mbtn" style="background:#C9A84C"></div>
+          <div class="dpbody">
+            <div class="dptag" style="background:rgba(0,212,255,.15);color:#00D4FF;border:1px solid rgba(0,212,255,.3)">Performance</div>
+            <div class="dphead" style="color:#fff;font-size:20px;letter-spacing:-0.5px">Sınırları<br>Yeniden Çiz.</div>
+            <div class="dpbtn" style="background:#00D4FF;color:#000">Koleksiyona Gir</div>
           </div>
         </div>
         <div class="dcaret"><i class="fa-solid fa-arrow-up-right"></i></div>
@@ -1012,17 +1036,16 @@ footer .flegal a{color:var(--gold)}
     <!-- 4: Araç Parça -->
     <div class="demo-card reveal d1">
       <div class="dvis dv4">
-        <div class="mockup">
-          <div class="mockup-bar">
-            <div class="mbdot" style="background:#E8531A"></div>
-            <div class="mbdot" style="background:rgba(255,255,255,.1)"></div>
-            <div class="mbdot" style="background:rgba(255,255,255,.1)"></div>
+        <div class="dpreview" style="background-image:url('https://images.pexels.com/photos/4480505/pexels-photo-4480505.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')">
+          <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(28,33,40,.92) 50%,rgba(28,33,40,.45) 100%);opacity:.95;transition:opacity .4s"></div>
+          <div class="dpnav" style="background:rgba(232,83,26,.9);padding:0 10px">
+            <span class="dplogo" style="color:#fff;font-size:9px;letter-spacing:3px">DEMİR <span style="color:#F5C842">PARTS</span></span>
+            <span style="font-size:7px;color:rgba(255,255,255,.7);letter-spacing:1px">500K+ PARÇA</span>
           </div>
-          <div class="mockup-hero" style="border-color:rgba(232,83,26,.15)">
-            <div class="mline w75" style="background:#E8531A;opacity:.85"></div>
-            <div class="mline w50" style="background:#F5C842;opacity:.7"></div>
-            <div class="mline w100"></div>
-            <div class="mbtn" style="background:#E8531A;clip-path:polygon(0 0,100% 0,100% 65%,88% 100%,0 100%)"></div>
+          <div class="dpbody">
+            <div class="dptag" style="background:rgba(232,83,26,.2);color:#E8531A;border:1px solid rgba(232,83,26,.3)">Endüstriyel</div>
+            <div class="dphead" style="color:#E8ECF0;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;letter-spacing:-0.5px;text-transform:uppercase">Orjinal<br><span style="color:#E8531A">Parça.</span></div>
+            <div class="dpbtn" style="background:#E8531A;color:#fff;clip-path:polygon(0 0,100% 0,100% 65%,92% 100%,0 100%)">Parça Ara</div>
           </div>
         </div>
         <div class="dcaret"><i class="fa-solid fa-arrow-up-right"></i></div>
@@ -1041,17 +1064,19 @@ footer .flegal a{color:var(--gold)}
     <!-- 5: Galeri -->
     <div class="demo-card reveal d2">
       <div class="dvis dv5">
-        <div class="mockup">
-          <div class="mockup-bar">
-            <div class="mbdot" style="background:#9B6B4A"></div>
-            <div class="mbdot" style="background:rgba(255,255,255,.1)"></div>
-            <div class="mbdot" style="background:rgba(255,255,255,.1)"></div>
+        <div class="dpreview" style="background-image:url('https://images.pexels.com/photos/2480854/pexels-photo-2480854.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')">
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(248,245,240,.15) 0%,rgba(26,26,24,.8) 100%);opacity:.9;transition:opacity .4s"></div>
+          <div class="dpnav" style="background:rgba(248,245,240,.15);backdrop-filter:blur(10px)">
+            <span class="dplogo" style="color:#F8F5F0;font-family:'Libre Baskerville',serif;font-weight:400;letter-spacing:8px;font-size:13px">PHOS</span>
+            <div class="dplinks">
+              <span class="dplink" style="color:#F8F5F0">Sergiler</span>
+              <span class="dplink" style="color:#F8F5F0">Sanatçılar</span>
+            </div>
           </div>
-          <div class="mockup-hero" style="border-color:rgba(155,107,74,.15)">
-            <div class="mline w75" style="background:rgba(255,255,255,.55)"></div>
-            <div class="mline w50" style="background:#9B6B4A;opacity:.9"></div>
-            <div class="mline w100"></div>
-            <div class="mbtn" style="background:#1A1A18;border:1px solid #9B6B4A"></div>
+          <div class="dpbody">
+            <div class="dptag" style="background:rgba(155,107,74,.7);color:#F8F5F0">Sanat Galerisi</div>
+            <div class="dphead" style="color:#F8F5F0;font-family:'Libre Baskerville',serif;font-weight:400;font-style:italic">Işık ve<br><em style="color:#9B6B4A">duygu</em>.</div>
+            <div class="dpbtn" style="background:#1A1A18;color:#F8F5F0;border:1px solid rgba(155,107,74,.6)">Sergiyi Gez</div>
           </div>
         </div>
         <div class="dcaret"><i class="fa-solid fa-arrow-up-right"></i></div>
