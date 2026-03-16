@@ -125,7 +125,7 @@ button{font-family:inherit;cursor:pointer;border:none}
 .nav-subtle:hover{color:var(--gold)}
 
 /* ═══════════════════════════════════════
-   HERO
+   HERO — PREMIUM ATMOSFERİK TASARIM
 ═══════════════════════════════════════ */
 .hero{
   min-height:100vh;
@@ -135,18 +135,72 @@ button{font-family:inherit;cursor:pointer;border:none}
   position:relative;overflow:hidden;
 }
 
-/* Backgrounds */
+/* Altın şerit — en üst */
+.hero::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:1px;z-index:10;
+  background:linear-gradient(90deg,transparent 0%,rgba(201,168,76,0.2) 15%,rgba(201,168,76,0.8) 40%,var(--gold) 50%,rgba(201,168,76,0.8) 60%,rgba(201,168,76,0.2) 85%,transparent 100%);
+  animation:gold-shimmer 4s ease-in-out infinite;
+}
+@keyframes gold-shimmer{0%,100%{opacity:.5;transform:scaleX(.85)}50%{opacity:1;transform:scaleX(1)}}
+
+/* Backgrounds — çok katmanlı atmosfer */
 .hero-bg{
   position:absolute;inset:0;z-index:0;
   background:
-    radial-gradient(ellipse 72% 60% at 78% 28%,rgba(201,168,76,.07) 0%,transparent 60%),
-    radial-gradient(ellipse 48% 48% at 12% 78%,rgba(201,168,76,.04) 0%,transparent 55%),
-    var(--black);
+    radial-gradient(ellipse 100% 80% at 100% -10%,rgba(201,168,76,0.22) 0%,transparent 48%),
+    radial-gradient(ellipse 70% 70% at -5% 100%,rgba(201,168,76,0.12) 0%,transparent 48%),
+    radial-gradient(ellipse 50% 50% at 55% 45%,rgba(201,168,76,0.05) 0%,transparent 55%),
+    radial-gradient(ellipse 30% 40% at 30% 20%,rgba(180,140,60,0.06) 0%,transparent 50%),
+    linear-gradient(160deg,#0F0B00 0%,#080808 35%,#06060D 100%);
 }
+
+/* Altın pulsating orb — sağ üst */
+.hero-bg::after{
+  content:'';
+  position:absolute;
+  width:700px;height:700px;
+  right:-150px;top:-180px;
+  background:radial-gradient(circle,rgba(201,168,76,0.09) 0%,rgba(201,168,76,0.03) 45%,transparent 70%);
+  border-radius:50%;
+  animation:orb-breathe 7s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes orb-breathe{0%,100%{transform:scale(1) rotate(0deg);opacity:.6}50%{transform:scale(1.18) rotate(8deg);opacity:1}}
+
+/* Grid — altın tonlu, merkezden açılan mask */
 .hero-grid{
   position:absolute;inset:0;z-index:0;
-  background-image:linear-gradient(var(--brd) 1px,transparent 1px),linear-gradient(90deg,var(--brd) 1px,transparent 1px);
+  background-image:
+    linear-gradient(rgba(201,168,76,0.09) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(201,168,76,0.09) 1px,transparent 1px);
   background-size:72px 72px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 85% at 60% 40%,black 15%,rgba(0,0,0,0.4) 55%,transparent 80%);
+  mask-image:radial-gradient(ellipse 90% 85% at 60% 40%,black 15%,rgba(0,0,0,0.4) 55%,transparent 80%);
+}
+
+/* Film grain — lüks doku */
+.hero-noise{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  opacity:0.4;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  background-size:200px 200px;
+}
+
+/* Yüzen partiküller */
+.hero-particles{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.hp{
+  position:absolute;bottom:-10px;
+  width:2px;height:2px;
+  background:var(--gold);border-radius:50%;
+  opacity:0;
+  animation:hp-rise var(--d,8s) ease-in-out var(--dl,0s) infinite;
+}
+@keyframes hp-rise{
+  0%{opacity:0;transform:translateY(0) scale(.5)}
+  15%{opacity:.8}
+  85%{opacity:.2}
+  100%{opacity:0;transform:translateY(-500px) scale(1.5) rotate(180deg)}
 }
 
 /* Left */
@@ -610,6 +664,19 @@ footer .flegal a{color:var(--gold)}
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-particles" aria-hidden="true">
+    <div class="hp" style="left:8%;width:2px;height:2px;--d:9s;--dl:0s"></div>
+    <div class="hp" style="left:22%;width:3px;height:3px;--d:12s;--dl:1.5s"></div>
+    <div class="hp" style="left:38%;width:2px;height:2px;--d:8s;--dl:3s"></div>
+    <div class="hp" style="left:55%;width:3px;height:3px;--d:11s;--dl:0.5s"></div>
+    <div class="hp" style="left:70%;width:2px;height:2px;--d:10s;--dl:2s"></div>
+    <div class="hp" style="left:83%;width:4px;height:4px;--d:14s;--dl:4s"></div>
+    <div class="hp" style="left:93%;width:2px;height:2px;--d:9s;--dl:1s"></div>
+    <div class="hp" style="left:15%;width:2px;height:2px;--d:13s;--dl:6s"></div>
+    <div class="hp" style="left:47%;width:3px;height:3px;--d:10s;--dl:2.5s"></div>
+    <div class="hp" style="left:64%;width:2px;height:2px;--d:11s;--dl:5s"></div>
+  </div>
 
   <div class="hero-left">
     <div class="eyebrow hero-eyebrow">Kuzey Kıbrıs &nbsp;·&nbsp; Web Tasarım Stüdyosu</div>
@@ -1022,12 +1089,12 @@ footer .flegal a{color:var(--gold)}
     <div class="reveal d2">
       <div class="form-title">Mesaj Gönderin</div>
       <div class="frow">
-        <div class="ffield"><input class="finput" type="text" placeholder="Adınız Soyadınız" autocomplete="name"></div>
-        <div class="ffield"><input class="finput" type="text" placeholder="İşletme Adı (varsa)"></div>
+        <div class="ffield"><input id="f-name" class="finput" type="text" placeholder="Adınız Soyadınız" autocomplete="name"></div>
+        <div class="ffield"><input id="f-biz" class="finput" type="text" placeholder="İşletme Adı (varsa)"></div>
       </div>
-      <div class="ffield"><input class="finput" type="tel" placeholder="Telefon / WhatsApp" autocomplete="tel"></div>
+      <div class="ffield"><input id="f-tel" class="finput" type="tel" placeholder="Telefon / WhatsApp" autocomplete="tel"></div>
       <div class="ffield fselect-wrap">
-        <select class="fselect">
+        <select id="f-service" class="fselect">
           <option value="" disabled selected>Hizmet Türü Seçin</option>
           <option>Web Sitesi Tasarımı</option>
           <option>Marka Kimliği &amp; Logo</option>
@@ -1037,7 +1104,7 @@ footer .flegal a{color:var(--gold)}
           <option>Birden Fazla Hizmet</option>
         </select>
       </div>
-      <div class="ffield"><textarea class="ftextarea" placeholder="Projeniz hakkında kısaca bilgi verin..."></textarea></div>
+      <div class="ffield"><textarea id="f-msg" class="ftextarea" placeholder="Projeniz hakkında kısaca bilgi verin..."></textarea></div>
       <button class="btn-submit" onclick="submitForm()">
         <i class="fa-solid fa-paper-plane"></i> Mesaj Gönder
       </button>
@@ -1123,12 +1190,34 @@ const ro = new IntersectionObserver(entries => {
 }, { threshold: 0.10 });
 document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-/* Form submit */
+/* Form submit — WhatsApp yönlendirmesi */
 function submitForm() {
+  const name    = (document.getElementById('f-name')?.value    || '').trim();
+  const biz     = (document.getElementById('f-biz')?.value     || '').trim();
+  const tel     = (document.getElementById('f-tel')?.value     || '').trim();
+  const service = (document.getElementById('f-service')?.value || '').trim();
+  const msg     = (document.getElementById('f-msg')?.value     || '').trim();
+
+  if (!name) {
+    document.getElementById('f-name').focus();
+    return;
+  }
+
+  let text = '🌐 *Dev/Soy Web Stüdyosu — Teklif Talebi*\n\n';
+  if (name)    text += `👤 Ad: ${name}\n`;
+  if (biz)     text += `🏢 İşletme: ${biz}\n`;
+  if (tel)     text += `📞 Telefon: ${tel}\n`;
+  if (service) text += `🎯 Hizmet: ${service}\n`;
+  if (msg)     text += `\n💬 Not: ${msg}`;
+
+  const url = 'https://wa.me/905391084979?text=' + encodeURIComponent(text);
+
+  /* Toast göster, kısa gecikme sonra aç */
   const t = document.getElementById('toast');
-  document.getElementById('toast-msg').textContent = 'Mesajınız alındı! En kısa sürede WhatsApp\'tan dönüş yapacağız.';
+  document.getElementById('toast-msg').textContent = 'WhatsApp açılıyor… Mesajınız hazır!';
   t.classList.add('on');
-  setTimeout(() => t.classList.remove('on'), 5000);
+  setTimeout(() => t.classList.remove('on'), 4000);
+  setTimeout(() => window.open(url, '_blank'), 600);
 }
 </script>
 </body>
