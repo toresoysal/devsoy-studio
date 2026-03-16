@@ -690,6 +690,116 @@ footer{
 footer .flinks li a:hover{color:var(--white)}
 footer .flegal{color:rgba(255,255,255,0.14)}
 footer .flegal a{color:var(--gold)}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — TABLET (≤1024px)
+═══════════════════════════════════════ */
+@media (max-width:1024px){
+  #nav{padding:18px 32px}
+  #nav.scrolled{padding:14px 32px}
+  .hero{grid-template-columns:1fr;padding:100px 32px 60px;min-height:auto}
+  .hero-right{display:none}
+  .hero-title{font-size:58px}
+  .demos-grid{grid-template-columns:1fr 1fr}
+  .process-grid{grid-template-columns:1fr 1fr}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .why-layout{grid-template-columns:1fr;gap:48px}
+  .contact-layout{grid-template-columns:1fr;gap:48px}
+  .footer-main{grid-template-columns:1fr 1fr;gap:36px}
+  .section{padding:80px 32px}
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — MOBILE (≤768px)
+═══════════════════════════════════════ */
+@media (max-width:768px){
+  /* NAV */
+  #nav{padding:14px 20px}
+  #nav.scrolled{padding:12px 20px}
+  .nav-links{display:none}
+  .nav-right .nav-subtle{display:none}
+  #nav-burger{display:flex !important}
+
+  /* HERO */
+  .hero{
+    grid-template-columns:1fr;
+    padding:88px 20px 48px;
+    min-height:auto;
+  }
+  .hero-right{display:none}
+  .hero-title{font-size:44px;line-height:.95}
+  .hero-sub{font-size:15px;margin-bottom:32px}
+  .hero-ctas{flex-direction:column;gap:12px;align-items:stretch}
+  .btn-gold-lg,.btn-ghost-lg{
+    width:100%;justify-content:center;
+    padding:16px 24px;
+  }
+  .hero-scroll{display:none}
+
+  /* DEMOS */
+  .demos-grid{grid-template-columns:1fr}
+  .sec-head{flex-direction:column;align-items:flex-start;gap:8px}
+  .sec-note{display:none}
+  .section-title{font-size:36px}
+
+  /* PROCESS */
+  .process-grid{grid-template-columns:1fr}
+  .parrow{display:none !important}
+
+  /* SERVICES */
+  .services-grid{grid-template-columns:1fr}
+
+  /* WHY */
+  .why-layout{grid-template-columns:1fr;gap:32px}
+  .wquote{font-size:22px}
+
+  /* CONTACT */
+  .contact-layout{grid-template-columns:1fr;gap:40px}
+  .frow{grid-template-columns:1fr}
+
+  /* FOOTER */
+  .footer-main{grid-template-columns:1fr;gap:28px}
+  footer{padding:48px 20px 28px}
+  .fbot{flex-direction:column;gap:8px;text-align:center}
+
+  /* SECTIONS */
+  .section{padding:56px 20px}
+
+  /* HAMBURGER OVERLAY MENU */
+  .nav-links.open{
+    display:flex !important;
+    flex-direction:column;
+    position:fixed;
+    top:60px;left:0;right:0;
+    background:rgba(8,8,5,0.97);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    padding:12px 0 20px;
+    gap:0;
+    border-bottom:1px solid rgba(201,168,76,0.2);
+    z-index:998;
+    list-style:none;
+  }
+  .nav-links.open li a{
+    display:block;
+    padding:14px 20px;
+    font-size:12px;letter-spacing:3px;text-transform:uppercase;
+    color:rgba(255,255,255,0.6);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .nav-links.open li a:hover{color:var(--gold)}
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE (≤480px)
+═══════════════════════════════════════ */
+@media (max-width:480px){
+  .hero-title{font-size:36px}
+  .section-title{font-size:28px}
+  .wquote{font-size:20px}
+  .wmetrics{grid-template-columns:1fr 1fr}
+  .dvis{height:160px}
+}
 </style>
 </head>
 <body>
@@ -712,6 +822,10 @@ footer .flegal a{color:var(--gold)}
     <a href="#contact" class="btn-gold">
       Teklif Al <i class="fa-solid fa-arrow-right" style="font-size:10px;"></i>
     </a>
+    <button id="nav-burger" aria-label="Menüyü aç"
+      style="display:none;background:none;border:1px solid rgba(201,168,76,0.3);color:#C9A84C;width:40px;height:40px;font-size:18px;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+      ☰
+    </button>
   </div>
 </nav>
 
@@ -1230,6 +1344,24 @@ footer .flegal a{color:var(--gold)}
 const nav = document.getElementById('nav');
 const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 50);
 window.addEventListener('scroll', onScroll, { passive: true });
+
+/* Hamburger menu */
+const burger = document.getElementById('nav-burger');
+const navLinks = document.querySelector('.nav-links');
+if (burger && navLinks) {
+  burger.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    burger.textContent = isOpen ? '✕' : '☰';
+    burger.setAttribute('aria-label', isOpen ? 'Menüyü kapat' : 'Menüyü aç');
+  });
+  /* Linklere tıklanınca kapat */
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      burger.textContent = '☰';
+    });
+  });
+}
 
 /* Smooth scroll */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
