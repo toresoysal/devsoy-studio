@@ -722,119 +722,115 @@ footer {
 
 /* ===== MOBILE RESPONSIVE ===== */
 @media (max-width: 1024px) {
+  nav { padding: 16px 32px; }
   .nav-links { display: none; }
-  .hamburger { display: flex; }
-  /* If there's no hamburger button, add one to the nav */
-
-  /* Make hero 2-column layouts stack */
-  .hero-inner, .hero-content-wrap, [class*="hero"] .grid-2,
-  .hero-grid, .hero-layout {
-    flex-direction: column !important;
-    grid-template-columns: 1fr !important;
-  }
-
-  /* Product grids: 2 columns on tablet */
-  .product-grid, .products-grid, .grid-3, .grid-4,
-  [class*="product-grid"], [class*="grid"] {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
+  /* Hero collapse */
+  .hero { grid-template-columns: 1fr; margin-top: 66px; }
+  .hero-left { padding: 60px 40px; }
+  .hero-right { min-height: 400px; }
+  /* Collections: 2 col */
+  .collections-grid { grid-template-columns: 1fr 1fr; }
+  .col-card:nth-child(1) { grid-row: auto; }
+  .col-card:nth-child(1) .col-image { min-height: 280px; }
+  /* Products: 2 col */
+  .products-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  /* Banner */
+  .mid-banner { margin: 0 40px; padding: 60px 40px; }
+  /* Testimonials: 2 col */
+  .testimonials-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  footer { padding: 60px 40px 32px; }
+  .collections { padding: 80px 40px; }
+  .products { padding: 60px 40px; }
+  .testimonials { padding: 80px 40px; }
 }
 
 @media (max-width: 768px) {
-  /* Navigation */
-  nav, .navbar, .nav { padding: 0 1rem; }
-  .nav-links, .nav-menu {
+  /* NAV */
+  nav { padding: 14px 20px; }
+  .nav-links {
     display: none;
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.95);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    z-index: 999;
+    background: rgba(249,244,236,0.98);
+    flex-direction: column; justify-content: center; align-items: center;
+    gap: 2rem; z-index: 998; list-style: none;
   }
-  .nav-links.open, .nav-menu.open { display: flex; }
-  .hamburger, .menu-btn, .nav-toggle {
-    display: flex !important;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    z-index: 1000;
-    background: none; border: none; padding: 8px;
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 14px; letter-spacing: 3px; color: var(--dark-brown); }
+  .nav-actions i { font-size: 18px; }
+  .nav-menu-btn {
+    display: flex !important; flex-direction: column; gap: 5px;
+    cursor: pointer; background: none; border: none; padding: 6px;
   }
-  .hamburger span, .menu-btn span {
-    display: block; width: 24px; height: 2px;
-    background: currentColor;
-    transition: 0.3s;
-  }
+  .nav-menu-btn span { display: block; width: 22px; height: 2px; background: var(--dark-brown); }
 
-  /* Hero section */
-  .hero, [class*="hero-section"] {
-    min-height: 70vh !important;
-    padding: 6rem 1.5rem 3rem !important;
-  }
-  .hero-inner, .hero-content, .hero-layout, .hero-grid {
-    flex-direction: column !important;
-    grid-template-columns: 1fr !important;
-    gap: 2rem !important;
-    text-align: center !important;
-  }
-  .hero-image-area, .hero-visual, [class*="hero-img"] {
-    width: 100% !important;
-    height: 300px !important;
-    max-width: 100% !important;
-  }
+  /* HERO */
+  .hero { grid-template-columns: 1fr; margin-top: 60px; min-height: auto; }
+  .hero-left { padding: 48px 20px 40px; }
+  .hero-title { font-size: clamp(36px, 10vw, 60px); line-height: 1.1; }
+  .hero-title .line-offset { padding-left: 24px; font-size: clamp(28px, 8vw, 48px); }
+  .hero-subtitle { font-size: 14px; max-width: 100%; }
+  .hero-actions { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .btn-primary { width: 100%; justify-content: center; }
+  .hero-right { min-height: 300px; }
+  .hero-image-area { min-height: 300px; font-size: 0; }
+  /* Fix tag that overflows to left */
+  .hero-image-tag { left: 12px; bottom: 20px; padding: 14px 20px; }
+  .hero-scroll { display: none; }
 
-  /* Typography */
-  h1, .hero-title, [class*="hero"] h1 { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
-  h2, .section-title { font-size: clamp(1.5rem, 5vw, 2.5rem) !important; }
-  h3 { font-size: clamp(1.1rem, 4vw, 1.5rem) !important; }
+  /* MARQUEE */
+  .marquee-wrap { padding: 10px 0; }
 
-  /* Sections */
-  section, [class*="-section"] { padding: 3rem 1.5rem !important; }
-  .container, .section-inner { padding: 0 1.5rem !important; max-width: 100% !important; }
-
-  /* Grids → single column */
-  .product-grid, .products-grid, .grid-2, .grid-3, .grid-4,
-  [class*="product-grid"], .collection-grid, .items-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1rem !important;
+  /* COLLECTIONS */
+  .collections { padding: 48px 20px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 32px; }
+  .section-title { font-size: clamp(28px, 8vw, 40px); }
+  .collections-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
+  .col-card:nth-child(1) { grid-row: auto; }
+  .col-card:nth-child(1) .col-image { min-height: 260px; font-size: 0; }
+  .col-image { min-height: 200px; font-size: 0; }
 
-  /* 2-column layouts → single column */
-  .two-col, .split-layout, .about-grid, .info-grid,
-  [class*="two-col"], [class*="split"] {
-    flex-direction: column !important;
-    grid-template-columns: 1fr !important;
-  }
+  /* PRODUCTS */
+  .products { padding: 48px 20px; }
+  .products-grid { grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px; }
+  .product-image { aspect-ratio: 3/4; font-size: 0; }
 
-  /* Images */
-  .product-image, .col-image, .figure-image, [class*="product-img"],
-  [class*="prod-img"], [class*="pi1"], [class*="pi2"], [class*="pi3"],
-  [class*="pi4"], [class*="pi5"], [class*="pi6"] {
-    height: 220px !important;
+  /* MID BANNER */
+  .mid-banner {
+    margin: 0;
+    padding: 48px 20px;
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
+  .banner-title { font-size: 36px; }
+  .banner-visual { height: 200px; font-size: 80px; }
 
-  /* Buttons */
-  .btn, [class*="btn"], button:not(.hamburger):not(.menu-btn) {
-    width: 100% !important;
-    max-width: 320px !important;
-    margin: 0.5rem auto !important;
-    display: block !important;
-  }
+  /* TESTIMONIALS */
+  .testimonials { padding: 48px 20px; }
+  .testimonials-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 32px; }
 
-  /* Feature/promo rows */
-  .promo-row, .feature-row, .highlight-row, .banner-inner {
-    flex-direction: column !important;
-    text-align: center !important;
-  }
+  /* NEWSLETTER */
+  .newsletter { padding: 48px 20px; }
+  .newsletter-title { font-size: 32px; }
+  .newsletter-form { flex-direction: column; max-width: 100%; }
+  .newsletter-form input, .newsletter-form button { width: 100%; }
+
+  /* FOOTER */
+  footer { padding: 48px 20px 32px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
 }
 
 @media (max-width: 480px) {
-  h1, .hero-title { font-size: clamp(1.8rem, 9vw, 2.8rem) !important; }
-  .hero, [class*="hero-section"] { padding: 5rem 1rem 2rem !important; }
-  section, [class*="-section"] { padding: 2rem 1rem !important; }
-  .product-image, [class*="prod-img"], [class*="pi"] { height: 180px !important; }
+  .hero-title { font-size: clamp(30px, 9vw, 44px); }
+  .hero-title .line-offset { padding-left: 16px; font-size: clamp(24px, 7vw, 36px); }
+  .products-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 20px; }
+  .testimonials-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -855,6 +851,7 @@ footer {
     <i class="fa-regular fa-heart"></i>
     <i class="fa-regular fa-bag-shopping cart-badge"></i>
   </div>
+  <button class="nav-menu-btn" style="display:none;" onclick="this.closest('nav').querySelector('.nav-links').classList.toggle('open')"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- HERO -->

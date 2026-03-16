@@ -629,104 +629,95 @@ footer {
 
 /* ===== MOBILE RESPONSIVE ===== */
 @media (max-width: 1024px) {
+  nav { padding: 0 24px; }
   .nav-links { display: none; }
-  .hamburger { display: flex; }
-
-  .hero-inner, .hero-content-wrap, .hero-grid, .hero-layout {
-    flex-direction: column !important;
-    grid-template-columns: 1fr !important;
-  }
-
-  .product-grid, .products-grid, .grid-3, .grid-4,
-  [class*="product-grid"], [class*="grid"] {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
+  /* Hero collapse */
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 80px 32px 40px; }
+  .hero-right { min-height: 300px; padding: 32px; }
+  /* Products: 3 col on tablet */
+  .products-grid { grid-template-columns: repeat(3, 1fr); }
+  /* Promo: 2 col on tablet */
+  .promo-row { grid-template-columns: 1fr 1fr; padding: 0 32px 48px; }
+  /* Newsletter */
+  .newsletter { padding: 60px 32px; }
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  footer { padding: 48px 32px 24px; }
+  /* Featured */
+  .featured { padding: 60px 32px; }
 }
 
 @media (max-width: 768px) {
-  nav, .navbar, .nav { padding: 0 1rem; }
-  .nav-links, .nav-menu {
+  /* NAV */
+  nav { padding: 0 16px; height: 56px; }
+  .nav-right { gap: 10px; }
+  .nav-links {
     display: none;
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.95);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    z-index: 999;
+    background: var(--dark);
+    flex-direction: column; justify-content: center; align-items: center;
+    gap: 1.5rem; z-index: 998; list-style: none;
   }
-  .nav-links.open, .nav-menu.open { display: flex; }
-  .hamburger, .menu-btn, .nav-toggle {
-    display: flex !important;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    z-index: 1000;
-    background: none; border: none; padding: 8px;
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 14px; color: white; padding: 10px 20px; }
+  .cart-btn { display: none; }
+  .nav-menu-btn {
+    display: flex !important; flex-direction: column; gap: 5px;
+    cursor: pointer; background: none; border: none; padding: 8px;
   }
-  .hamburger span, .menu-btn span {
-    display: block; width: 24px; height: 2px;
-    background: currentColor;
-    transition: 0.3s;
-  }
+  .nav-menu-btn span { display: block; width: 22px; height: 2px; background: var(--yellow); }
 
-  .hero, [class*="hero-section"] {
-    min-height: 70vh !important;
-    padding: 6rem 1.5rem 3rem !important;
-  }
-  .hero-inner, .hero-content, .hero-layout, .hero-grid {
-    flex-direction: column !important;
-    grid-template-columns: 1fr !important;
-    gap: 2rem !important;
-    text-align: center !important;
-  }
-  .hero-image-area, .hero-visual, [class*="hero-img"] {
-    width: 100% !important;
-    height: 300px !important;
-    max-width: 100% !important;
-  }
+  /* TOP BAND: single line */
+  .top-band-item:nth-child(n+5) { display: none; }
 
-  h1, .hero-title, [class*="hero"] h1 { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
-  h2, .section-title { font-size: clamp(1.5rem, 5vw, 2.5rem) !important; }
-  h3 { font-size: clamp(1.1rem, 4vw, 1.5rem) !important; }
+  /* HERO */
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 40px 20px; }
+  .hero-title { font-size: clamp(28px, 10vw, 44px); }
+  .hero-sub { font-size: 14px; max-width: 100%; }
+  .hero-btns { flex-direction: column; }
+  .btn-pixel { width: 100%; text-align: center; }
+  .hero-stats { gap: 20px; flex-wrap: wrap; }
+  .hero-right { min-height: 240px; padding: 20px; }
+  .hero-canvas { gap: 6px; }
 
-  section, [class*="-section"] { padding: 3rem 1.5rem !important; }
-  .container, .section-inner { padding: 0 1.5rem !important; max-width: 100% !important; }
+  /* CAT BAR */
+  .cat-bar { padding: 0 8px; }
+  .cat-item { padding: 14px 12px; min-width: 72px; }
+  .cat-name { font-size: 8px; }
 
-  .product-grid, .products-grid, .grid-2, .grid-3, .grid-4,
-  [class*="product-grid"], .collection-grid, .items-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1rem !important;
-  }
+  /* FEATURED */
+  .featured { padding: 40px 16px; }
+  .section-head { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .section-title-px { font-size: 20px; }
+  .products-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .prod-img { height: 130px; font-size: 0; }
 
-  .two-col, .split-layout, .about-grid, .info-grid,
-  [class*="two-col"], [class*="split"] {
-    flex-direction: column !important;
-    grid-template-columns: 1fr !important;
-  }
+  /* PROMO */
+  .promo-row { grid-template-columns: 1fr; padding: 0 16px 40px; gap: 12px; }
+  .promo-block { padding: 28px 24px; }
+  .promo-title { font-size: 16px; }
+  .promo-emoji { font-size: 44px; }
 
-  .product-image, .col-image, [class*="prod-img"], [class*="pimg"] {
-    height: 220px !important;
-  }
+  /* BRANDS */
+  .brands-row { padding: 20px 16px; gap: 20px; overflow-x: auto; }
 
-  .btn, [class*="btn"], button:not(.hamburger):not(.menu-btn) {
-    width: 100% !important;
-    max-width: 320px !important;
-    margin: 0.5rem auto !important;
-    display: block !important;
-  }
+  /* NEWSLETTER */
+  .newsletter { grid-template-columns: 1fr; padding: 48px 16px; gap: 24px; }
+  .nl-left .nl-pixel-title { font-size: 24px; }
 
-  .promo-row, .feature-row, .highlight-row, .banner-inner {
-    flex-direction: column !important;
-    text-align: center !important;
-  }
+  /* FOOTER */
+  footer { padding: 40px 16px 24px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
 }
 
 @media (max-width: 480px) {
-  h1, .hero-title { font-size: clamp(1.8rem, 9vw, 2.8rem) !important; }
-  .hero, [class*="hero-section"] { padding: 5rem 1rem 2rem !important; }
-  section, [class*="-section"] { padding: 2rem 1rem !important; }
-  .product-image, [class*="prod-img"], [class*="pimg"] { height: 180px !important; }
+  .products-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .prod-img { height: 110px; }
+  .hero-title { font-size: clamp(24px, 9vw, 36px); }
+  .footer-grid { grid-template-columns: 1fr; gap: 20px; }
 }
 </style>
 </head>
@@ -768,6 +759,9 @@ footer {
     <i class="fa-regular fa-magnifying-glass"></i>
     <button class="cart-btn">
       <i class="fa-solid fa-bag-shopping"></i> SEPET (0)
+    </button>
+    <button class="nav-menu-btn" style="display:none;" onclick="this.closest('nav').querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
     </button>
   </div>
 </nav>

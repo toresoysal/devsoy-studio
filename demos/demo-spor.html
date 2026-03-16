@@ -655,105 +655,97 @@ window-scroll-handled-by-js {}
 
 /* ===== MOBILE RESPONSIVE ===== */
 @media (max-width: 1024px) {
+  nav { padding: 20px 32px; }
+  nav.scrolled { padding: 14px 32px; }
   .nav-links { display: none; }
-  .hamburger { display: flex; }
-
-  .hero-inner, .hero-content-wrap, .hero-grid, .hero-layout {
-    flex-direction: column !important;
-    grid-template-columns: 1fr !important;
-  }
-
-  .product-grid, .products-grid, .grid-3, .grid-4,
-  [class*="product-grid"], [class*="collection-grid"] {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
+  .hero-content { grid-template-columns: 1fr; padding: 0 32px; gap: 32px; }
+  .col-grid { grid-template-columns: 1fr 1fr; }
+  .prod-grid { grid-template-columns: 1fr 1fr; }
+  .philosophy { grid-template-columns: 1fr; gap: 40px; padding: 80px 32px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .collections { padding: 80px 32px; }
+  .products-section { padding: 0 32px 80px; }
+  footer { padding: 60px 32px 32px; }
 }
 
 @media (max-width: 768px) {
-  nav, .navbar, .nav { padding: 0 1rem; }
-  .nav-links, .nav-menu {
+  /* NAV */
+  nav { padding: 16px 20px; }
+  nav.scrolled { padding: 12px 20px; }
+  .nav-links {
     display: none;
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(13,17,23,0.97);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    z-index: 999;
+    background: rgba(13,17,23,0.98);
+    flex-direction: column; justify-content: center; align-items: center;
+    gap: 2rem; z-index: 998; list-style: none;
   }
-  .nav-links.open, .nav-menu.open { display: flex; }
-  .hamburger, .menu-btn, .nav-toggle {
-    display: flex !important;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    z-index: 1000;
-    background: none; border: none; padding: 8px;
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 14px; letter-spacing: 3px; color: var(--text); }
+  .nav-menu-btn {
+    display: flex !important; flex-direction: column; gap: 5px;
+    cursor: pointer; background: none; border: none; padding: 8px; z-index: 999;
   }
-  .hamburger span, .menu-btn span {
-    display: block; width: 24px; height: 2px;
-    background: #00E5FF;
-    transition: 0.3s;
-  }
+  .nav-menu-btn span { display: block; width: 22px; height: 2px; background: var(--electric); }
 
-  .hero, [class*="hero-section"] {
-    min-height: 70vh !important;
-    padding: 6rem 1.5rem 3rem !important;
+  /* HERO */
+  .hero { min-height: auto; padding-bottom: 40px; }
+  .hero-content {
+    grid-template-columns: 1fr;
+    padding: 100px 20px 40px;
+    gap: 40px;
+    margin-top: 0;
   }
-  .hero-inner, .hero-content, .hero-layout, .hero-grid, .showcase-grid {
-    flex-direction: column !important;
-    grid-template-columns: 1fr !important;
-    gap: 2rem !important;
-    text-align: center !important;
-  }
-  .hero-image-area, .hero-visual, .showcase-main, [class*="hero-img"] {
-    width: 100% !important;
-    height: 300px !important;
-    max-width: 100% !important;
-  }
+  .hero-title { font-size: clamp(56px, 15vw, 90px); letter-spacing: -1px; }
+  .hero-desc { font-size: 14px; max-width: 100%; }
+  .hero-cta { flex-direction: column; align-items: flex-start; gap: 16px; }
 
-  h1, .hero-title, [class*="hero"] h1 { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
-  h2, .section-title { font-size: clamp(1.5rem, 5vw, 2.5rem) !important; }
-  h3 { font-size: clamp(1.1rem, 4vw, 1.5rem) !important; }
-
-  section, [class*="-section"] { padding: 3rem 1.5rem !important; }
-  .container, .section-inner { padding: 0 1.5rem !important; max-width: 100% !important; }
-
-  .product-grid, .products-grid, .grid-2, .grid-3, .grid-4,
-  [class*="product-grid"], .collection-grid, .items-grid, .pa-grid, .ci-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1rem !important;
+  /* SHOWCASE — hide thumb strip that overflows */
+  .showcase-thumb-row { display: none; }
+  .hero-metrics {
+    position: static;
+    margin-top: 20px;
+    gap: 20px;
+    padding: 16px 20px;
+    flex-wrap: wrap;
   }
+  .showcase-main { max-width: 100%; aspect-ratio: 4/3; font-size: 0; }
 
-  .two-col, .split-layout, .about-grid, .info-grid,
-  [class*="two-col"], [class*="split"] {
-    flex-direction: column !important;
-    grid-template-columns: 1fr !important;
-  }
+  /* RIBBON */
+  .ribbon { margin-top: 0; }
 
-  .pa1, .pa2, .pa3, .pa4, .ci1, .ci2, .ci3,
-  .product-image, [class*="product-img"] {
-    height: 220px !important;
-  }
+  /* COLLECTIONS */
+  .collections { padding: 60px 20px; }
+  .section-title-lux { font-size: clamp(28px, 8vw, 48px); }
+  .col-grid { grid-template-columns: 1fr; gap: 2px; }
+  .col-img { height: 260px; }
 
-  .btn, [class*="btn"], button:not(.hamburger):not(.menu-btn) {
-    width: 100% !important;
-    max-width: 320px !important;
-    margin: 0.5rem auto !important;
-    display: block !important;
-  }
+  /* PRODUCTS */
+  .products-section { padding: 0 20px 60px; }
+  .sec-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .prod-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+  .prod-img-area { height: 200px; }
 
-  .promo-row, .feature-row, .highlight-row, .banner-inner, .hero-stats {
-    flex-direction: column !important;
-    text-align: center !important;
+  /* PHILOSOPHY */
+  .philosophy {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 60px 20px;
   }
+  .phil-quote { font-size: 26px; }
+  .phil-right { grid-template-columns: 1fr 1fr; }
+
+  /* FOOTER */
+  footer { padding: 48px 20px 32px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
 }
 
 @media (max-width: 480px) {
-  h1, .hero-title { font-size: clamp(1.8rem, 9vw, 2.8rem) !important; }
-  .hero, [class*="hero-section"] { padding: 5rem 1rem 2rem !important; }
-  section, [class*="-section"] { padding: 2rem 1rem !important; }
-  .pa1, .pa2, .pa3, .pa4, .ci1, .ci2, .ci3 { height: 180px !important; }
+  .hero-title { font-size: clamp(44px, 13vw, 70px); }
+  .prod-grid { grid-template-columns: 1fr; }
+  .prod-img-area { height: 220px; }
+  .footer-top { grid-template-columns: 1fr; }
+  .hero-cta .btn-gold { width: 100%; text-align: center; justify-content: center; }
 }
 </style>
 </head>
@@ -773,6 +765,9 @@ window-scroll-handled-by-js {}
     <i class="fa-solid fa-magnifying-glass"></i>
     <i class="fa-regular fa-heart"></i>
     <i class="fa-solid fa-bag-shopping"></i>
+    <button class="nav-menu-btn" style="display:none;" onclick="this.closest('nav').querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
